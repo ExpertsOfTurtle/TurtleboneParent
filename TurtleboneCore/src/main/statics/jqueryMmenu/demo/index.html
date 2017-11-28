@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<head>
+	<script src="../jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="../jquery.mmenu.all.js" type="text/javascript"></script>
+	<link href="../jquery.mmenu.all.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+</head>
+<body>
+	<div id="my-page">
+		<div id="my-header"/>
+		<div id="my-content">
+			<a href="#my-menu">Open the menu</a>
+			<a href="#my-page">Close the menu</a>
+		</div>
+		<div id="my-footer"/>
+	</div>
+
+	<nav id="my-menu">
+		<ul class="listview-icons">
+			<li><a href="/"><i class="fa fa-home"></i> &nbsp; Home</a></li>
+			<li>
+		 		<span><i class="fa fa-graduation-cap"></i> &nbsp; Tutorials</span>
+					<ul>
+						<li>
+							<span>Basic off-canvas menu</span>
+							<div>
+								<p>This tutorial guides you through the first steps of creating an app look-alike sliding menu for your website and webapp.</p>
+								<ul>
+									<li><a href="/tutorials/off-canvas">Getting started</a></li>
+									<li><a href="/tutorials/off-canvas/the-page.html">The page</a></li>
+									<li><a href="/tutorials/off-canvas/the-menu.html">The menu</a></li>
+									<li><a href="/tutorials/off-canvas/styling-lists.html">Styling lists</a></li>
+									<li><a href="/tutorials/off-canvas/fire-the-plugin.html">Fire the plugin</a></li>
+									<li><a href="/tutorials/off-canvas/open-and-close-the-menu.html">Open and close the menu</a></li>
+									<li><a href="/tutorials/off-canvas/learn-more.html">Learn more</a></li>
+									<li><a href="/tutorials/off-canvas/video.html">Video tutorial</a></li>
+								</ul>
+							</div>
+						</li>
+						<li>
+							<span>Advanced menu with rich content</span>
+							<div>
+								<p>This tutorial shows you how you can create an advanced menu with rich content.</p>
+								<ul>
+									<li><a href="/tutorials/advanced">Getting started</a></li>
+									<li><a href="/tutorials/advanced/the-menu.html">The menu</a></li>
+									<li><a href="/tutorials/advanced/styling-lists.html">Styling lists</a></li>
+									<li><a href="/tutorials/advanced/thumbnail-grid.html">Thumbnail grid</a></li>
+									<li><a href="/tutorials/advanced/learn-more.html">Learn more</a></li>
+								</ul>
+							</div>
+						</li>
+						<li><a href="/tutorials/animated-hamburger.html">Animated hamburger icon</a></li>
+						<li><a href="/tutorials/dynamic-content.html">Dynamic content</a></li>
+					</ul>
+				</li>
+			<li>
+			<a href="/contact/"><i class="fa fa-home"></i> &nbsp; Contact</a>
+			</li>
+		</ul>
+	</nav>
+</body>
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      $("#my-menu").mmenu({
+         // options
+      }, {
+         // configuration
+         offCanvas: {
+            pageNodetype: "section"
+         },
+		 classNames: {
+            inset: "inline"
+         }
+      });
+	  
+	  var API = $("#my-menu").data( "mmenu" );      
+      $("#my-button").click(function() {
+         API.open();
+      });
+	  $("#my-button").click(function() {
+         API.close();
+      });
+   });
+</script>
+<html>
+	

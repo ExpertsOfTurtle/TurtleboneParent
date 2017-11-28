@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		#parse("header.vm")		
+	</head>
+	<body>
+		
+		<div data-role="page" data-dialog="true">
+			<div data-role="header" data-theme="b">
+				<h1>Dream by ${detail.username}</h1>
+			</div>
+			<div role="main" class="ui-content">
+				<h2>${detail.datetime}</h2>							
+				<p>${detail.result}</p>
+				<p>${detail.type}</p>
+				#if ("${detail.type}" == "DREAM")
+					#if("$!{detail.strresult3}" != "")
+						<img width="100%" src="$!{serverPath}$!{detail.strresult3}"/>
+					#end
+				#end
+			</div>
+		</div>
+		<!-- /page -->
+		
+
+	</body>
+</html>

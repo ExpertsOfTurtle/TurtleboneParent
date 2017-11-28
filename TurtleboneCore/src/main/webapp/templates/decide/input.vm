@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+			<title>External and internal panels</title>
+			<link rel="shortcut icon" href="../favicon.ico">
+			<meta name="viewport" content="width=device-width, initial-scale=1">
+			<link rel="stylesheet" href="statics/jqueryMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
+			<script src="statics/jqueryMobile/js/jquery.js"></script>
+			<script src="statics/jqueryMobile/js/jquery.mobile-1.4.5.min.js"></script>
+			<script>
+		$( document ).on( "pagecreate", function() {
+			$( "body > [data-role='panel']" ).panel();
+			$( "body > [data-role='panel'] [data-role='listview']" ).listview();
+			insertRow();
+		});
+		$( document ).one( "pageshow", function() {
+			$( "body > [data-role='header']" ).toolbar();
+			$( "body > [data-role='header'] [data-role='navbar']" ).navbar();
+		});
+		
+		function insertRow() {
+			var html=$("#inputOption").html();
+			var x = $(html);
+			$("#optionContent").append(x);
+			$("span.optionIdClz", x).html();
+			$("#optionContent").trigger("create")
+		}
+		function deleteRow(obj) {
+			$(obj).closest(".optionClz").remove();
+		}
+		function create() {
+			var options = [];
+			$("#optionContent input[name='optionName']").each(function(idx, item){
+				if (options[idx] == null) {
+					options[idx] = {};
+				}
+				options[idx].options=item.value;
+			});
+			$("#optionContent input[name='optionProbability']").each(function(idx, item){
+				options[idx].probability=parseInt(item.value);
+			});
+			var group = {
+				"groupname":$("#groupName").val(),
+				"type":parseInt($("#groupType").val())
+			};
+			var param = {
+				"group":group,
+				"options":options
+			};
+			console.log(param);
+			console.log(JSON.stringify(param));
+			$("#json").html(JSON.stringify(param));
+		}
+		
+						</script>
+	</head>
+	<body>
+		<div data-role="header" data-position="fixed" data-theme="a">
+			<h1>External header Page A</h1>
+			<a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
+			<div data-role="navbar">
+				<ul>
+					<li>
+						<a href="turtlebone.html">turtlebone.html</a>
+					</li>
+					<li>
+						<a href="list.html">list.html</a>
+					</li>
+					<li>
+						<a href="page-c.html">Page C</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!-- /header -->
+
+		<div data-role="page" id="a">
+			<div data-demo-html="true">
+				<ul data-role="listview" data-inset="true">
+					<li data-role="list-divider">Friday, October 8, 2010 <span class="ui-li-count">2</span></li>
+					<li><a href="#popupMenu" data-rel="popup" data-transition="slideup">
+					<p class="ui-li-aside"><strong>6:24</strong>PM</p>
+					<h2>What color should I choose?</h2>
+					<p>BLACK</p>
+					<p>BLACK</p>
+					<p>BLACK</p>					
+					</a></li>
+					
+					<li><a href="create.html">
+					<h2>jQuery Team</h2>
+					<p><strong>Boston Conference Planning</strong></p>
+					<p>In preparation for the upcoming conference in Boston, we need to start gathering a list of sponsors and speakers.</p>
+						<p class="ui-li-aside"><strong>9:18</strong>AM</p>
+					</a></li>
+					
+					<li data-role="list-divider">Thursday, October 7, 2010 <span class="ui-li-count">1</span></li>
+					<li><a href="index.html">
+					<h2>Avery Walker</h2>
+					<p><strong>Re: Dinner Tonight</strong></p>
+					<p>Sure, let's plan on meeting at Highland Kitchen at 8:00 tonight. Can't wait!</p>
+						<p class="ui-li-aside"><strong>4:48</strong>PM</p>
+					</a></li>
+				</ul>
+				
+				<div data-role="popup" id="popupMenu" data-theme="b">
+					<ul data-role="listview" data-inset="true" style="min-width:210px;">
+						<li data-role="list-divider">Choose an action</li>
+						<li><a href="#">View details</a></li>
+						<li><a href="#">Edit</a></li>
+						<li><a href="#">Disable</a></li>
+						<li><a href="#">Delete</a></li>
+					</ul>
+				</div>
+			</div><!--/demo-html -->
+			
+			<div data-demo-html="true">
+				<form>
+					<ul data-role="listview" data-inset="true">
+                        <li class="ui-field-contain">
+                            <label for="name2">选项</label>
+                            <input type="text" name="name2" id="name2" value="" data-clear-btn="true">
+                        </li>                       
+                        <li class="ui-field-contain">
+                            <label for="flip2">允许重复</label>
+                            <select name="flip2" id="flip2" data-role="slider">
+                                <option value="off">Off</option>
+                                <option value="on">On</option>
+                            </select>
+                        </li>
+                        <li class="ui-field-contain">
+                            <label for="slider2">概率:</label>
+                            <input type="range" name="slider2" id="slider2" value="0" min="0" max="100" data-highlight="true">
+                        </li>
+                        <li class="ui-body ui-body-b">
+                            <fieldset class="ui-grid-a">
+                                    <div class="ui-block-a"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Cancel</button></div>
+                                    <div class="ui-block-b"><button type="submit" class="ui-btn ui-corner-all ui-btn-a">Submit</button></div>
+                            </fieldset>
+                        </li>
+					</ul>
+				</form>
+			</div><!--/demo-html -->
+		</div>
+		<!-- /page -->
+		
+		
+		<div data-role="page" id="hidenPage">
+			
+		</div>
+
+		<!-- Left Menu -->
+		<div data-role="panel" id="outside" data-theme="b">			
+			<ul data-role="listview">
+				<li data-icon="back">
+					<a href="#" data-rel="close">Close</a>
+				</li>
+				<li>
+					<a href="turtlebone.html">turtlebone.html</a>
+				</li>
+			</ul>
+		</div>
+		
+
+	</body>
+</html>
+				

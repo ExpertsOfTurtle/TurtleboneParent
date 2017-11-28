@@ -1,0 +1,60 @@
+<h2>Summary</h2>
+<table style="width:330px">
+	<thead>
+		<tr>
+			<td>username</td>
+			<td>problem count</td>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>DFS</td>
+			<td>$dfsList.size()</td>
+		</tr>
+		<tr>
+			<td>Could</td>
+			<td>$couldList.size()</td>
+		</tr>
+	</tbody>
+</table>
+#if ($dfsList.size() > 0)
+	<h2>Details - DFS</h2> 
+	<table style="width:630px">
+		<thead>
+			<tr>
+				<td>Datetime</td>
+				<td>Problem</td>			
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($row in $dfsList)
+				<tr>
+					<td>$row.datetime</td>
+					<td>$row.strresult3</td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+		
+#end
+
+#if ($couldList.size() > 0)
+	<h2>Details - Could</h2> 
+	<table style="width:630px">
+		<thead>
+			<tr>
+				<td>Datetime</td>
+				<td>Problem</td>			
+			</tr>
+		</thead>
+		<tbody>
+			#foreach($row in $dfsList)
+				<tr>
+					<td>$row.datetime</td>
+					<td>$row.strresult3</td>
+				</tr>
+			#end
+		</tbody>
+	</table>
+		
+#end

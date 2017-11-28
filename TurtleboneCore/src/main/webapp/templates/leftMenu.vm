@@ -1,0 +1,27 @@
+<div data-role="panel" id="outside" data-theme="b">
+			
+			<ul data-role="listview">
+				<li style="height:100px;"><span ></span></li>
+				<li data-icon="back">
+					<a href="#" data-rel="close">Close</a>
+				</li>
+				<li>
+					<a href="/core/main/login">Login</a>
+				</li>
+				<li>
+					<a href="/core/main/decide/list">List Selction</a>
+				</li>
+				<li>
+					<a href="/core/main/dream/input">createDream</a>
+				</li>
+				<li>
+					<a href="/core/main/dream/list">DreamList.</a>
+				</li>
+				<li>
+					<a href="/contract/main/contract/list">Contract list.</a>
+				</li>
+				<li>
+					<a href="/contract/main/contract/input">Create contract</a>
+				</li>
+			</ul>
+		</div>

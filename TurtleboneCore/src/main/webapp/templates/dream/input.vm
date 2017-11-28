@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		#parse("header.vm")		
+	</head>
+	<body>
+		
+		<div data-role="page" id="createDreamPage">
+			#set($headerTitle="Create Dream")
+			#parse("bodyHeader.vm")
+			
+			<div role="main" class="ui-content">
+				<div data-demo-html="true">
+					<div id="dreamDebug"></div>
+				</div>
+				<div data-demo-html="true">
+					<label for="text-basic">Content:</label>
+					<textarea type="" name="content" id="content" value=""></textarea>
+				</div>
+				
+				<div data-demo-html="true">
+					<label for="select-choice-mini" class="select">Dreamer:</label>
+					<select name="dreamer" id="dreamer" data-native-menu="false">
+						<option value="">No selected</option>
+						<option value="DFS">DFS</option>
+						<option value="Could">Could</option>
+					</select>
+				</div>
+				
+				<div data-demo-html="true">
+					 <label for="text-basic">Date(yyyy-MM-dd):</label>
+					 <input type="text" name="dreamdate" id="dreamdate" value="">
+				</div>
+				
+				<div data-demo-html="true">
+					 <label for="text-basic">Picture:</label>
+					 <form id="fileForm">
+					 	<input type="file" name="img" id="img" value="">
+					 </form>
+				</div>
+				
+				
+				<div data-demo-html="true">
+					<!--
+					<input type="button" data-inline="true" value="Upload" onclick="uploadPic();">
+					-->
+					<input type="button" data-inline="true" value="Submit" onclick="onSubmit();">
+				</div>
+			</div>
+			
+			<!-- Left Menu -->
+			#parse("leftMenu.vm")
+	
+			#parse("bodyFooter.vm")
+		</div>
+		<!-- /page -->
+		
+
+	</body>
+</html>
+				

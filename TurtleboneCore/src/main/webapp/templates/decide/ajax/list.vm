@@ -1,0 +1,11 @@
+<li data-role="list-divider"><span class="ui-li-count">0</span></li>
+#foreach ($module in $chooseList)
+	<li>
+		<a href="#" href="#popupMenu" data-rel="popup" data-transition="slideup">
+			<h2>${module.group.groupname}</h2>
+			#foreach ($opt in $module.options)
+				<p>${opt.optionname} (${opt.probability})</p>
+			#end
+		</a>
+	</li>		
+#end

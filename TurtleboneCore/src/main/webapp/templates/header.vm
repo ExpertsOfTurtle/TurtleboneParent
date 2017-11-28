@@ -1,0 +1,29 @@
+<link rel="shortcut icon" href="../favicon.ico">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="$ROOT/statics/jqueryMobile/css/themes/default/jquery.mobile-1.4.5.min.css">
+<script src="$ROOT/statics/jqueryMobile/js/jquery.js"></script>
+<script src="$ROOT/statics/jqueryMobile/js/jquery.mobile-1.4.5.min.js"></script>
+<style>
+	div[data-role='page']>div {
+		padding: 10px;
+	}
+</style>
+
+<script type="text/javascript" src="$ROOT/statics/md5.js"></script>
+<script type="text/javascript" src="$ROOT/statics/common.js"></script>
+<script type="text/javascript" src="$ROOT/statics/js/dream/input.js"></script>
+<script type="text/javascript" src="$ROOT/statics/js/decide/input.js"></script>
+<script type="text/javascript" src="$ROOT/statics/js/contract/contract.js"></script>
+<script type="text/javascript" src="$ROOT/statics/js/login/login.js"></script>
+<script>
+	$(document).delegate("#listDreamPage", "pageinit", function(){
+		DREAM_PAGE.pageOffset=0;
+        loadNext();
+    });
+    $(document).delegate("#decideListPage", "pageinit", function(){
+		loadAllDecideList();
+    });
+    $(document).delegate("#contractListPage", "pageinit", function(){
+		loadAllContractList();
+    });
+</script>

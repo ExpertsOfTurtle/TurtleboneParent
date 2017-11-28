@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+	<script src="jquery-1.8.3.min.js" type="text/javascript"></script>
+	<script src="jqueryMmenu/jquery.mmenu.all.js" type="text/javascript"></script>
+	<link href="jqueryMmenu/jquery.mmenu.all.css" type="text/css" rel="stylesheet" />
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
+</head>
+<body>
+	<div id="my-page">
+		<div id="my-header">
+			<h2>___${wf}...</h2>
+		</div>
+		<div id="my-content">
+			<a href="#my-menu">Open the menu</a>
+			<a href="#my-page">Close the menu</a>
+		</div>
+		<div id="my-footer"/>
+	</div>
+
+	<nav id="my-menu">
+		<ul class="listview-icons">
+			<li><a href="#"><i class="fa fa-home"></i> &nbsp; Choose</a></li>
+			<li>
+		 		<span><i class="fa fa-graduation-cap"></i> &nbsp; Profile</span>
+					<ul>						
+						<li><a href="http://www.turtlebone.top/">TurtleBone</a></li>
+						<li><a href="http://www.baidu.com/">Baidu</a></li>
+					</ul>
+				</li>
+			<li>
+			<li><a href="#"><i class="fa fa-home"></i> &nbsp; CF</a></li>
+			<a href="#"><i class="fa fa-home"></i> &nbsp; Activity</a>
+			</li>
+		</ul>
+	</nav>
+</body>
+
+<script type="text/javascript">
+   $(document).ready(function() {
+      $("#my-menu").mmenu({
+         // options
+      }, {
+         // configuration
+         offCanvas: {
+            pageNodetype: "section"
+         },
+		 classNames: {
+            inset: "inline"
+         }
+      });
+	  
+	  var API = $("#my-menu").data( "mmenu" );      
+      $("#my-button").click(function() {
+         API.open();
+      });
+	  $("#my-button").click(function() {
+         API.close();
+      });
+   });
+</script>
+<html>
+	

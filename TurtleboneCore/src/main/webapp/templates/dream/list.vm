@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		#parse("header.vm")		
+	</head>
+	<body>
+			
+		<div data-role="page" id="listDreamPage">
+			#set($headerTitle="List Dream")
+			#parse("bodyHeader.vm")
+			
+			<div role="main" class="ui-content">
+				<div data-demo-html="true">
+					<ul data-role="listview" data-inset="true" id="listDreamUl">
+						<li data-role="list-divider"><span class="ui-li-count">0</span></li>
+					</ul>
+					<ul data-role="listview" data-inset="true">
+						<li>
+							<a href="javascript:loadNext();">Load more</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<!-- Left Menu -->
+			#parse("leftMenu.vm")
+	
+			#parse("bodyFooter.vm")
+		</div>
+		<!-- /page -->
+		
+		
+	</body>
+</html>
+				
