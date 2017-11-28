@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"  
+	xmlns:jee="http://www.springframework.org/schema/jee" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:venus-context="http://venus.vip.vip.com/schema/context" xmlns:venus-datasource="http://venus.vip.vip.com/schema/datasource"
+	xmlns:venus-jdbc="http://venus.vip.vip.com/schema/jdbc"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:venus-cache="http://venus.vip.vip.com/schema/cache"
+	xmlns:venus-mq="http://venus.vip.vip.com/schema/mq"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.0.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.6.xsd
+		http://venus.vip.vip.com/schema/context http://venus.vip.vip.com/schema/context/venus-context-1.3.0.xsd
+		http://venus.vip.vip.com/schema/datasource http://venus.vip.vip.com/schema/datasource/venus-datasource-1.3.0.xsd
+		http://venus.vip.vip.com/schema/jdbc http://venus.vip.vip.com/schema/jdbc/venus-jdbc-1.3.0.xsd 
+		http://venus.vip.vip.com/schema/cache http://venus.vip.vip.com/schema/cache/venus-cache-1.4.0.xsd
+		http://venus.vip.vip.com/schema/mq http://venus.vip.vip.com/schema/mq/venus-mq-1.4.0.xsd" 
+		default-lazy-init="false">
+	
+	<venus-context:property-placeholder ignore-resource-not-found="true"/>
+	
+	<bean id="orikaBeanMapper" class="com.vip.venus.core.beans.mapping.orika.OrikaBeanMapper">
+		<property name="basePackage" value="com.turtlebone.core.**"></property>
+	</bean>
+	
+	<!--i18n-->
+  	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+      	<property name="basenames">
+            <list>
+                <value>classpath:i18n</value>
+            </list>
+       	</property>
+      	<property name="defaultEncoding" value="UTF-8"/>
+		<property name="fallbackToSystemLocale" value="false"/>
+   	</bean>
+   	
+	<!-- validator -->
+   	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+    	<property name="validationMessageSource" ref="messageSource"/>
+    </bean>
+
+	<context:component-scan base-package="com.turtlebone.contract.**.repository" />
+	<context:component-scan base-package="com.turtlebone.contract.**.service" />
+	
+	<context:annotation-config />
+	
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.turtlebone.core.**.repository" />
+		<property name="sqlSessionFactoryBeanName" value="myBatisSqlSessionFactory" />
+		<property name="annotationClass" value="org.springframework.stereotype.Repository" /> 
+	</bean>
+
+	<bean id="myBatisSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="turtlebone-contractDataSource" />
+		<property name="mapperLocations" value="classpath*:mapper/*Mapper.xml" />
+	</bean>
+
+	<bean id="transactionManager" class="com.vip.venus.data.datasource.SmartDataSourceTransactionManager">
+		<property name="dataSource" ref="turtlebone-contractDataSource" />
+	</bean>
+	
+	<venus-datasource:matrix-datasource matrix-name="turtlebone-contractDataSource">
+	   <!-- Please config database Connection Pool's parameters ，here take druid as an example: -->
+	   <venus-datasource:pool-configs pool-type="druid">
+            <venus-datasource:pool-config atom-names="*">
+                <venus-datasource:property name="initialSize" value="3"/>
+                <venus-datasource:property name="minIdle" value="3"/>
+                <venus-datasource:property name="maxActive" value="15"/>
+                <venus-datasource:property name="maxWait" value="5000"/>
+                <venus-datasource:property name="timeBetweenEvictionRunsMillis" value="90000"/>
+                <venus-datasource:property name="minEvictableIdleTimeMillis" value="1800000"/>
+                <venus-datasource:property name="testOnBorrow" value="false"/>
+                <venus-datasource:property name="testOnReturn" value="false"/>
+                <venus-datasource:property name="testWhileIdle" value="true"/>
+            </venus-datasource:pool-config>
+        </venus-datasource:pool-configs>
+	</venus-datasource:matrix-datasource>
+	
+</beans>

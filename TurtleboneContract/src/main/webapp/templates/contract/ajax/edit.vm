@@ -1,0 +1,23 @@
+
+	
+	<div data-demo-html="true">
+		<label for="text-basic">Creation time:</label>
+		<p>$!{detail.createtime}</p>
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Contract No.:</label>
+		<p>$!{detail.contractNo}</p>
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Title:</label>
+		<input type="text" style="width:80%" name="contractTitle" id="contractTitle" value="$!{detail.contractName}"></input>
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Content:</label>
+		<textarea name="contractContent" id="contractContent" 
+		style="width:80%;" rows="8"
+		>$!{detail.contractContent}</textarea>
+	</div>
+	<p>Status:${detail.contractStatus}</p>		
+	<input type="button" data-inline="true" value="OK" onclick=";"></input>
+	<a href="#contractListPage" data-direction="reverse" class="ui-btn ui-btn-inline">Close</input>

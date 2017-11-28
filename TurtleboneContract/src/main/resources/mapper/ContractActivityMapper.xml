@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.contract.repository.ContractActivityRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.contract.entity.ContractActivity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contactId" property="contactid" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="action" property="action" jdbcType="INTEGER" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `contactId`,
+   `username`,
+   `datetime`,
+   `action`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_activity
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract_activity
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.contract.entity.ContractActivity" >
+    insert into contract_activity ( 
+     `id`,
+     `contactId`,
+     `username`,
+     `datetime`,
+     `action`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{contactid,jdbcType=INTEGER},
+     #{username,jdbcType=VARCHAR},
+     #{datetime,jdbcType=TIMESTAMP},
+     #{action,jdbcType=INTEGER}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.contract.entity.ContractActivity" >
+    insert into contract_activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="contactid != null" >
+        `contactId`,
+      </if>
+      <if test="username != null" >
+        `username`,
+      </if>
+      <if test="datetime != null" >
+        `datetime`,
+      </if>
+      <if test="action != null" >
+        `action`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contactid != null" >
+        #{contactid,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.contract.entity.ContractActivity" >
+    update contract_activity
+	  <set>
+       <if test="contactid != null" >
+        `contactId`= #{contactid,jdbcType=INTEGER},
+       </if>
+       <if test="username != null" >
+        `username`= #{username,jdbcType=VARCHAR},
+       </if>
+       <if test="datetime != null" >
+        `datetime`= #{datetime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="action != null" >
+        `action`= #{action,jdbcType=INTEGER},
+       </if>
+          </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.contract.entity.ContractActivity" >
+    update contract_activity
+    set 
+       `contactId` = #{contactid,jdbcType=INTEGER},
+       `username` = #{username,jdbcType=VARCHAR},
+       `datetime` = #{datetime,jdbcType=TIMESTAMP},
+       `action` = #{action,jdbcType=INTEGER}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.contract.entity.ContractActivity" >
+    select count(*) from contract_activity
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="contactid != null" >
+        and `contactId` = #{contactid,jdbcType=INTEGER}
+      </if>
+            <if test="username != null" >
+        and `username` = #{username,jdbcType=VARCHAR}
+      </if>
+            <if test="datetime != null" >
+        and `datetime` = #{datetime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="action != null" >
+        and `action` = #{action,jdbcType=INTEGER}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_activity where 1 = 1 
+        <if test="contractActivity.id != null" >
+      and `id` = #{contractActivity.id,jdbcType=INTEGER}
+    </if>
+        <if test="contractActivity.contactid != null" >
+      and `contactId` = #{contractActivity.contactid,jdbcType=INTEGER}
+    </if>
+        <if test="contractActivity.username != null" >
+      and `username` = #{contractActivity.username,jdbcType=VARCHAR}
+    </if>
+        <if test="contractActivity.datetime != null" >
+      and `datetime` = #{contractActivity.datetime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="contractActivity.action != null" >
+      and `action` = #{contractActivity.action,jdbcType=INTEGER}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'contactId'
+   || order.property == 'username'
+   || order.property == 'datetime'
+   || order.property == 'action'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  
+  <select id="selectSignActivity" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_activity
+    where contactid = #{contractid,jdbcType=INTEGER}
+    and username = #{username,jdbcType=VARCHAR} limit 1
+  </select>
+  
+  <select id="selectBulkSignActivity" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract_activity where 1 = 1
+    <if test="contactid != null" >
+      and `contactId` = #{contactid,jdbcType=INTEGER}
+    </if>
+    <if test="username != null" >
+      and `username` = #{username,jdbcType=VARCHAR}
+    </if>
+  </select>
+ </mapper>
+  
+
+  
+	

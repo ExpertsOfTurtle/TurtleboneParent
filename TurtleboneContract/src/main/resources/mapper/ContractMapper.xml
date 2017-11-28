@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.contract.repository.ContractRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.contract.entity.Contract" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contract_no" property="contractNo" jdbcType="VARCHAR" />
+    <result column="contract_name" property="contractName" jdbcType="VARCHAR" />
+    <result column="contract_type" property="contractType" jdbcType="VARCHAR" />
+    <result column="effective_date" property="effectiveDate" jdbcType="TIMESTAMP" />
+    <result column="expired_date" property="expiredDate" jdbcType="TIMESTAMP" />
+    <result column="contract_status" property="contractStatus" jdbcType="SMALLINT" />
+    <result column="contract_party" property="contractParty" jdbcType="VARCHAR" />
+    <result column="signed_time" property="signedTime" jdbcType="VARCHAR" />
+    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
+    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="contract_content" property="contractContent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `contract_no`,
+   `contract_name`,
+   `contract_type`,
+   `effective_date`,
+   `expired_date`,
+   `contract_status`,
+   `contract_party`,
+   `signed_time`,
+   `create_by`,
+   `update_by`,
+   `createtime`,
+   `updatetime`,
+   `contract_content`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from contract
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.contract.entity.Contract" 
+  useGeneratedKeys="true" keyProperty="id">
+    insert into contract ( 
+     `id`,
+     `contract_no`,
+     `contract_name`,
+     `contract_type`,
+     `effective_date`,
+     `expired_date`,
+     `contract_status`,
+     `contract_party`,
+     `signed_time`,
+     `create_by`,
+     `update_by`,
+     `createtime`,
+     `updatetime`,
+     `contract_content`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{contractNo,jdbcType=VARCHAR},
+     #{contractName,jdbcType=VARCHAR},
+     #{contractType,jdbcType=VARCHAR},
+     #{effectiveDate,jdbcType=TIMESTAMP},
+     #{expiredDate,jdbcType=TIMESTAMP},
+     #{contractStatus,jdbcType=SMALLINT},
+     #{contractParty,jdbcType=VARCHAR},
+     #{signedTime,jdbcType=VARCHAR},
+     #{createBy,jdbcType=VARCHAR},
+     #{updateBy,jdbcType=VARCHAR},
+     #{createtime,jdbcType=TIMESTAMP},
+     #{updatetime,jdbcType=TIMESTAMP},
+     #{contractContent,jdbcType=LONGVARCHAR}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.contract.entity.Contract" >
+    insert into contract
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="contractNo != null" >
+        `contract_no`,
+      </if>
+      <if test="contractName != null" >
+        `contract_name`,
+      </if>
+      <if test="contractType != null" >
+        `contract_type`,
+      </if>
+      <if test="effectiveDate != null" >
+        `effective_date`,
+      </if>
+      <if test="expiredDate != null" >
+        `expired_date`,
+      </if>
+      <if test="contractStatus != null" >
+        `contract_status`,
+      </if>
+      <if test="contractParty != null" >
+        `contract_party`,
+      </if>
+      <if test="signedTime != null" >
+        `signed_time`,
+      </if>
+      <if test="createBy != null" >
+        `create_by`,
+      </if>
+      <if test="updateBy != null" >
+        `update_by`,
+      </if>
+      <if test="createtime != null" >
+        `createtime`,
+      </if>
+      <if test="updatetime != null" >
+        `updatetime`,
+      </if>
+      <if test="contractContent != null" >
+        `contract_content`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contractNo != null" >
+        #{contractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractName != null" >
+        #{contractName,jdbcType=VARCHAR},
+      </if>
+      <if test="contractType != null" >
+        #{contractType,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveDate != null" >
+        #{effectiveDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiredDate != null" >
+        #{expiredDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractStatus != null" >
+        #{contractStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="contractParty != null" >
+        #{contractParty,jdbcType=VARCHAR},
+      </if>
+      <if test="signedTime != null" >
+        #{signedTime,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null" >
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateBy != null" >
+        #{updateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="contractContent != null" >
+        #{contractContent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.contract.entity.Contract" >
+    update contract
+	  <set>
+       <if test="contractNo != null" >
+        `contract_no`= #{contractNo,jdbcType=VARCHAR},
+       </if>
+       <if test="contractName != null" >
+        `contract_name`= #{contractName,jdbcType=VARCHAR},
+       </if>
+       <if test="contractType != null" >
+        `contract_type`= #{contractType,jdbcType=VARCHAR},
+       </if>
+       <if test="effectiveDate != null" >
+        `effective_date`= #{effectiveDate,jdbcType=TIMESTAMP},
+       </if>
+       <if test="expiredDate != null" >
+        `expired_date`= #{expiredDate,jdbcType=TIMESTAMP},
+       </if>
+       <if test="contractStatus != null" >
+        `contract_status`= #{contractStatus,jdbcType=SMALLINT},
+       </if>
+       <if test="contractParty != null" >
+        `contract_party`= #{contractParty,jdbcType=VARCHAR},
+       </if>
+       <if test="signedTime != null" >
+        `signed_time`= #{signedTime,jdbcType=VARCHAR},
+       </if>
+       <if test="createBy != null" >
+        `create_by`= #{createBy,jdbcType=VARCHAR},
+       </if>
+       <if test="updateBy != null" >
+        `update_by`= #{updateBy,jdbcType=VARCHAR},
+       </if>
+       <if test="createtime != null" >
+        `createtime`= #{createtime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="updatetime != null" >
+        `updatetime`= #{updatetime,jdbcType=TIMESTAMP},
+       </if>
+           <if test="contractContent != null" >
+        `contract_content`= #{contractContent,jdbcType=LONGVARCHAR},
+       </if>
+      </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.contract.entity.Contract" >
+    update contract
+    set 
+   `contract_content` = #{contractContent,jdbcType=LONGVARCHAR},
+       `contract_no` = #{contractNo,jdbcType=VARCHAR},
+       `contract_name` = #{contractName,jdbcType=VARCHAR},
+       `contract_type` = #{contractType,jdbcType=VARCHAR},
+       `effective_date` = #{effectiveDate,jdbcType=TIMESTAMP},
+       `expired_date` = #{expiredDate,jdbcType=TIMESTAMP},
+       `contract_status` = #{contractStatus,jdbcType=SMALLINT},
+       `contract_party` = #{contractParty,jdbcType=VARCHAR},
+       `signed_time` = #{signedTime,jdbcType=VARCHAR},
+       `create_by` = #{createBy,jdbcType=VARCHAR},
+       `update_by` = #{updateBy,jdbcType=VARCHAR},
+       `createtime` = #{createtime,jdbcType=TIMESTAMP},
+       `updatetime` = #{updatetime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.contract.entity.Contract" >
+    select count(*) from contract
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="contractNo != null" >
+        and `contract_no` = #{contractNo,jdbcType=VARCHAR}
+      </if>
+            <if test="contractName != null" >
+        and `contract_name` = #{contractName,jdbcType=VARCHAR}
+      </if>
+            <if test="contractType != null" >
+        and `contract_type` = #{contractType,jdbcType=VARCHAR}
+      </if>
+            <if test="effectiveDate != null" >
+        and `effective_date` = #{effectiveDate,jdbcType=TIMESTAMP}
+      </if>
+            <if test="expiredDate != null" >
+        and `expired_date` = #{expiredDate,jdbcType=TIMESTAMP}
+      </if>
+            <if test="contractStatus != null" >
+        and `contract_status` = #{contractStatus,jdbcType=SMALLINT}
+      </if>
+            <if test="contractParty != null" >
+        and `contract_party` = #{contractParty,jdbcType=VARCHAR}
+      </if>
+            <if test="signedTime != null" >
+        and `signed_time` = #{signedTime,jdbcType=VARCHAR}
+      </if>
+            <if test="createBy != null" >
+        and `create_by` = #{createBy,jdbcType=VARCHAR}
+      </if>
+            <if test="updateBy != null" >
+        and `update_by` = #{updateBy,jdbcType=VARCHAR}
+      </if>
+            <if test="createtime != null" >
+        and `createtime` = #{createtime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="updatetime != null" >
+        and `updatetime` = #{updatetime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="contractContent != null" >
+        and `contract_content` = #{contractContent,jdbcType=LONGVARCHAR}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract where 1 = 1 
+        <if test="contract.id != null" >
+      and `id` = #{contract.id,jdbcType=INTEGER}
+    </if>
+        <if test="contract.contractNo != null" >
+      and `contract_no` = #{contract.contractNo,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.contractName != null" >
+      and `contract_name` = #{contract.contractName,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.contractType != null" >
+      and `contract_type` = #{contract.contractType,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.effectiveDate != null" >
+      and `effective_date` = #{contract.effectiveDate,jdbcType=TIMESTAMP}
+    </if>
+        <if test="contract.expiredDate != null" >
+      and `expired_date` = #{contract.expiredDate,jdbcType=TIMESTAMP}
+    </if>
+        <if test="contract.contractStatus != null" >
+      and `contract_status` = #{contract.contractStatus,jdbcType=SMALLINT}
+    </if>
+        <if test="contract.contractParty != null" >
+      and `contract_party` = #{contract.contractParty,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.signedTime != null" >
+      and `signed_time` = #{contract.signedTime,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.createBy != null" >
+      and `create_by` = #{contract.createBy,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.updateBy != null" >
+      and `update_by` = #{contract.updateBy,jdbcType=VARCHAR}
+    </if>
+        <if test="contract.createtime != null" >
+      and `createtime` = #{contract.createtime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="contract.updatetime != null" >
+      and `updatetime` = #{contract.updatetime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="contract.contractContent != null" >
+      and `contract_content` = #{contract.contractContent,jdbcType=LONGVARCHAR}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'contract_no'
+   || order.property == 'contract_name'
+   || order.property == 'contract_type'
+   || order.property == 'effective_date'
+   || order.property == 'expired_date'
+   || order.property == 'contract_status'
+   || order.property == 'contract_party'
+   || order.property == 'signed_time'
+   || order.property == 'create_by'
+   || order.property == 'update_by'
+   || order.property == 'createtime'
+   || order.property == 'updatetime'
+   || order.property == 'contract_content'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from contract    
+  </select>
+ </mapper>
+  
+
+  
+	

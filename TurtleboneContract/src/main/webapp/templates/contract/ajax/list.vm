@@ -1,0 +1,14 @@
+#foreach ($module in $list)		
+	<li aid="${module.id}">
+		<a _href="/contract/contract/detail/${module.id}" 
+		href="#popupMenu"
+		onclick="onSelectContract(${module.id});"
+		class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
+		data-rel="popup" data-transition="slideup"
+		_data-transition="pop" >
+			<h2>${module.createtime}</h2>							
+			<p>${module.createBy}</p>
+			<p>${module.contractName}</p>
+		</a>
+	</li>
+#end
