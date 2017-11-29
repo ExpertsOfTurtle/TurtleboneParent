@@ -1,0 +1,25 @@
+########################################
+#				project  configuration   for 128
+########################################
+
+project.exportPath=D:/Tools/codegen-2.0.6/bin
+project.name=TurtleBone-Core
+project.packageName=com.turtlebone
+project.moduleName=core
+project.type=simpleservice,webapp
+#project.type=
+project.buildTool=gradle
+project.templateFile=
+#project.templateFile=D:/vm-simple-webapp-tablesharding.json
+project.domain=www.turtlebone.top
+
+
+########################################
+#				database  configuration
+########################################
+db.driver=com.mysql.jdbc.Driver
+#db.url=jdbc:mysql://39.108.103.108:3306/turtle
+db.url=jdbc:mysql://127.0.0.1:3306/turtle
+db.userId=mysql
+db.pwd=mysql
+db.tables=activity:Activity,optiongroup:OptionGroup,options:Options,problems:Problem,user:User,task:Task,punishment:Punishment,task:Task,task_user:TaskUser
