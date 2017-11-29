@@ -45,15 +45,16 @@ public class SecurityFilter implements Filter {
 			throws IOException, ServletException {
 		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
 		String path = request.getRequestURI();
-		logger.info("Core RequestURI={}", path);
+		logger.info("Task RequestURI={}", path);
+		
+		String tokenId = request.getParameter("tokenId");
+		request.setAttribute("username", tokenId);
+		logger.info("tokenId={}", tokenId);
 		
 		if (checkExclude(path)) {
 			filterChain.doFilter(req, rsp);	
 			return;
 		}
-		
-		String tokenId = request.getParameter("tokenId");
-		logger.info("tokenId={}", tokenId);
 		
 		if (StringUtil.isEmpty(tokenId)) {
 			rsp.setContentType("application/json");

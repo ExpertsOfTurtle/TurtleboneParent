@@ -5,7 +5,7 @@
 	<artifactId>TurtleboneParent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	
+
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
@@ -161,13 +161,20 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.16.12</version>		
+			<version>1.16.12</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-clean-plugin -->
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-clean-plugin</artifactId>
+			<version>2.6.1</version>
+		</dependency>
+
 	</dependencies>
 	<modules>
 		<module>TurtleboneAuth</module>
@@ -175,5 +182,15 @@
 		<module>TurtleboneCore</module>
 		<module>TurtleboneContract-api</module>
 		<module>TurtleboneContract</module>
+		<module>TurtleboneTask</module>
+		<module>TurtleboneTask-api</module>
 	</modules>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 </project>
