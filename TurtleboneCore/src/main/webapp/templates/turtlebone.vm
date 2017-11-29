@@ -13,7 +13,8 @@
 			#parse("bodyHeader.vm")
 			<!-- /header -->
 		
-				Nothing here
+				<img src="http://on-img.com/chart_image/5a1ed46ae4b00f2396d1f6a2.png" width="100%"/>
+				<a href="https://www.processon.com/diagraming/5a1ed46ae4b00f2396d1f69f">Draw</a>
 				
 			<!-- Left Menu -->
 			#parse("leftMenu.vm")
