@@ -6,7 +6,7 @@
 					<a href="#" data-rel="close">Close</a>
 				</li>
 				<li>
-					<a href="/core/main/login">Login</a>
+					<a href="/auth/pages/login">Login</a>
 				</li>
 				<li>
 					<a href="/core/main/decide/list">List Selction</a>
@@ -18,10 +18,10 @@
 					<a href="/core/main/dream/list">DreamList.</a>
 				</li>
 				<li>
-					<a href="/contract/main/contract/list">Contract list.</a>
+					<a href="/contract/pages/listMain">Contract list.</a>
 				</li>
 				<li>
-					<a href="/contract/main/contract/input">Create contract</a>
+					<a href="/contract/pages/inputMain">Create contract</a>
 				</li>
 			</ul>
 		</div>

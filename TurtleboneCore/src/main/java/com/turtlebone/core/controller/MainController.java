@@ -25,9 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aliyuncs.http.HttpResponse;
 
-@Controller
-@EnableAutoConfiguration
-@RequestMapping(value="/main")
+//@Controller
+//@EnableAutoConfiguration
+//@RequestMapping(value="/main")
 public class MainController {
 	private static Logger logger = LoggerFactory.getLogger(MainController.class);
 	
@@ -50,7 +50,7 @@ public class MainController {
 		model.put("ROOT", req.getContextPath());
 		return "turtlebone";
 	}
-	
+	/*
 	@RequestMapping(value="/login")
 	public String login(Map<String, Object> model) {
 		logger.debug("go to login.vm");
@@ -72,5 +72,5 @@ public class MainController {
 			HttpServletResponse resp) {
 		logger.debug("go to /contract/{}.vm", page);
 		return "contract/" + page;
-	}
+	}*/
 }

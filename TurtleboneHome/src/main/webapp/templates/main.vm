@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Beta1</title>
+		#parse("header.vm");		
+	</head>
+	<body>
+		
+
+		<div data-role="page" id="a">
+			#set($headerTitle="Main")
+			#parse("bodyHeader.vm")
+			<!-- /header -->
+		
+				Nothing here
+				
+			<!-- Left Menu -->
+			#parse("leftMenu.vm")
+	
+			#parse("bodyFooter.vm")
+		</div>
+		
+		<!-- /page -->
+
+		
+		
+	</body>
+</html>
+				

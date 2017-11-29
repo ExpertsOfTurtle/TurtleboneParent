@@ -3,14 +3,9 @@
 			<a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
 			<div data-role="navbar">
 				<ul>
+					
 					<li>
-						<a href="/core/main/decide/list">SelctionList</a>
-					</li>					
-					<li>
-						<a href="/core/main/dream/list">DreamList</a>
-					</li>
-					<li>
-						<a href="/contract/main/contract/list">ContractList</a>
+						<a href="/contract/pages/listMain">Contract</a>
 					</li>
 				</ul>
 			</div>

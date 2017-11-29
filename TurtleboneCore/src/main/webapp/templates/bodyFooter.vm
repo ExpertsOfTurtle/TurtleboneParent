@@ -3,13 +3,13 @@
 				<div data-role="navbar">
 					<ul>
 						<li>
-							<a href="index.html" class="ui-btn-active ui-state-persist">Page A</a>
+							<a href="#" class="ui-btn-active ui-state-persist">Page A</a>
 						</li>
 						<li>
-							<a href="page-b.html">Page B</a>
+							<a href="#">Page B</a>
 						</li>
 						<li>
-							<a href="page-c.html">Page C</a>
+							<a href="#">Page C</a>
 						</li>
 					</ul>
 				</div>

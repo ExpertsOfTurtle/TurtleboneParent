@@ -1,25 +1,5 @@
 spring:
   profiles: default
-  datasource:
-    type: org.apache.commons.dbcp2.BasicDataSource
-    driverClassName: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/turtle?allowMultiQueries=true
-    username: mysql
-    password: mysql
-    initialSize: 10
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    testWhileIdle: true
-    validationQuery: select 'x'
-  redis:
-    database: 0
-    hostName: 127.0.0.1
-    port: 6379
-    pool.max-idle: 8
-    pool.min-idle: 0
-    pool.max-active: 8
-    pool.max-wait: -1
   velocity:
     charset: UTF-8
     properties.input.encoding: UTF-8
@@ -27,13 +7,11 @@ spring:
     resourceLoaderPath: classpath:templates/
     suffix: .vm
 server:
-  port: 12005
-  contextPath: /contract/
-mybatis:
-  mapperLocations: classpath:mapper/*.xml
+  port: 12000
+  contextPath: /home/
 redis.expireTime: 60
 constants:
-  excludeRegex: /*/statics/*|/*/main/*|/contract/list|/*/js/*|/*/pages/*
+  excludeRegex: /*/statics/*|/*/main/*|/contract/list
 ---
 spring:
   profiles: prod
@@ -65,8 +43,8 @@ spring:
     resourceLoaderPath: classpath:templates/
     suffix: .vm
 server:
-  port: 12005
-  contextPath: /contract/
+  port: 12000
+  contextPath: /home/
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 3600

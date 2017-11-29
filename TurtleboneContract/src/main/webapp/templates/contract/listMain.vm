@@ -6,6 +6,13 @@
 	<body>
 		
 		<div data-role="page" id="contractListPage">
+			<script type="text/javascript" src="/contract/js/contract/contract.js"></script>
+			<script type="text/javascript">
+				 $(document).delegate("#contractListPage", "pageinit", function(){
+					loadAllContractList();
+			    });
+			</script>
+			
 			#set($headerTitle="List Contract")
 			#parse("bodyHeader.vm")
 			

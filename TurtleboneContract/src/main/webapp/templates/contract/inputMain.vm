@@ -6,6 +6,8 @@
 	<body>
 		
 		<div data-role="page" id="createDreamPage">
+			<script type="text/javascript" src="/contract/js/contract/contract.js"></script>
+		
 			#set($headerTitle="Create Contract")
 			#parse("bodyHeader.vm")
 			
