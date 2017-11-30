@@ -8,6 +8,7 @@
     <result column="assignDatetime" property="assigndatetime" jdbcType="VARCHAR" />
     <result column="deadline" property="deadline" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="percentage" property="percentage" jdbcType="INTEGER" />
   </resultMap>
 
  <sql id="Base_Column_List" >
@@ -16,7 +17,8 @@
    `username`,
    `assignDatetime`,
    `deadline`,
-   `status`
+   `status`,
+   `percentage`
  </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -30,15 +32,21 @@
     delete from task_user
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByTaskId" parameterType="java.lang.Integer" >
+    delete from task_user
+    where taskId = #{taskId,jdbcType=INTEGER}
+  </delete>
   
-  <insert id="insert" parameterType="com.turtlebone.task.entity.TaskUser" >
+  <insert id="insert" parameterType="com.turtlebone.task.entity.TaskUser" 
+  useGeneratedKeys="true" keyProperty="id">
     insert into task_user ( 
      `id`,
      `taskid`,
      `username`,
      `assignDatetime`,
      `deadline`,
-     `status`
+     `status`,
+     `percentage`
     )
     values (
      #{id,jdbcType=INTEGER},
@@ -46,7 +54,8 @@
      #{username,jdbcType=VARCHAR},
      #{assigndatetime,jdbcType=VARCHAR},
      #{deadline,jdbcType=VARCHAR},
-     #{status,jdbcType=INTEGER}
+     #{status,jdbcType=INTEGER},
+     #{percentage,jdbcType=INTEGER}
  )
   </insert>
   
@@ -73,6 +82,9 @@
       <if test="status != null" >
         `status`,
       </if>
+      <if test="percentage != null" >
+        `percentage`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -92,6 +104,9 @@
       </if>
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
+      </if>
+      <if test="percentage != null" >
+        #{percentage,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -114,6 +129,9 @@
        <if test="status != null" >
         `status`= #{status,jdbcType=INTEGER},
        </if>
+       <if test="percentage != null" >
+        `percentage`= #{percentage,jdbcType=INTEGER},
+       </if>
           </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -125,7 +143,8 @@
        `username` = #{username,jdbcType=VARCHAR},
        `assignDatetime` = #{assigndatetime,jdbcType=VARCHAR},
        `deadline` = #{deadline,jdbcType=VARCHAR},
-       `status` = #{status,jdbcType=INTEGER}
+       `status` = #{status,jdbcType=INTEGER},
+       `percentage` = #{percentage,jdbcType=INTEGER}
      where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -152,6 +171,9 @@
             <if test="status != null" >
         and `status` = #{status,jdbcType=INTEGER}
       </if>
+            <if test="percentage != null" >
+        and `percentage` = #{percentage,jdbcType=INTEGER}
+      </if>
           </where>
   </select>
 
@@ -177,6 +199,9 @@
         <if test="taskUser.status != null" >
       and `status` = #{taskUser.status,jdbcType=INTEGER}
     </if>
+        <if test="taskUser.percentage != null" >
+      and `percentage` = #{taskUser.percentage,jdbcType=INTEGER}
+    </if>
         <if test="pageable.sort != null" >
       order by 
       <foreach collection="pageable.sort" item="order" separator="," >
@@ -187,6 +212,7 @@
    || order.property == 'assignDatetime'
    || order.property == 'deadline'
    || order.property == 'status'
+   || order.property == 'percentage'
         " >
         		${order.property} ${order.direction}
         </if>
@@ -196,6 +222,23 @@
       limit ${pageable.offset}, ${pageable.pageSize}
     </if>
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from task_user where 1 = 1 
+    <if test="taskId != null" >
+      and `taskid` = #{taskId,jdbcType=INTEGER}
+    </if>
+    <if test="username != null" >
+      and `username` = #{username,jdbcType=VARCHAR}
+    </if>
+    <if test="deadlineFrom != null and deadlineTo != null" >
+      and `deadline` between #{deadlineFrom,jdbcType=VARCHAR} and #{deadlineTo,jdbcType=VARCHAR}
+    </if>
+    <if test="status != null" >
+      and `status` = #{status,jdbcType=INTEGER}
+    </if>
+   </select>
  </mapper>
   
 

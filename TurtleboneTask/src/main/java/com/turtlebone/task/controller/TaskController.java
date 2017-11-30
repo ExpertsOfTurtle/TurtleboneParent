@@ -3,6 +3,7 @@ package com.turtlebone.task.controller;
 import java.util.List;
 import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,8 @@ import com.turtlebone.task.model.TaskModel;
 import com.turtlebone.task.model.TaskUserModel;
 import com.turtlebone.task.service.TaskService;
 import com.turtlebone.task.service.TaskUserService;
+import com.alibaba.fastjson.JSON;
+import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.StringUtil;
 
@@ -40,21 +43,24 @@ public class TaskController {
 	private TaskUserService taskUserService;
 		
 	@RequestMapping(value="/queryMyTask", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> queryMyTask(ServletRequest req) {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+	public @ResponseBody ResponseEntity<?> queryMyTask(HttpServletRequest request) throws TurtleException {
 		String username = (String)request.getAttribute("username");
+		
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
+		
 		List<TaskModel> list = taskService.selectPage(null, null, username, null, null, null);
 		return ResponseEntity.ok(list);
 	}
 	
-	@RequestMapping(value="/create", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request, ServletRequest req) {
-		HttpServletRequest httpReq = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+	@RequestMapping(value="/create", method = RequestMethod.PUT)
+	public @ResponseBody ResponseEntity<?> createTask(@RequestBody CreateTaskRequest request, 
+			HttpServletRequest httpReq) throws TurtleException {
 		String username = (String)httpReq.getAttribute("username");
 		
 		if (StringUtil.isEmpty(username)) {
-			logger.warn("Please login first");
-			return ResponseEntity.ok("Plz login");
+			throw new TurtleException("", "Please login first", "");
 		}
 		
 		TaskModel taskModel = new TaskModel();
@@ -65,6 +71,8 @@ public class TaskController {
 		taskModel.setPunishmentId(taskModel.getPunishmentId());
 		taskModel.setStatus(ITaskStatus.NEW);
 		taskModel.setType(ITaskType.NORMAL);
+		taskModel.setDifficulty(request.getDifficulty());
+		taskModel.setCreatetime(DateUtil.getDateTime());
 		
 		int id = taskService.create(taskModel);
 		for (String user : request.getOwner()) {
@@ -80,4 +88,55 @@ public class TaskController {
 		return ResponseEntity.ok(taskModel);
 	}	
 	
+	@RequestMapping(value="/modify", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> modifyTask(@RequestBody CreateTaskRequest request, 
+			HttpServletRequest httpReq) throws TurtleException {
+		String username = (String)httpReq.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
+		
+		logger.debug("modify task, request={}", JSON.toJSONString(request));
+		
+		if (request.getId() == null) {
+			throw new TurtleException("", "taskId is null", "");
+		}
+		logger.debug("Modify task, id={}", request.getId());
+		
+		TaskModel taskModel = taskService.findByPrimaryKey(request.getId());
+		if (taskModel == null) {
+			throw new TurtleException("", "Please login first", "");
+		} else if (!username.equalsIgnoreCase(taskModel.getCreator())) {
+			throw new TurtleException("", "You are not the owner of the task", "");
+		}
+		
+		taskModel.setTitle(request.getTitle());
+		taskModel.setContent(request.getContent());
+		taskModel.setDeadline(taskModel.getDeadline());
+		taskModel.setPunishmentId(taskModel.getPunishmentId());
+		taskModel.setDifficulty(request.getDifficulty());
+		taskService.updateByPrimaryKey(taskModel);
+		
+		List<TaskUserModel> taskuserList = taskUserService.selectByCondition(request.getId(), null, null, null, null);
+		for (TaskUserModel taskUserModel : taskuserList) {
+			taskUserModel.setDeadline(taskModel.getDeadline());
+			taskUserService.updateByPrimaryKey(taskUserModel);
+		}
+		
+		return ResponseEntity.ok(taskModel);
+	}	
+	
+	@RequestMapping(value="/delete/{taskId}", method = RequestMethod.DELETE)
+	public @ResponseBody ResponseEntity<?> delete(HttpServletRequest httpReq, 
+			@PathParam(value="taskId") Integer taskId) throws TurtleException {
+		String username = (String)httpReq.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
+		
+		taskService.deleteByPrimaryKey(taskId);
+		taskUserService.deleteByTaskId(taskId);
+		
+		return ResponseEntity.ok("OK");
+	}
 }

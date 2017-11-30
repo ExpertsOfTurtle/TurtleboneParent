@@ -21,6 +21,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
 import com.turtlebone.core.bean.ResultVO;
+import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.util.StringUtil;
 
 import lombok.Data;
@@ -55,6 +56,7 @@ public class SecurityFilter implements Filter {
 			filterChain.doFilter(req, rsp);	
 			return;
 		}
+		
 		
 		if (StringUtil.isEmpty(tokenId)) {
 			rsp.setContentType("application/json");

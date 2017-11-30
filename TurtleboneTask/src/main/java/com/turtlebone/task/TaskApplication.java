@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.turtlebone.task.repository") 
 @EnableScheduling
 @EnableAutoConfiguration
-public class Application {
+public class TaskApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(TaskApplication.class, args);
 	}
 }

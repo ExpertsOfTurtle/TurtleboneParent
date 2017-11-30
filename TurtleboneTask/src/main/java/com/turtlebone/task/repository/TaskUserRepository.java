@@ -1,6 +1,8 @@
 package com.turtlebone.task.repository;
 
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -11,6 +13,8 @@ import com.turtlebone.task.entity.TaskUser;
 public interface TaskUserRepository{
 
   	int deleteByPrimaryKey(Integer id);
+  	
+  	int deleteByTaskId(Integer taskId);
 	
 	TaskUser selectByPrimaryKey(Integer id);
 	
@@ -28,4 +32,5 @@ public interface TaskUserRepository{
 
     List<TaskUser> selectPage(@Param("taskUser") TaskUser taskUser, @Param("pageable") Pageable pageable);
 	
+    List<TaskUser> selectByCondition(Map map);
 }
