@@ -76,15 +76,15 @@ function doSign(contractId,actionType) {
 		}
 	});
 }
-function loadDetails(action) {
-		var url = "/contract/contract/" + action + "/" + ContractItem.id + "?tokenId=" + PROFILE.tokenId;
+function loadTaskDetails(action) {
+		var url = "/task/pages/" + action + "/" + TaskItem.id + "?tokenId=" + PROFILE.tokenId;
 		var rs = $.ajax({
 			type:"GET",
 			url:url,
 			contentType:"application/json; charset=utf-8",
 			dataType : "text",
 			success : function (result) {
-				$("#contractDetailsContent").html(result);
+				$("#taskDetailsContent").html(result);
 				$("input[type=Button]").button();
 			},
 			error : function() {

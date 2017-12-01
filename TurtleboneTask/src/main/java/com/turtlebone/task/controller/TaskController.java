@@ -20,6 +20,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.turtlebone.task.bean.CreateTaskRequest;
+import com.turtlebone.task.bean.UpdateProgressRequest;
 import com.turtlebone.task.constants.ITaskStatus;
 import com.turtlebone.task.constants.ITaskType;
 import com.turtlebone.task.model.TaskModel;
@@ -63,6 +64,7 @@ public class TaskController {
 			throw new TurtleException("", "Please login first", "");
 		}
 		
+		//Create Task
 		TaskModel taskModel = new TaskModel();
 		taskModel.setTitle(request.getTitle());
 		taskModel.setContent(request.getContent());
@@ -72,9 +74,10 @@ public class TaskController {
 		taskModel.setStatus(ITaskStatus.NEW);
 		taskModel.setType(ITaskType.NORMAL);
 		taskModel.setDifficulty(request.getDifficulty());
-		taskModel.setCreatetime(DateUtil.getDateTime());
-		
+		taskModel.setCreatetime(DateUtil.getDateTime());		
 		int id = taskService.create(taskModel);
+		
+		//Asign task to user
 		for (String user : request.getOwner()) {
 			TaskUserModel taskUserModel = new TaskUserModel();
 			taskUserModel.setTaskid(id);
@@ -105,11 +108,12 @@ public class TaskController {
 		
 		TaskModel taskModel = taskService.findByPrimaryKey(request.getId());
 		if (taskModel == null) {
-			throw new TurtleException("", "Please login first", "");
+			throw new TurtleException("", "No such task", "");
 		} else if (!username.equalsIgnoreCase(taskModel.getCreator())) {
 			throw new TurtleException("", "You are not the owner of the task", "");
 		}
 		
+		//Update task
 		taskModel.setTitle(request.getTitle());
 		taskModel.setContent(request.getContent());
 		taskModel.setDeadline(taskModel.getDeadline());
@@ -117,6 +121,7 @@ public class TaskController {
 		taskModel.setDifficulty(request.getDifficulty());
 		taskService.updateByPrimaryKey(taskModel);
 		
+		//Update task for task owner
 		List<TaskUserModel> taskuserList = taskUserService.selectByCondition(request.getId(), null, null, null, null);
 		for (TaskUserModel taskUserModel : taskuserList) {
 			taskUserModel.setDeadline(taskModel.getDeadline());
@@ -134,9 +139,55 @@ public class TaskController {
 			throw new TurtleException("", "Please login first", "");
 		}
 		
+		TaskModel taskModel = taskService.findByPrimaryKey(taskId);
+		if (taskModel == null) {
+			throw new TurtleException("", "No such task", "");
+		} else if (!username.equalsIgnoreCase(taskModel.getCreator())) {
+			throw new TurtleException("", "You are not the owner of the task", "");
+		}
+		
 		taskService.deleteByPrimaryKey(taskId);
 		taskUserService.deleteByTaskId(taskId);
 		
 		return ResponseEntity.ok("OK");
 	}
+	
+	@RequestMapping(value="/updateProgress", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> updateProgress(HttpServletRequest httpReq,
+			@RequestBody UpdateProgressRequest request) throws TurtleException {
+		String username = (String)httpReq.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
+		
+		Integer percentage = request.getPercentage();
+		if (percentage == null || percentage < 0 || percentage > 100) {
+			throw new TurtleException("", "Incorrect percentage!", "");
+		}
+		
+		List<TaskUserModel> list = taskUserService.selectByCondition(request.getId(), username, null, null, null);
+		if (list == null) {
+			throw new TurtleException("", "No such record", "");
+		} else if (list.size() != 1) {
+			throw new TurtleException("", "Why you have 2 same tasks?", "");
+		}
+		TaskUserModel taskUserModel = list.get(0);
+		switch (request.getActionType()) {
+			case "STATUS":
+				taskUserModel.setStatus(request.getStatus());
+				if (ITaskStatus.DONE == request.getStatus()) {
+					taskUserModel.setPercentage(100);
+				}
+				break;
+			case "PERCENTAGE":
+				taskUserModel.setPercentage(request.getPercentage());
+				break;
+			default:
+				break;
+		}
+		taskUserService.updateByPrimaryKey(taskUserModel);
+		
+		return ResponseEntity.ok(taskUserModel);
+	}
+	
 }

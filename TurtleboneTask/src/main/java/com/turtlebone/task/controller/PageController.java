@@ -52,6 +52,9 @@ public class PageController {
 		return "task/listMain";
 	}
 	
+	/**
+	 * Create task
+	 */
 	@RequestMapping(value="/inputMain")
 	public String inputMain(ServletRequest request, Map<String, Object> model) {
 		logger.info("goto inputMain.vm");
@@ -60,6 +63,9 @@ public class PageController {
 		return "task/inputMain";
 	}
 	
+	/**
+	 * Query all my tasks
+	 */
 	@RequestMapping(value="/loadMyTask", method = RequestMethod.GET)
 	public String loadMyTask(HttpServletRequest httpReq, 
 			Map<String, Object> model) throws TurtleException {
@@ -86,6 +92,6 @@ public class PageController {
 		TaskModel taskModel = taskService.findByPrimaryKey(taskId);
 		model.put("taskModel", taskModel);
 		
-		return "task/pages/list";
+		return "task/pages/details";
 	}
 }

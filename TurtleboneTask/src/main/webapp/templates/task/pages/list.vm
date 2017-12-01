@@ -1,8 +1,8 @@
 #foreach ($module in $list)		
 	<li aid="${module.id}">
 		<a _href="/task/task/detail/${module.id}" 
-		href="#popupMenu"
-		onclick="alert(${module.id});"
+		href="#taskPopupMenu"
+		onclick="onSelectTask(${module.id});"
 		class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
 		data-rel="popup" data-transition="slideup"
 		_data-transition="pop" >

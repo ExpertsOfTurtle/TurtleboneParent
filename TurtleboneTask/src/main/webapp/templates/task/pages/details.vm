@@ -1,7 +1,7 @@
-
-	<h2>${detail.createtime}</h2>	
-	<p>ContractNo:${detail.contractNo}</p>
-	<p>Status:${detail.contractStatus}</p>						
-	<p>${detail.contractContent}</p>
+#include("../function.vm")
+	<h2>${taskModel.title}</h2>	
+	<p>Id:${taskModel.id}</p>
+	<p>Status:#getStatusText(${taskModel.status})</p>						
+	<p>${taskModel.content}</p>
 	<input type="button" data-inline="true" value="Accept" onclick="doSign(${detail.id},'Accept');"></input>
 	<input type="button" data-inline="true" value="Decline" onclick="doSign(${detail.id},'Decline');"></input>
