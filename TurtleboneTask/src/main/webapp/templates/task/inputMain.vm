@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		#parse("header.vm")		
+	</head>
+	<body>
+		
+		<div data-role="page" id="createTaskPage">
+			<script type="text/javascript" src="/task/js/task/task.js"></script>
+		
+			#set($headerTitle="Create Task")
+			#parse("bodyHeader.vm")
+			
+			<div role="main" class="ui-content">
+				<div data-demo-html="true">
+					<div id="taskInputDebug"></div>
+				</div>
+				<div data-demo-html="true">
+					<label for="text-basic">Title:</label>
+					<input type="text" name="taskTitle" id="taskTitle" value=""></input>
+				</div>
+				
+				<div data-demo-html="true">
+					<label for="text-basic">Content:</label>
+					<textarea name="taskContent" id="taskContent" value=""></textarea>
+				</div>
+				
+				<div data-demo-html="true">
+					 <label for="text-basic">Deadline:</label>
+					 <input type="date" name="taskDeadline" id="taskDeadline" value="">
+				</div>
+				
+				<div data-demo-html="true">
+					 <label for="text-basic">Difficulty:</label>
+					 <input type="text" name="taskDifficulty" id="taskDifficulty" value="1">
+				</div>
+				
+				<div data-demo-html="true">
+					 <label for="text-basic">Percentage:</label>
+					 <input type="text" name="taskPercentage" id="taskPercentage" value="0">
+				</div>
+				
+				<div data-demo-html="true">
+					<label for="select-choice-mini" class="select">user:</label>
+					<select multiple class="form-control" name="party" id="party" data-native-menu="false">
+						<option value="">No selected</option>
+						<option value="DFS">DFS</option>
+						<option value="WF">WF</option>
+					</select>
+				</div>
+				
+				<div data-demo-html="true">
+					<input type="button" data-inline="true" value="Submit" onclick="onCreateTask();"></input>
+				</div>
+			</div>
+			
+			<!-- Left Menu -->
+			#parse("leftMenu.vm")
+	
+			#parse("bodyFooter.vm")
+		</div>
+		<!-- /page -->
+		
+
+	</body>
+</html>
+				

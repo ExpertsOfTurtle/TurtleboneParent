@@ -1,3 +1,4 @@
+PROFILE={tokenId:"DFS",username:"DFS"}
 var TaskItem = {
 	id:null
 }
@@ -20,13 +21,14 @@ function loadAllTasks() {
 		}
 	});
 }
-function onCreateContract() {
-	var title = $("#contractTitle").val();
-	var content = $("#contractContent").val();
+function onCreateTask() {
+	var title = $("#taskTitle").val();
+	var content = $("#taskContent").val();
 	var creator = PROFILE.username;
 	var party = $("#party").val()
-	var effectiveDate = $("#contractEffDate").val();
-	var expiredDate = $("#contractExprDate").val();
+	var deadline = $("#taskDeadline").val();
+	var difficulty = $("#taskDifficulty").val();
+	var percentage = $("#taskPercentage").val();
 	if (creator == null || creator == "") {
 		alert("Login first");
 		return;
@@ -35,14 +37,14 @@ function onCreateContract() {
 		"title":title,
 		"content":content,
 		"creator":creator,
-		"type":"CONTRACT",
-		"partyList":party,
-		"effectiveDate":effectiveDate,
-		"expiredDate":expiredDate
+		"owner":party,
+		"deadline":deadline,
+		"percentage":percentage,
+		"difficulty":difficulty
 	}
-	var url = "/contract/contract/create?tokenId=" + PROFILE.tokenId;
+	var url = "/task/task/create?tokenId=" + PROFILE.tokenId;
 	var rs = $.ajax({
-		type:"POST",
+		type:"PUT",
 		url:url,
 		data : JSON.stringify(param),
 		contentType:"application/json; charset=utf-8",

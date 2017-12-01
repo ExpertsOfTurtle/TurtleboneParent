@@ -15,4 +15,5 @@ public class CreateTaskRequest {
 	private Integer punishmentId;
 	private Integer type;
 	private Integer difficulty;
+	private Integer percentage;
 }

@@ -1,0 +1,35 @@
+
+	
+	#parse("task/common/function.vm")
+	
+	<div data-demo-html="true">
+		<label for="text-basic">Title:</label>
+		<input type="text" style="width:80%" name="taskTitle" id="taskTitle" value="$!{detail.title}"></input>
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Content:</label>
+		<textarea name="taskContent" id="taskContent" 
+		style="width:80%;" rows="8"
+		>$!{detail.content}</textarea>
+	</div>
+	<p>Status:#getStatusText(${detail.status})</p>		
+	<div data-demo-html="true">
+		<label for="text-basic">Creation time:</label>
+		$!{detail.createtime}
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Deadline:</label>
+		<input type="date" value="$!{detail.deadline}" name="taskDeadline" id="taskDeadline" />
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Difficulty:</label>
+		<input type="text" value="$!{detail.difficulty}" name="taskDifficulty" id="taskDifficulty" />
+	</div>
+	<div data-demo-html="true">
+		<label for="text-basic">Percentage:</label>
+		<input type="text" value="$!{detail.percentage}" name="taskPercentage" id="taskPercentage" />
+	</div>
+	
+	<input type="button" data-inline="true" value="OK" onclick=";"></input>
+	<a href="#taskListPage" data-direction="reverse" class="ui-btn ui-btn-inline">Close</input>
+

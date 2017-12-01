@@ -81,9 +81,9 @@ public class PageController {
 	}
 	
 	@RequestMapping(value="/detail/{taskId}", method = RequestMethod.GET)
-	public String getDetail(HttpServletRequest httpReq, 
+	public String getDetailPage(HttpServletRequest httpReq, 
 			Map<String, Object> model,
-			@PathParam(value="taskId") Integer taskId) throws TurtleException {
+			@PathVariable("taskId") Integer taskId) throws TurtleException {
 		String username = (String)httpReq.getAttribute("username");
 		if (StringUtil.isEmpty(username)) {
 			throw new TurtleException("", "Please login first", "");
@@ -93,5 +93,19 @@ public class PageController {
 		model.put("taskModel", taskModel);
 		
 		return "task/pages/details";
+	}
+	@RequestMapping(value="/edit/{taskId}", method = RequestMethod.GET)
+	public String getEditPage(HttpServletRequest httpReq, 
+			Map<String, Object> model,
+			@PathVariable("taskId") Integer taskId) throws TurtleException {
+		String username = (String)httpReq.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
+		
+		TaskModel taskModel = taskService.findByPrimaryKey(taskId);
+		model.put("detail", taskModel);
+				
+		return "task/pages/edit";
 	}
 }

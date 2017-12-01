@@ -25,8 +25,8 @@
 					<div data-role="popup" id="taskPopupMenu" data-theme="b">
 						<ul data-role="listview" data-inset="true" style="min-width:210px;">
 							<li data-role="list-divider">Choose an action</li>
-							<li><a href="#taskDetailDialog" onclick="loadTaskDetails('details');" data-rel="dialog" data-transition="pop">View details</a></li>
-							<li><a href="#taskDetailDialog" onclick="loadDetails('editDetail');" data-rel="dialog" data-transition="pop">Edit</a></li>
+							<li><a href="#taskDetailDialog" onclick="loadTaskDetails('detail');" data-rel="dialog" data-transition="pop">View details</a></li>
+							<li><a href="#taskDetailDialog" onclick="loadTaskDetails('edit');" data-rel="dialog" data-transition="pop">Edit</a></li>
 							<li><a href="#">Delete</a></li>
 						</ul>
 					</div>

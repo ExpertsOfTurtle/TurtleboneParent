@@ -1,4 +1,4 @@
-#include("../function.vm")
+#parse("task/common/function.vm")
 	<h2>${taskModel.title}</h2>	
 	<p>Id:${taskModel.id}</p>
 	<p>Status:#getStatusText(${taskModel.status})</p>						
