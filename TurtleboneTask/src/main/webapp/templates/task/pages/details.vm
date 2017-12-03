@@ -1,7 +1,22 @@
 #parse("task/common/function.vm")
 	<h2>${taskModel.title}</h2>	
 	<p>Id:${taskModel.id}</p>
-	<p>Status:#getStatusText(${taskModel.status})</p>						
+	<input type="hidden" id="taskId" name="taskId" value="${taskModel.id}"/>
+	<p>Status:#getStatusText(${taskModel.status})</p>	
+	<p>Created by:$!{taskModel.creator}</p>					
 	<p>${taskModel.content}</p>
-	<input type="button" data-inline="true" value="Accept" onclick="doSign(${detail.id},'Accept');"></input>
-	<input type="button" data-inline="true" value="Decline" onclick="doSign(${detail.id},'Decline');"></input>
+	<div id="divTaskPercentage">
+		<label for="taskPercentage">Progress:<div id="labelTaskPercentage"></div></label>
+	 	<input type="number" name="taskPercentage" id="taskPercentage" 
+	 	data-highlight="true"
+	 	value="$!{myTask.percentage}" min="0" max="100" step="5"/>
+	</div>
+	
+	
+	
+	<input type="button" data-inline="true" value="Update" 
+	onclick="doUpdateProgress('PERCENTAGE');"></input>
+	
+	<input type="button" data-inline="true" value="Give up" 
+	onclick="doUpdateProgress('STATUS', -1);"></input>
+	

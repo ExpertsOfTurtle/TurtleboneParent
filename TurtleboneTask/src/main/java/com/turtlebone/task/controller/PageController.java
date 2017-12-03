@@ -30,6 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.util.StringUtil;
 import com.turtlebone.task.model.TaskModel;
+import com.turtlebone.task.model.TaskUserModel;
 import com.turtlebone.task.service.TaskService;
 import com.turtlebone.task.service.TaskUserService;
 
@@ -92,6 +93,13 @@ public class PageController {
 		TaskModel taskModel = taskService.findByPrimaryKey(taskId);
 		model.put("taskModel", taskModel);
 		
+		List<TaskUserModel> list = taskUserService.selectByCondition(taskId, username, null, null, null);
+		if (list != null && list.size() == 1) {
+			model.put("myTask", list.get(0));
+		} else {
+			logger.warn("This is not my task!");
+		}
+		
 		return "task/pages/details";
 	}
 	@RequestMapping(value="/edit/{taskId}", method = RequestMethod.GET)
@@ -105,6 +113,13 @@ public class PageController {
 		
 		TaskModel taskModel = taskService.findByPrimaryKey(taskId);
 		model.put("detail", taskModel);
+		
+		List<TaskUserModel> list = taskUserService.selectByCondition(taskId, username, null, null, null);
+		if (list != null && list.size() == 1) {
+			model.put("myTask", list.get(0));
+		} else {
+			logger.warn("This is not my task!");
+		}
 				
 		return "task/pages/edit";
 	}

@@ -1,7 +1,7 @@
 
 	
 	#parse("task/common/function.vm")
-	
+	<input type="hidden" id="taskId" name="taskId" value="$!{detail.id}"/>
 	<div data-demo-html="true">
 		<label for="text-basic">Title:</label>
 		<input type="text" style="width:80%" name="taskTitle" id="taskTitle" value="$!{detail.title}"></input>
@@ -30,6 +30,6 @@
 		<input type="text" value="$!{detail.percentage}" name="taskPercentage" id="taskPercentage" />
 	</div>
 	
-	<input type="button" data-inline="true" value="OK" onclick=";"></input>
+	<input type="button" data-inline="true" value="OK" onclick="onModifyTask();"></input>
 	<a href="#taskListPage" data-direction="reverse" class="ui-btn ui-btn-inline">Close</input>
 
