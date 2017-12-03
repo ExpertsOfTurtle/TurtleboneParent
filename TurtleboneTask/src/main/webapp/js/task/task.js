@@ -5,6 +5,10 @@ PROFILE = {
 var TaskItem = {
 	id : null
 }
+function onInitInputPage() {
+	$("#taskDifficulty").slider();
+	$("#taskPercentage").slider();
+}
 function onInitTaskPercentage() {
 	$("#taskPercentage").slider({
 		range : 'min',

@@ -23,5 +23,11 @@
 				<li>
 					<a href="/contract/pages/inputMain">Create contract</a>
 				</li>
+				<li>
+					<a href="/task/pages/listMain">Task list.</a>
+				</li>
+				<li>
+					<a href="/task/pages/inputMain">Create Task</a>
+				</li>
 			</ul>
 		</div>

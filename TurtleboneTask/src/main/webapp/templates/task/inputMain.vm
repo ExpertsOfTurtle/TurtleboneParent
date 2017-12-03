@@ -7,7 +7,7 @@
 		
 		<div data-role="page" id="createTaskPage">
 			<script type="text/javascript" src="/task/js/task/task.js"></script>
-		
+			
 			#set($headerTitle="Create Task")
 			#parse("bodyHeader.vm")
 			
@@ -22,7 +22,7 @@
 				
 				<div data-demo-html="true">
 					<label for="text-basic">Content:</label>
-					<textarea name="taskContent" id="taskContent" value=""></textarea>
+					<textarea name="taskContent" id="taskContent" value="" rows="8"></textarea>
 				</div>
 				
 				<div data-demo-html="true">
@@ -32,12 +32,14 @@
 				
 				<div data-demo-html="true">
 					 <label for="text-basic">Difficulty:</label>
-					 <input type="text" name="taskDifficulty" id="taskDifficulty" value="1">
+					 <input type="number" name="taskDifficulty" id="taskDifficulty" value="1"
+					 data-highlight="true" min="1" max="5" step="1">
 				</div>
 				
 				<div data-demo-html="true">
 					 <label for="text-basic">Percentage:</label>
-					 <input type="text" name="taskPercentage" id="taskPercentage" value="0">
+					 <input type="number" name="taskPercentage" id="taskPercentage" value="0"
+					 data-highlight="true" min="0" max="100" step="5">
 				</div>
 				
 				<div data-demo-html="true">
@@ -61,6 +63,11 @@
 		</div>
 		<!-- /page -->
 		
+		<script type="text/javascript">
+		$(document).ready(function(){
+			onInitInputPage();
+		});
+		</script>
 
 	</body>
 </html>

@@ -18,7 +18,10 @@
 			
 			<div role="main" class="ui-content">
 				<div data-demo-html="true">
-				
+					<div data-role="collapsible">
+					  <h3>Filter</h3>
+					  <a href="" onclick="loadAllTasks();">Go</a>
+					</div>
 					<ul data-role="listview" data-inset="true" id="listTaskUL">
 						
 					</ul>
