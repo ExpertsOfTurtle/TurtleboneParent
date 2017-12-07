@@ -1,4 +1,10 @@
-#foreach ($module in $list)		
+#parse("task/common/function.vm")
+
+#foreach ($module in $list)	
+	<li data-role="list-divider">
+		<h2>${module.title}</h2>
+		<span class="ui-li-count">${module.percentage}%</span>
+	</li>	
 	<li aid="${module.id}">
 		<a _href="/task/task/detail/${module.id}" 
 		href="#taskPopupMenu"
@@ -6,9 +12,10 @@
 		class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
 		data-rel="popup" data-transition="slideup"
 		_data-transition="pop" >
-			<h2>${module.title}</h2>							
-			<p>${module.creator}</p>
+			
+			<p class="ui-li-aside">#getTaskType(${module.type})</p>
 			<p>${module.content}</p>
+			<p>${module.deadline}</p>
 		</a>
 	</li>
 #end

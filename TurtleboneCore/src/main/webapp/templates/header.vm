@@ -27,5 +27,10 @@
     $(document).delegate("#decideListPage", "pageinit", function(){
 		loadAllDecideList();
     });
-   
+    $(document).delegate("#taskListPage", "pageinit", function(){
+		loadAllTasks();
+	});
+	$(document).delegate("#createTaskPage", "pageinit", function(){
+		onInitInputPage();	//創建任務的頁面加載成功后初始化slider
+	});
 </script>

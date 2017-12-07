@@ -3,8 +3,19 @@
 	<p>Id:${taskModel.id}</p>
 	<input type="hidden" id="taskId" name="taskId" value="${taskModel.id}"/>
 	<p>Status:#getStatusText(${taskModel.status})</p>	
-	<p>Created by:$!{taskModel.creator}</p>					
-	<p>${taskModel.content}</p>
+	<p>Created by:$!{taskModel.creator}</p>	
+	#if("$!{taskModel.deadline}" != "")	
+		<p>Deadline: $!{taskModel.deadline}</p>		
+	#end	
+	
+	<div class="ui-field-contain">
+	<textarea style="border:1px solid yellow;width:100%;" 
+	data-mini="true" rows="4"
+	disabled="true"
+	>
+	${taskModel.content}</textarea>
+	</div>
+	
 	<div id="divTaskPercentage">
 		<label for="taskPercentage">Progress:<div id="labelTaskPercentage"></div></label>
 	 	<input type="number" name="taskPercentage" id="taskPercentage" 

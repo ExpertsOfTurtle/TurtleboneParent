@@ -7,11 +7,7 @@
 		
 		<div data-role="page" id="taskListPage">
 			<script type="text/javascript" src="/task/js/task/task.js"></script>
-			<script type="text/javascript">
-				 $(document).delegate("#taskListPage", "pageinit", function(){
-					loadAllTasks();
-			    });
-			</script>
+			
 			
 			#set($headerTitle="List Task")
 			#parse("bodyHeader.vm")
@@ -29,8 +25,8 @@
 					<div data-role="popup" id="taskPopupMenu" data-theme="b">
 						<ul data-role="listview" data-inset="true" style="min-width:210px;">
 							<li data-role="list-divider">Choose an action</li>
-							<li><a href="#taskDetailDialog" onclick="loadTaskDetails('detail');" data-rel="dialog" data-transition="pop">Enter</a></li>
-							<li><a href="#taskDetailDialog" onclick="loadTaskDetails('edit');" data-rel="dialog" data-transition="pop">Edit</a></li>
+							<li><a href="/task/pages/taskDetailDialog" onclick="TaskItem.action='detail';" data-rel="dialog" data-transition="pop">Enter</a></li>
+							<li><a href="/task/pages/taskDetailDialog" onclick="TaskItem.action='edit';" data-rel="dialog" data-transition="pop">Edit</a></li>
 							<li><a href="#">Delete</a></li>
 						</ul>
 					</div>
@@ -43,19 +39,6 @@
 			#parse("bodyFooter.vm")
 		</div>
 		<!-- /page -->
-		
-		<!-- Task Details page -->
-		<div data-role="dialog" id="taskDetailDialog">
-			<div data-role="header" data-theme="b">
-				<h1>Details page</h1>
-			</div>
-			<div role="main" class="ui-content" id="taskDetailsContent">
-			</div>
-			
-			<div data-role="footer">
-			</div>
-		</div>
-		
 		
 
 	</body>

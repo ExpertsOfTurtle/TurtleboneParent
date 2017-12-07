@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
-@SpringBootApplication(scanBasePackages = "com.turtlebone.home")
+@SpringBootApplication(scanBasePackages = "com.turtlebone")
 @EnableAutoConfiguration
 public class HomeApp {
 	public static void main(String[] args) {

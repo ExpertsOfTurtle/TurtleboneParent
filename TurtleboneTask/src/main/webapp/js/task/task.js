@@ -3,11 +3,13 @@ PROFILE = {
 	username : "DFS"
 }
 var TaskItem = {
-	id : null
+	id : null,
+	action : null
 }
 function onInitInputPage() {
-	$("#taskDifficulty").slider();
-	$("#taskPercentage").slider();
+	//$("#taskDifficulty").slider();
+	//$("#taskPercentage").slider();
+	$("input[type=number]").slider();
 }
 function onInitTaskPercentage() {
 	$("#taskPercentage").slider({
@@ -143,6 +145,9 @@ function doUpdateProgress(actionType, status) {
 	});
 }
 function loadTaskDetails(action) {
+	if (action == null || action == undefined) {
+		action = TaskItem.action;
+	}
 	var url = "/task/pages/" + action + "/" + TaskItem.id + "?tokenId="
 			+ PROFILE.tokenId;
 	var rs = $.ajax({

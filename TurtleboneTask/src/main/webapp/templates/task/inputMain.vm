@@ -37,9 +37,18 @@
 				</div>
 				
 				<div data-demo-html="true">
-					 <label for="text-basic">Percentage:</label>
+					 <label for="text-basic">Progress:</label>
 					 <input type="number" name="taskPercentage" id="taskPercentage" value="0"
 					 data-highlight="true" min="0" max="100" step="5">
+				</div>
+				
+				<div data-demo-html="true">
+					<label for="select-choice-mini" class="select">Type:</label>
+					<select class="form-control" name="taskType" id="taskType" data-native-menu="false">
+						<option value="0">普通</option>
+						<option value="1">題目</option>
+						<option value="2">年度</option>
+					</select>
 				</div>
 				
 				<div data-demo-html="true">

@@ -5,3 +5,10 @@
 #elseif("$code" == "-1")GIVEUP
 #end
 #end
+
+#macro(getTaskType $code)
+#if("$code" == "0")普通
+#elseif("$code" == "1")做題
+#elseif("$code" == "2")年度
+#end
+#end

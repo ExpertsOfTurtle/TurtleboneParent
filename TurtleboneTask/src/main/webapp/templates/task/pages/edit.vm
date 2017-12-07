@@ -26,8 +26,10 @@
 		<input type="text" value="$!{detail.difficulty}" name="taskDifficulty" id="taskDifficulty" />
 	</div>
 	<div data-demo-html="true">
-		<label for="text-basic">Percentage:</label>
-		<input type="text" value="$!{detail.percentage}" name="taskPercentage" id="taskPercentage" />
+		<label for="taskPercentage">Progress:<div id="labelTaskPercentage"></div></label>
+	 	<input type="number" name="taskPercentage" id="taskPercentage" 
+	 	data-highlight="true"
+	 	value="$!{detail.percentage}" min="0" max="100" step="5"/>
 	</div>
 	
 	<input type="button" data-inline="true" value="OK" onclick="onModifyTask();"></input>

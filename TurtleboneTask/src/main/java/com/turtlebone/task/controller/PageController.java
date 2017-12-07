@@ -65,6 +65,17 @@ public class PageController {
 	}
 	
 	/**
+	 * taskDetailDialog
+	 */
+	@RequestMapping(value="/taskDetailDialog")
+	public String taskDetailDialog(ServletRequest request, Map<String, Object> model) {
+		logger.info("goto taskDetailDialog.vm");
+		HttpServletRequest req = (HttpServletRequest) request;
+		model.put("ROOT", req.getContextPath());
+		return "task/taskDetailDialog";
+	}
+	
+	/**
 	 * Query all my tasks
 	 */
 	@RequestMapping(value="/loadMyTask", method = RequestMethod.GET)

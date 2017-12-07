@@ -72,7 +72,7 @@ public class TaskController {
 		taskModel.setDeadline(request.getDeadline());
 		taskModel.setPunishmentId(request.getPunishmentId());
 		taskModel.setStatus(ITaskStatus.NEW);
-		taskModel.setType(ITaskType.NORMAL);
+		taskModel.setType(request.getType());
 		taskModel.setDifficulty(request.getDifficulty());
 		taskModel.setPercentage(request.getPercentage() == null ? 0 : request.getPercentage());
 		taskModel.setCreatetime(DateUtil.getDateTime());		
@@ -117,9 +117,10 @@ public class TaskController {
 		//Update task
 		taskModel.setTitle(request.getTitle());
 		taskModel.setContent(request.getContent());
-		taskModel.setDeadline(taskModel.getDeadline());
-		taskModel.setPunishmentId(taskModel.getPunishmentId());
+		taskModel.setDeadline(request.getDeadline());
+		taskModel.setPunishmentId(request.getPunishmentId());
 		taskModel.setDifficulty(request.getDifficulty());
+		taskModel.setPercentage(request.getPercentage());
 		taskService.updateByPrimaryKey(taskModel);
 		
 		//Update task for task owner
