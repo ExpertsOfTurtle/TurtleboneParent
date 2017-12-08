@@ -27,6 +27,7 @@ import com.turtlebone.auth.model.ProfileModel;
 import com.turtlebone.auth.model.TokenModel;
 import com.turtlebone.auth.service.ProfileService;
 import com.turtlebone.auth.service.TokenService;
+import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.MD5Util;
 import com.turtlebone.core.util.StringUtil;
@@ -104,7 +105,7 @@ public class TokenController {
 	}
 	
 	@RequestMapping(value="/verify", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> verify(@RequestBody VerifyTokenRequest request) {
+	public @ResponseBody ResponseEntity<?> verify(@RequestBody VerifyTokenRequest request) throws TurtleException {
 		logger.info("Verify [username={},tokenId={}]", request.getUsername(), request.getTokenId());
 		TokenModel token = null;
 		try {
@@ -112,10 +113,10 @@ public class TokenController {
 		} catch (AuthException e) {
 			String msg = e.getErrorMesage();
 			logger.error(msg);
-			return ResponseEntity.ok(msg);
+			throw new TurtleException("E0000", msg);
 		}
 		logger.info("Verification successfully! {}", token);
-		return ResponseEntity.ok("OK");
+		return ResponseEntity.ok(token);
 	}
 	@RequestMapping(value="/verify", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> verify(@RequestParam String username, @RequestParam String tokenId) {
@@ -144,8 +145,8 @@ public class TokenController {
 		
 		Long second = request.getExtendSecond();
 		if (second == null || second <= 0) {
-			logger.error("extendSceond[{}] incorrect", second);
-			return ResponseEntity.ok("ExtendSecond incorrect");
+			logger.warn("extendSceond[{}] incorrect, default set to 10min", second);
+			second = 600L;
 		}
 		
 		Date date = new Date();

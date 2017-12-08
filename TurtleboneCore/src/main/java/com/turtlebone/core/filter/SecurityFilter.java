@@ -20,8 +20,13 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.alibaba.fastjson.JSON;
+import com.turtlebone.auth.bean.VerifyTokenRequest;
+import com.turtlebone.auth.model.TokenModel;
 import com.turtlebone.core.bean.ResultVO;
 import com.turtlebone.core.exception.TurtleException;
+import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.UserService;
+import com.turtlebone.core.util.SendHTTPUtil;
 import com.turtlebone.core.util.StringUtil;
 
 import lombok.Data;
@@ -34,6 +39,8 @@ public class SecurityFilter implements Filter {
 	private String[] excludePaths;
 	
 	private Environment env;
+	
+	private UserService userService;
 	
 	@Override
 	public void destroy() {
@@ -49,13 +56,24 @@ public class SecurityFilter implements Filter {
 		logger.info("Task RequestURI={}", path);
 		
 		String tokenId = request.getParameter("tokenId");
+		String username = request.getParameter("username");
+		request.setAttribute("username", username);
 		request.setAttribute("username", tokenId);
-		logger.info("tokenId={}", tokenId);
+		logger.info("tokenId={}, username={}", tokenId, username);
 		
 		if (checkExclude(path)) {
 			filterChain.doFilter(req, rsp);	
 			return;
 		}
+		TokenModel token = verifyToken(tokenId, username);
+		if (token == null) {
+			//verification fail
+			rsp.setContentType("application/json");
+			rsp.getWriter().print(JSON.toJSONString(new ResultVO<String>(ResultVO.PARAMERROR, "Token verification fail", "")));
+			return;
+		}
+		
+		logger.info("Verification success");
 		
 		
 		if (StringUtil.isEmpty(tokenId)) {
@@ -82,6 +100,22 @@ public class SecurityFilter implements Filter {
             }
         }
         return false;
+	}
+	
+	private TokenModel verifyToken(String tokenId, String username) {
+		VerifyTokenRequest request = new VerifyTokenRequest();
+		request.setUsername(username);
+		request.setTokenId(tokenId);
+		String url = "http://turtlebone.top/auth/token/verify";
+		try {
+			String result = SendHTTPUtil.callApiServer(url, "POST", JSON.toJSONString(request), null);
+			TokenModel token = JSON.parseObject(result, TokenModel.class);
+			return token;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

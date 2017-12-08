@@ -1,0 +1,5 @@
+spring:
+  profiles: default
+constants:
+  emailTemplatePath: /data/emailTemplate/
+  excludeRegex: /core/task/query

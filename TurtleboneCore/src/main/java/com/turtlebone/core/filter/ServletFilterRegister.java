@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import com.turtlebone.core.service.UserService;
+
 @Component
 public class ServletFilterRegister {
 
@@ -17,10 +19,14 @@ public class ServletFilterRegister {
 	@Value("${constants.excludeRegex}")
 	private String excludeRegex;
 	
+	@Autowired
+	private UserService userService;
+	
 	@Bean
 	public FilterRegistrationBean registrationAuthenticationFilter() throws ServletException {
 		SecurityFilter authenticationFilter = new SecurityFilter();
 		authenticationFilter.setEnv(env);
+		authenticationFilter.setUserService(userService);
 		
 		FilterRegistrationBean registration = new FilterRegistrationBean(authenticationFilter);
 		registration.addUrlPatterns("/*");

@@ -36,14 +36,16 @@
 				</div>
 				
 				<div data-demo-html="true">
-					 <label for="text-basic">Picture:</label>
-					 <form id="fileForm">
-					 	<input type="file" name="img" id="img" value="">
-					 </form>
+					<label for="select-choice-mini" class="select">type:</label>
+					<select class="form-control" name="type" id="party" data-native-menu="false">
+						<option value="">No selected</option>
+						<option value="DFS">DFS</option>
+						<option value="WF">WF</option>
+					</select>
 				</div>
 				
 				<div data-demo-html="true">
-					<label for="select-choice-mini" class="select">Dreamer:</label>
+					<label for="select-choice-mini" class="select">party:</label>
 					<select multiple class="form-control" name="party" id="party" data-native-menu="false">
 						<option value="">No selected</option>
 						<option value="DFS">DFS</option>

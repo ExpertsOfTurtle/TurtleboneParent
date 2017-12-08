@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(scanBasePackages = "com.turtlebone")
-@MapperScan("com.turtlebone.task.repository") 
+@MapperScan("com.turtlebone.*.repository") 
 @EnableScheduling
 @EnableAutoConfiguration
 public class TaskApplication {

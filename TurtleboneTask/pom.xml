@@ -18,6 +18,11 @@
   		<artifactId>TurtleboneTask-api</artifactId>
   		<version>0.0.1-SNAPSHOT</version>
   	</dependency>
+  	<dependency>
+  		<groupId>com.turtlebone</groupId>
+  		<artifactId>TurtleboneAuth-api</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
   </dependencies>
   <build>
 		<resources>
