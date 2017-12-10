@@ -1,0 +1,11 @@
+#foreach ($module in $list)		
+	<li aid="${module.idactivity}">
+		<a href="/core/activity/detail/${module.idactivity}" 
+		class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
+		data-transition="pop" >
+			<h2>${module.datetime}</h2>							
+			<p>${module.username}</p>
+			<p>${module.result}</p>
+		</a>
+	</li>
+#end

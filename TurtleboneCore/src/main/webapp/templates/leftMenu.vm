@@ -12,10 +12,10 @@
 					<a href="/core/main/decide/list">List Selction</a>
 				</li>
 				<li>
-					<a href="/core/main/dream/input">createDream</a>
+					<a href="/dream/pages/inputMain">createDream</a>
 				</li>
 				<li>
-					<a href="/core/main/dream/list">DreamList.</a>
+					<a href="/dream/pages/listMain">DreamList.</a>
 				</li>
 				<li>
 					<a href="/contract/pages/listMain">Contract list.</a>

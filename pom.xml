@@ -130,6 +130,8 @@
 		<module>TurtleboneTask</module>
 		<module>TurtleboneTask-api</module>
 		<module>TurtleboneHome</module>
+		<module>TurtleboneDream</module>
+		<module>TurtleboneDream-api</module>
 	</modules>
 	<build>
 		<plugins>
