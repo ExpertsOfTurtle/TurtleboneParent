@@ -1,6 +1,5 @@
 package com.turtlebone.dream.bean;
 
-import com.turtlebone.core.enums.sudoku.SudokuLevel;
 
 import lombok.Data;
 
