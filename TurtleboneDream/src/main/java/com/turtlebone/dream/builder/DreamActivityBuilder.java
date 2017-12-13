@@ -1,4 +1,4 @@
-package com.turtlebone.core.builder.activity;
+package com.turtlebone.dream.builder;
 
 import java.io.File;
 import java.util.Date;
@@ -24,7 +24,15 @@ import com.turtlebone.core.util.StringUtil;
 public class DreamActivityBuilder {
 	private static Logger logger = LoggerFactory.getLogger(DreamActivityBuilder.class);
 	
-	public ActivityModel build(String username, String datetime, String content, String dreampic) {
+	/**
+	 * @param username
+	 * @param datetime
+	 * @param content
+	 * @param dreampic
+	 * @param dreamType : IDreamType中又定义，默认是1，表示普通梦
+	 * @return
+	 */
+	public ActivityModel build(String username, String datetime, String content, String dreampic, Integer dreamType) {
 		logger.debug("[Dream]username={},datetime={},content={}", username, datetime, content);
 		ActivityModel model = new ActivityModel();
 		model.setUsername(username);
@@ -36,6 +44,7 @@ public class DreamActivityBuilder {
 		model.setType(ActivityType.DREAM.name());
 		model.setResult(content);
 		model.setStrresult3(dreampic);
+		model.setResult1((long)dreamType);
 		
 		String ct = content.length() > 30 ? content.substring(0, 30) + "..." : content;
 		String description = String.format("[%s] [发梦]了，内容：[%s]", 

@@ -6,6 +6,8 @@
 	<body>
 		
 		<div data-role="page" id="createDreamPage">
+			<script type="text/javascript" src="/dream/js/dream/input.js"></script>
+		
 			#set($headerTitle="Create Dream")
 			#parse("bodyHeader.vm")
 			
@@ -18,6 +20,15 @@
 					<textarea type="" name="content" id="content" value=""></textarea>
 				</div>
 				
+				<div data-demo-html="true">
+					<label for="select-choice-mini" class="select">type:</label>
+					<select class="form-control" name="dreamType" id="dreamType" data-native-menu="false">
+						<option value="">No selected</option>
+						<option value="1">Normal</option>
+						<option value="0">Private</option>
+					</select>
+				</div>
+					
 				<div data-demo-html="true">
 					<label for="select-choice-mini" class="select">Dreamer:</label>
 					<select name="dreamer" id="dreamer" data-native-menu="false">

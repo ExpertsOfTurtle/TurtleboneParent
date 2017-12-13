@@ -16,6 +16,7 @@ function createDream() {
 	var content = $("#content").val();
 	var dreamer = $("#dreamer").val();
 	var date = $("#dreamdate").val();
+	var dreamType = $("#dreamType").val();
 	if (dreamer == "" || content == "") {
 		alert("Input content & select dreamer!");
 		return;
@@ -24,7 +25,8 @@ function createDream() {
 		"content" : content,
 		"username" : dreamer,
 		"datetime" : date,
-		"dreampic" : IMG_PATH
+		"dreampic" : IMG_PATH,
+		"dreamType" : dreamType
 	};
 	var rs = $.ajax({
 		type : "POST",
@@ -37,6 +39,7 @@ function createDream() {
 			$("#content").val("");
 			$("#dreamer").val("");
 			$("#dreamdate").val("");
+			$("#dreamType").val("1");
 		},
 		error : function() {
 

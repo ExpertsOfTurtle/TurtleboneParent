@@ -34,16 +34,7 @@
 					 <label for="text-basic">Expr. Date(yyyy-MM-dd):</label>
 					 <input type="text" name="contractExprDate" id="contractExprDate" value="">
 				</div>
-				
-				<div data-demo-html="true">
-					<label for="select-choice-mini" class="select">type:</label>
-					<select class="form-control" name="type" id="party" data-native-menu="false">
-						<option value="">No selected</option>
-						<option value="DFS">DFS</option>
-						<option value="WF">WF</option>
-					</select>
-				</div>
-				
+								
 				<div data-demo-html="true">
 					<label for="select-choice-mini" class="select">party:</label>
 					<select multiple class="form-control" name="party" id="party" data-native-menu="false">

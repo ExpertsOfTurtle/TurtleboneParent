@@ -31,8 +31,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.turtlebone.core.bean.QueryActivityRequest;
 import com.turtlebone.core.bean.Uploadpath;
-import com.turtlebone.core.builder.activity.DreamActivityBuilder;
-import com.turtlebone.core.builder.activity.SudokuActivityBuilder;
 import com.turtlebone.core.enums.ActivityType;
 import com.turtlebone.core.model.ActivityModel;
 import com.turtlebone.core.model.UserModel;
@@ -40,6 +38,8 @@ import com.turtlebone.core.service.ActivityService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.BeanCopyUtils;
 import com.turtlebone.dream.bean.DreamActivityRequest;
+import com.turtlebone.dream.builder.DreamActivityBuilder;
+import com.turtlebone.dream.constants.IDreamType;
 
 @Controller
 @EnableAutoConfiguration
@@ -64,8 +64,9 @@ public class DreamController {
 		}
 		String username = request.getUsername();
 		String datetime = request.getDatetime();
+		Integer dreamType = request.getDreamType() == null ? IDreamType.NORMAL : request.getDreamType();
 		ActivityModel activity = dreamActivityBuilder.build(username, datetime, request.getContent(),
-				request.getDreampic());
+				request.getDreampic(), dreamType);
 		logger.debug("activity:{}", JSON.toJSONString(activity));
 		activityService.create(activity);
 		return ResponseEntity.ok(activity);

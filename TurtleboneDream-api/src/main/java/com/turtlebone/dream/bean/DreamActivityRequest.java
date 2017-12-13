@@ -10,4 +10,5 @@ public class DreamActivityRequest {
 	private String content;
 	private String dreampic;
 	private Integer dreamId;
+	private Integer dreamType;
 }
