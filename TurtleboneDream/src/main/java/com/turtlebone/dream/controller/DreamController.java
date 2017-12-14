@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -32,14 +33,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.turtlebone.core.bean.QueryActivityRequest;
 import com.turtlebone.core.bean.Uploadpath;
 import com.turtlebone.core.enums.ActivityType;
-import com.turtlebone.core.model.ActivityModel;
 import com.turtlebone.core.model.UserModel;
-import com.turtlebone.core.service.ActivityService;
+import com.turtlebone.dream.service.DreamService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.BeanCopyUtils;
 import com.turtlebone.dream.bean.DreamActivityRequest;
 import com.turtlebone.dream.builder.DreamActivityBuilder;
 import com.turtlebone.dream.constants.IDreamType;
+import com.turtlebone.dream.model.ActivityModel;
 
 @Controller
 @EnableAutoConfiguration
@@ -48,21 +49,22 @@ public class DreamController {
 	private static Logger logger = LoggerFactory.getLogger(DreamController.class);
 
 	@Autowired
-	private ActivityService activityService;
+	private DreamService activityService;
 	@Autowired
 	private UserService userService;
 	@Autowired
 	private DreamActivityBuilder dreamActivityBuilder;
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> addDream(@RequestBody DreamActivityRequest request) {
+	public @ResponseBody ResponseEntity<?> addDream(HttpServletRequest httpReq, @RequestBody DreamActivityRequest request) {
 		logger.debug("request:{}", JSON.toJSONString(request));
 
-		UserModel user = userService.selectByUsername(request.getUsername());
+		String username = (String)httpReq.getAttribute("username");
+		
+		UserModel user = userService.selectByUsername(username);
 		if (user == null) {
 			return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body("no such username!");
 		}
-		String username = request.getUsername();
 		String datetime = request.getDatetime();
 		Integer dreamType = request.getDreamType() == null ? IDreamType.NORMAL : request.getDreamType();
 		ActivityModel activity = dreamActivityBuilder.build(username, datetime, request.getContent(),
@@ -73,9 +75,20 @@ public class DreamController {
 	}
 
 	@RequestMapping(value = "/query")
-	public String queryDream(Map<String, Object> model, @RequestBody QueryActivityRequest request) {
-		List<ActivityModel> list = activityService.selectByCondition(request.getUsername(), ActivityType.DREAM.name(),
-				null, null, request.getPageSize(), request.getOffset());
+	public String queryDream(HttpServletRequest httpReq, Map<String, Object> model, @RequestBody QueryActivityRequest request) {
+		String username = (String)httpReq.getAttribute("username");
+		
+		Integer pageNumber = request.getPageNumber();
+		Integer pageSize = request.getPageSize();
+		if (pageNumber == null) {
+			pageNumber = 1;
+		}
+		if (pageSize == null) {
+			pageSize = 10000;
+		}
+		List<ActivityModel> list = 
+				activityService.selectMyDream(username, pageSize, pageNumber);
+			
 		model.put("list", list);
 		return "dream/ajax/list";
 	}

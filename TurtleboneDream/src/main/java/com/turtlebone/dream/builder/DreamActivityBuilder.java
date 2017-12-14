@@ -16,9 +16,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.turtlebone.core.bean.Uploadpath;
 import com.turtlebone.core.enums.ActivityType;
 import com.turtlebone.core.enums.sudoku.SudokuLevel;
-import com.turtlebone.core.model.ActivityModel;
 import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.StringUtil;
+import com.turtlebone.dream.model.ActivityModel;
 
 @Component
 public class DreamActivityBuilder {
