@@ -26,12 +26,18 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.turtlebone.core.constants.VMParam;
+import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.UserService;
+
 @Controller
 @EnableAutoConfiguration
 @RequestMapping(value="/pages")
 public class PageController {
 	private static Logger logger = LoggerFactory.getLogger(PageController.class);
 	
+	@Autowired
+	private UserService userService;
 		
 	@RequestMapping(value="/listMain")
 	public String listMain(ServletRequest request, Map<String, Object> model) {
@@ -45,7 +51,10 @@ public class PageController {
 	public String inputMain(ServletRequest request, Map<String, Object> model) {
 		logger.info("goto inputMain.vm");
 		HttpServletRequest req = (HttpServletRequest) request;
+		
+		List<UserModel> userList = userService.listAllUser();
 		model.put("ROOT", req.getContextPath());
+		model.put(VMParam.userList, userList);
 		return "contract/inputMain";
 	}
 }

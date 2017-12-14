@@ -1,6 +1,8 @@
 
 package com.turtlebone.core.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -96,6 +98,18 @@ public class UserServiceImpl implements UserService {
 	public UserModel selectByUsername(String username) {
 		User user = userRepo.selectByUsername(username);
 		return BeanCopyUtils.map(user, UserModel.class);
+	}
+
+	@Override
+	public List<UserModel> selectByUserList(List<String> userList) {
+		List<User> list = userRepo.selectByUserList(userList);
+		return BeanCopyUtils.mapList(list, UserModel.class);
+	}
+	
+	@Override
+	public List<UserModel> listAllUser() {
+		List<User> list = userRepo.listAllUser();
+		return BeanCopyUtils.mapList(list, UserModel.class);
 	}
 
 

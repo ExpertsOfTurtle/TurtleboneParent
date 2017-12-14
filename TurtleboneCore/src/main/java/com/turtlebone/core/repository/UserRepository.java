@@ -28,4 +28,8 @@ public interface UserRepository{
     List<User> selectPage(@Param("user") User user, @Param("pageable") Pageable pageable);
 
     User selectByUsername(String username);
+    
+    List<User> selectByUserList(List<String> userList);
+    
+    List<User> listAllUser();
 }

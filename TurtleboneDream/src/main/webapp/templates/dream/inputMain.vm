@@ -33,8 +33,9 @@
 					<label for="select-choice-mini" class="select">Dreamer:</label>
 					<select name="dreamer" id="dreamer" data-native-menu="false">
 						<option value="">No selected</option>
-						<option value="DFS">DFS</option>
-						<option value="Could">Could</option>
+						#foreach($user in $userList)
+							<option value="$user.loginName">$user.loginName</option>
+						#end
 					</select>
 				</div>
 				

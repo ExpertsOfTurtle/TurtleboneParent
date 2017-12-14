@@ -1,6 +1,8 @@
 
 package com.turtlebone.core.service;
 
+import java.util.List;
+
 import com.turtlebone.core.model.UserModel;
 
 public interface UserService{
@@ -17,8 +19,11 @@ public interface UserService{
 	
 	public int deleteByPrimaryKey(Integer id);
 	
-
 	public int selectCount(UserModel userModel);
 	
 	public UserModel selectByUsername(String username);
+	
+	public List<UserModel> selectByUserList(List<String> userList);
+	
+	public List<UserModel> listAllUser();
 }

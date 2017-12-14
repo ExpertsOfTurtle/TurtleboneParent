@@ -220,6 +220,21 @@
     where login_name = #{username,jdbcType=VARCHAR}
     limit 1
   </select>
+  <select id="listAllUser" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+  </select>
+  <select id="selectByUserList" resultMap="BaseResultMap" parameterType="java.util.List" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where login_name in (
+    <foreach collection ="list" item="item" index= "index" separator ="," >
+    	#{item,jdbcType=VARCHAR}
+    </foreach>)
+     
+  </select>
  </mapper>
   
 

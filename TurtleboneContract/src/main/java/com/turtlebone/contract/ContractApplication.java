@@ -11,26 +11,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication(scanBasePackages = "com.turtlebone")
-@MapperScan("com.turtlebone.contract.repository")
-// @EnableScheduling
+@MapperScan("com.turtlebone.*.repository")
+@EnableScheduling
 @EnableAutoConfiguration
 public class ContractApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ContractApplication.class);
-	}
-
-	@Bean
-	public WebMvcConfigurer corsConfigurer() {
-		return new WebMvcConfigurerAdapter() {
-			@Override
-			public void addCorsMappings(CorsRegistry registry) {
-				registry.addMapping("/**").allowedOrigins("*").allowedMethods("PUT", "DELETE", "GET", "POST")
-						.allowedHeaders("*")
-						.exposedHeaders("access-control-allow-headers", "access-control-allow-methods",
-								"access-control-allow-origin", "access-control-max-age", "X-Frame-Options")
-						.allowCredentials(false).maxAge(3600);
-			}
-		};
-
 	}
 }
