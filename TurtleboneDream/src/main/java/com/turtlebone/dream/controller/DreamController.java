@@ -33,10 +33,12 @@ import com.alibaba.fastjson.JSONObject;
 import com.turtlebone.core.bean.QueryActivityRequest;
 import com.turtlebone.core.bean.Uploadpath;
 import com.turtlebone.core.enums.ActivityType;
+import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.model.UserModel;
 import com.turtlebone.dream.service.DreamService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.BeanCopyUtils;
+import com.turtlebone.core.util.StringUtil;
 import com.turtlebone.dream.bean.DreamActivityRequest;
 import com.turtlebone.dream.builder.DreamActivityBuilder;
 import com.turtlebone.dream.constants.IDreamType;
@@ -56,10 +58,13 @@ public class DreamController {
 	private DreamActivityBuilder dreamActivityBuilder;
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> addDream(HttpServletRequest httpReq, @RequestBody DreamActivityRequest request) {
+	public @ResponseBody ResponseEntity<?> addDream(HttpServletRequest httpReq, @RequestBody DreamActivityRequest request) throws TurtleException {
 		logger.debug("request:{}", JSON.toJSONString(request));
 
 		String username = (String)httpReq.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
 		
 		UserModel user = userService.selectByUsername(username);
 		if (user == null) {

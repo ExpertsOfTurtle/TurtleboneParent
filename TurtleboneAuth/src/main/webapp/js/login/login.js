@@ -1,7 +1,4 @@
-var PROFILE = {
-	username : null,
-	tokenId : null
-}
+
 function onLogin() {
 	var username = $("#loginUsername").val();
 	var password = $("#loginPassword").val();

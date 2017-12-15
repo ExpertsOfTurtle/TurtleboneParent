@@ -58,7 +58,7 @@ public class SecurityFilter implements Filter {
 		String tokenId = request.getParameter("tokenId");
 		String username = request.getParameter("username");
 		request.setAttribute("username", username);
-		request.setAttribute("username", tokenId);
+		request.setAttribute("tokenId", tokenId);
 		logger.info("tokenId={}, username={}", tokenId, username);
 		
 		if (checkExclude(path)) {

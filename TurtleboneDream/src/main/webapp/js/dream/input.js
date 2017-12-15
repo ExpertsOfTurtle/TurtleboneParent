@@ -30,7 +30,7 @@ function createDream() {
 	};
 	var rs = $.ajax({
 		type : "POST",
-		url : "/dream/dream/create",
+		url : "/dream/dream/create" + appendQueryURLForRequest(),
 		data : JSON.stringify(param),
 		contentType : "application/json; charset=utf-8",
 		dataType : "text",
@@ -55,7 +55,7 @@ function loadNext() {
 	}
 	var rs = $.ajax({
 		type : "POST",
-		url : "/dream/dream/query",
+		url : "/dream/dream/query" + appendQueryURLForRequest(),
 		data : JSON.stringify(param),
 		contentType : "application/json; charset=utf-8",
 		dataType : "text",
@@ -83,7 +83,7 @@ function uploadPic() {
 	}
 	var rs = $.ajax({
 		type : "POST",
-		url : "/dream/dream/uploadImg",
+		url : "/dream/dream/uploadImg" + appendQueryURLForRequest(),
 		data : new FormData($('#fileForm')[0]),
 		contentType : false,
 		processData : false,
