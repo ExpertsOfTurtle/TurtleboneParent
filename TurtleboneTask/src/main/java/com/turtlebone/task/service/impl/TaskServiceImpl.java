@@ -99,7 +99,7 @@ public class TaskServiceImpl implements TaskService {
 
 
 	@Override
-	public List<TaskModel> selectPage(String creator, String type, String owner, Integer status, String from, String to) {
+	public List<TaskModel> selectPage(String creator, Integer type, String owner, Integer status, String from, String to) {
 		Map<String, Object> map = new HashMap<>();
 		map.put("creator", creator);
 		map.put("type", type);

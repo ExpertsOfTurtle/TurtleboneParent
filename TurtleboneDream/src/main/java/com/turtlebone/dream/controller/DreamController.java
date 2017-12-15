@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -86,7 +87,7 @@ public class DreamController {
 		Integer pageNumber = request.getPageNumber();
 		Integer pageSize = request.getPageSize();
 		if (pageNumber == null) {
-			pageNumber = 1;
+			pageNumber = 0;
 		}
 		if (pageSize == null) {
 			pageSize = 10000;
@@ -118,5 +119,18 @@ public class DreamController {
 	    response.setHeader("Access-Control-Allow-Origin", "*");
 	    logger.debug("response:{}", result.toString());
 	    return result.toString();
+	}
+	
+	@RequestMapping(value = "/detail/{id}")
+	public String queryDetail(ServletRequest request, Map<String, Object> model,  @PathVariable("id") Integer id) {
+		ActivityModel detail = activityService.findByPrimaryKey(id);
+		model.put("detail", detail);
+		
+		HttpServletRequest req = (HttpServletRequest) request;
+		String serverName = req.getServerName();
+		int port = req.getServerPort();
+		String serverPath = String.format("http://%s", serverName);
+		model.put("serverPath", serverPath);
+		return "dream/ajax/detail";
 	}
 }

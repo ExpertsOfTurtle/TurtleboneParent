@@ -1,0 +1,8 @@
+<h2>${detail.datetime}</h2>							
+				<p>${detail.result}</p>
+				<p>By ${detail.username}</p>
+				#if ("${detail.type}" == "DREAM")
+					#if("$!{detail.strresult3}" != "")
+						<img width="100%" src="$!{serverPath}$!{detail.strresult3}"/>
+					#end
+				#end

@@ -15,6 +15,19 @@
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
 
+ <sql id="Advance_Column_List" >
+   `t`.`id`,
+   `t`.`creator`,
+   `t`.`title`,
+   `t`.`createTime`,
+   `tu`.`deadline`,
+   `t`.`difficulty`,
+   `tu`.`percentage`,
+   `t`.`type`,
+   `t`.`status`,
+   `t`.`punishment_id`,
+   `t`.`content`
+ </sql>
  <sql id="Base_Column_List" >
    `id`,
    `creator`,
@@ -243,41 +256,41 @@
 
 	<select id="selectPage" resultMap="BaseResultMap" parameterType="java.util.Map">
 		select
-		<include refid="Base_Column_List" />
-		from task where 1 = 1
+		<include refid="Advance_Column_List" />
+		from task t left join task_user tu on `t`.id=`tu`.taskid
+		 where 1 = 1
 		<if test="id != null">
-			and `id` = #{id,jdbcType=INTEGER}
+			and `t`.`id` = #{id,jdbcType=INTEGER}
 		</if>
 		<if test="creator != null">
-			and `creator` = #{creator,jdbcType=VARCHAR}
+			and `t`.`creator` = #{creator,jdbcType=VARCHAR}
 		</if>
 		<if test="owner != null">
-			and id in (
-			select taskid from task_user where `username` = #{owner,jdbcType=VARCHAR}
-			)			
+			and `tu`.`username` = #{owner,jdbcType=VARCHAR}
 		</if>
 		<if test="title != null">
-			and `title` = #{title,jdbcType=VARCHAR}
+			and `t`.`title` = #{title,jdbcType=VARCHAR}
 		</if>
 		<if test="deadline != null">
-			and `deadline` = #{deadline,jdbcType=VARCHAR}
+			and `tu`.`deadline` = #{deadline,jdbcType=VARCHAR}
 		</if>
 		<if test="punishmentId != null">
-			and `punishment_id` = #{punishmentId,jdbcType=INTEGER}
+			and `t`.`punishment_id` = #{punishmentId,jdbcType=INTEGER}
 		</if>
 		<if test="type != null">
-			and `type` = #{type,jdbcType=INTEGER}
+			and `t`.`type` = #{type,jdbcType=INTEGER}
 		</if>
 		<if test="status != null">
-			and `status` = #{status,jdbcType=INTEGER}
+			and `tu`.`status` = #{status,jdbcType=INTEGER}
 		</if>
 		<if test="content != null">
-			and `content` = #{content,jdbcType=LONGVARCHAR}
+			and `t`.`content` = #{content,jdbcType=LONGVARCHAR}
 		</if>
 		<if test="from != null and to != null">
-			and `deadline` between #{from,jdbcType=VARCHAR} and
+			and `t`.`deadline` between #{from,jdbcType=VARCHAR} and
 			#{to,jdbcType=VARCHAR}
 		</if>
+		order by `tu`.`deadline` is null or `tu`.`deadline` = "", `tu`.`deadline` asc
 	</select>
 </mapper>
   

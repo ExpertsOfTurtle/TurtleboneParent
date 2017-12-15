@@ -50,10 +50,8 @@ public class PageController {
 	@RequestMapping(value="/inputMain")
 	public String inputMain(ServletRequest request, Map<String, Object> model) {
 		logger.info("goto inputMain.vm");
-		HttpServletRequest req = (HttpServletRequest) request;
 		
 		List<UserModel> userList = userService.listAllUser();
-		model.put("ROOT", req.getContextPath());
 		model.put(VMParam.userList, userList);
 		return "dream/inputMain";
 	}

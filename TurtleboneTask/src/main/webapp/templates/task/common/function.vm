@@ -1,7 +1,7 @@
 #macro(getStatusText $code)
 #if("$code" == "0")NEW
-#elseif("$code" == "1")NEW
-#elseif("$code" == "2")DONE
+#elseif("$code" == "1")DONE
+#elseif("$code" == "2")INPROGRESS
 #elseif("$code" == "-1")GIVEUP
 #end
 #end

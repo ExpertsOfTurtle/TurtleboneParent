@@ -27,6 +27,8 @@ function onLogin() {
 			try {
 				json = JSON.parse(result);
 				rs = "Success，your tokenId:" + json.tokenid;
+				setCookie("username", username, 60 * 30);		//30 min
+				setCookie("tokenId", json.tokenid, 60 * 30);	//30 min
 				PROFILE.tokenId = json.tokenid;
 				PROFILE.username = username;
 				console.log(json);

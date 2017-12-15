@@ -55,8 +55,9 @@
 					<label for="select-choice-mini" class="select">user:</label>
 					<select multiple class="form-control" name="party" id="party" data-native-menu="false">
 						<option value="">No selected</option>
-						<option value="DFS">DFS</option>
-						<option value="WF">WF</option>
+						#foreach($user in $userList)
+							<option value="$user.loginName">$user.loginName</option>
+						#end
 					</select>
 				</div>
 				

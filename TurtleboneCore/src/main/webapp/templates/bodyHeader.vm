@@ -3,7 +3,12 @@
 			<a href="#outside" data-icon="bars" data-iconpos="notext">Menu</a>
 			<div data-role="navbar">
 				<ul>
-					
+					<li>
+						<a href="/dream/pages/listMain">D</a>
+					</li>
+					<li>
+						<a href="/task/pages/listMain">Task</a>
+					</li>
 					<li>
 						<a href="/contract/pages/listMain">Contract</a>
 					</li>

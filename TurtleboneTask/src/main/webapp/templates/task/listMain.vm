@@ -16,7 +16,38 @@
 				<div data-demo-html="true">
 					<div data-role="collapsible">
 					  <h3>Filter</h3>
-					  <a href="" onclick="loadAllTasks();">Go</a>
+					  
+					  <div data-demo-html="true">
+						 <label for="text-basic">Deadline from</label>
+						 <input type="date" name="filterDeadlineFrom" id="filterDeadlineFrom" value="">
+					</div>
+					<div data-demo-html="true">
+						 <label for="text-basic">Deadline to</label>
+						 <input type="date" name="filterDeadlineTo" id="filterDeadlineTo" value="">
+					</div>
+					
+					<div data-demo-html="true">
+						<label for="text-basic">Type</label>
+						<select class="form-control" name="filterTaskType" id="filterTaskType" data-native-menu="false">
+								<option value=" ">ALL</option>
+								<option value="0">Normal</option>
+								<option value="1">ACM</option>
+								<option value="2">Year</option>
+							</select>
+					</div>
+					
+					<div data-demo-html="true">
+						<label for="text-basic">Status</label>
+						<select class="form-control" name="filterStatus" id="filterStatus" data-native-menu="false">
+								<option value=" ">ALL</option>
+								<option value="0">NEW</option>
+								<option value="1">DONE</option>
+								<option value="2">INPROGRESS</option>
+								<option value="-1">GIVEUP</option>
+							</select>
+					</div>
+					
+					  <a href="" onclick="filterTask();">Go</a>
 					</div>
 					<ul data-role="listview" data-inset="true" id="listTaskUL">
 						
@@ -27,7 +58,6 @@
 							<li data-role="list-divider">Choose an action</li>
 							<li><a href="/task/pages/taskDetailDialog" onclick="TaskItem.action='detail';" data-rel="dialog" data-transition="pop">Enter</a></li>
 							<li><a href="/task/pages/taskDetailDialog" onclick="TaskItem.action='edit';" data-rel="dialog" data-transition="pop">Edit</a></li>
-							<li><a href="#">Delete</a></li>
 						</ul>
 					</div>
 				</div>

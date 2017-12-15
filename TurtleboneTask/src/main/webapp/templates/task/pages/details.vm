@@ -2,10 +2,10 @@
 	<h2>${taskModel.title}</h2>	
 	<p>Id:${taskModel.id}</p>
 	<input type="hidden" id="taskId" name="taskId" value="${taskModel.id}"/>
-	<p>Status:#getStatusText(${taskModel.status})</p>	
+	<p>Status(${myTask.status}):#getStatusText(${myTask.status})</p>	
 	<p>Created by:$!{taskModel.creator}</p>	
-	#if("$!{taskModel.deadline}" != "")	
-		<p>Deadline: $!{taskModel.deadline}</p>		
+	#if("$!{myTask.deadline}" != "")	
+		<p>Deadline: $!{myTask.deadline}</p>		
 	#end	
 	
 	<div class="ui-field-contain">

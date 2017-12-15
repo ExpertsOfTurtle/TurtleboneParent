@@ -71,11 +71,11 @@ public class TaskController {
 		taskModel.setCreator(username);
 		taskModel.setDeadline(request.getDeadline());
 		taskModel.setPunishmentId(request.getPunishmentId());
-		taskModel.setStatus(ITaskStatus.NEW);
 		taskModel.setType(request.getType());
 		taskModel.setDifficulty(request.getDifficulty());
 		taskModel.setPercentage(request.getPercentage() == null ? 0 : request.getPercentage());
-		taskModel.setCreatetime(DateUtil.getDateTime());		
+		taskModel.setCreatetime(DateUtil.getDateTime());
+		taskModel.setStatus(taskModel.getPercentage() > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
 		int id = taskService.create(taskModel);
 		
 		//Asign task to user
@@ -83,9 +83,10 @@ public class TaskController {
 			TaskUserModel taskUserModel = new TaskUserModel();
 			taskUserModel.setTaskid(id);
 			taskUserModel.setUsername(user);
-			taskUserModel.setStatus(ITaskStatus.NEW);
 			taskUserModel.setDeadline(taskModel.getDeadline());
 			taskUserModel.setAssigndatetime(DateUtil.getDateTime());
+			taskUserModel.setPercentage(request.getPercentage() == null ? 0 : request.getPercentage());
+			taskUserModel.setStatus(taskUserModel.getPercentage() > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
 			taskUserService.create(taskUserModel);
 		}
 		
@@ -183,6 +184,7 @@ public class TaskController {
 				break;
 			case "PERCENTAGE":
 				taskUserModel.setPercentage(request.getPercentage());
+				taskUserModel.setStatus(ITaskStatus.INPROGRESS);
 				break;
 			default:
 				break;

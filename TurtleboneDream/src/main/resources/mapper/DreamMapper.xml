@@ -330,7 +330,7 @@
     from activity
     where 1=1
  	
- 	and (`result1` != 1 or  `username` = #{param.username,jdbcType=VARCHAR} )   	
+ 	and (`result1` != 0 or  `username` = #{param.username,jdbcType=VARCHAR} )   	
  
      <if test="param.type != null" >
      	and `type` = #{param.type,jdbcType=VARCHAR}

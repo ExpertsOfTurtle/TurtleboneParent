@@ -27,7 +27,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.turtlebone.bean.FilterTaskRequest;
+import com.turtlebone.core.constants.VMParam;
 import com.turtlebone.core.exception.TurtleException;
+import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.StringUtil;
 import com.turtlebone.task.model.TaskModel;
 import com.turtlebone.task.model.TaskUserModel;
@@ -44,6 +48,8 @@ public class PageController {
 	private TaskService taskService;
 	@Autowired
 	private TaskUserService taskUserService;
+	@Autowired
+	private UserService userService;
 		
 	@RequestMapping(value="/listMain")
 	public String listMain(ServletRequest request, Map<String, Object> model) {
@@ -59,8 +65,8 @@ public class PageController {
 	@RequestMapping(value="/inputMain")
 	public String inputMain(ServletRequest request, Map<String, Object> model) {
 		logger.info("goto inputMain.vm");
-		HttpServletRequest req = (HttpServletRequest) request;
-		model.put("ROOT", req.getContextPath());
+		List<UserModel> userList = userService.listAllUser();
+		model.put(VMParam.userList, userList);
 		return "task/inputMain";
 	}
 	
@@ -78,15 +84,19 @@ public class PageController {
 	/**
 	 * Query all my tasks
 	 */
-	@RequestMapping(value="/loadMyTask", method = RequestMethod.GET)
-	public String loadMyTask(HttpServletRequest httpReq, 
+	@RequestMapping(value="/loadMyTask", method = RequestMethod.POST)
+	public String loadMyTask(HttpServletRequest httpReq, @RequestBody FilterTaskRequest request,
 			Map<String, Object> model) throws TurtleException {
 		String username = (String)httpReq.getAttribute("username");
 		if (StringUtil.isEmpty(username)) {
 			throw new TurtleException("", "Please login first", "");
 		}
 		
-		List<TaskModel> list = taskService.selectPage(null, null, username, null, null, null);
+		Integer type = request.getType();
+		Integer status = request.getStatus();
+		String deadlineFrom = request.getDeadlineFrom();
+		String deadlineTo = request.getDeadlineTo();
+		List<TaskModel> list = taskService.selectPage(null, type, username, status, deadlineFrom, deadlineTo);
 		model.put("list", list);
 		
 		return "task/pages/list";

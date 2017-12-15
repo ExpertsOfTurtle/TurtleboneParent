@@ -1,5 +1,5 @@
 var DREAM_PAGE = {
-	pageOffset : 0,
+	pageNumber : 0,
 	pageSize : 10
 }
 function onSubmit() {
@@ -51,7 +51,7 @@ function loadNext() {
 	var param = {
 		"type" : "",
 		"pageSize" : DREAM_PAGE.pageSize,
-		"offset" : DREAM_PAGE.pageOffset
+		"pageNumber" : DREAM_PAGE.pageNumber
 	}
 	var rs = $.ajax({
 		type : "POST",
@@ -64,9 +64,9 @@ function loadNext() {
 			if (result != null && result.length > 0) {
 				$("#listDreamUl").append(result);
 				$('#listDreamUl').listview('refresh');
-				DREAM_PAGE.pageOffset += DREAM_PAGE.pageSize;
+				DREAM_PAGE.pageNumber ++;
 			} else {
-				alert("No data");
+				alert("No more data");
 			}
 		},
 		error : function() {
@@ -103,4 +103,20 @@ function uploadPic() {
 		}
 	});
 	return rs;
+}
+function loadDreamDetails(id) {
+	var url = "/dream/dream/detail/" + id + appendQueryURLForRequest();
+	var rs = $.ajax({
+		type:"GET",
+		url:url,
+		contentType:"application/json; charset=utf-8",
+		dataType : "text",
+		success : function (result) {
+			$("#dreamDetailsContent").html(result);
+			$("input[type=Button]").button();
+		},
+		error : function() {
+			
+		}
+	});
 }

@@ -23,7 +23,7 @@
 	</div>
 	<div data-demo-html="true">
 		<label for="text-basic">Difficulty:</label>
-		<input type="text" value="$!{detail.difficulty}" name="taskDifficulty" id="taskDifficulty" />
+		<input type="number" min="1" max="5" step="1" value="$!{detail.difficulty}" name="taskDifficulty" id="taskDifficulty" />
 	</div>
 	<div data-demo-html="true">
 		<label for="taskPercentage">Progress:<div id="labelTaskPercentage"></div></label>

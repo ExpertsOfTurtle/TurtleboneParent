@@ -24,7 +24,10 @@ public class ServletFilterRegister {
 	
 	@Bean
 	public FilterRegistrationBean registrationAuthenticationFilter() throws ServletException {
-		SecurityFilter authenticationFilter = new SecurityFilter();
+		
+//		SecurityFilter authenticationFilter = new SecurityFilter();
+		MockSecurityFilter authenticationFilter = new MockSecurityFilter();
+		
 		authenticationFilter.setEnv(env);
 		authenticationFilter.setUserService(userService);
 		

@@ -23,6 +23,6 @@ public interface TaskService{
 
 	public int selectCount(TaskModel taskModel);
 	
-	public List<TaskModel> selectPage(String creator, String type, String owner, Integer status, String from, String to);
+	public List<TaskModel> selectPage(String creator, Integer type, String owner, Integer status, String from, String to);
 	
 }
