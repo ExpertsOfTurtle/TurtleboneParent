@@ -2,6 +2,7 @@ package com.turtlebone.core.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -76,5 +77,59 @@ public class DateUtil {
 			}
 		}
 		return null;
+	}
+	public static String getThisMonday() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, -1);
+		cal.set(Calendar.DAY_OF_WEEK, 2);
+		Date date = cal.getTime();
+		
+		SimpleDateFormat sdf = getSdf("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+	public static String getThisSunday() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, -1);
+		cal.set(Calendar.DAY_OF_WEEK, 2);
+		cal.add(Calendar.DATE, 6);
+		Date date = cal.getTime();
+		
+		SimpleDateFormat sdf = getSdf("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+	public static String getLastMonday() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, -1);
+		cal.set(Calendar.DAY_OF_WEEK, 2);
+		cal.add(Calendar.DATE, -7);
+		Date date = cal.getTime();
+		
+		SimpleDateFormat sdf = getSdf("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+	public static String getLastSunday() {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(new Date());
+		cal.add(Calendar.DATE, -1);
+		cal.set(Calendar.DAY_OF_WEEK, 2);
+		cal.add(Calendar.DATE, -1);
+		Date date = cal.getTime();
+		
+		SimpleDateFormat sdf = getSdf("yyyy-MM-dd");
+		return sdf.format(date);
+	}
+	public static String getNDaysLater(int n, String pattern) {
+		Calendar instance = Calendar.getInstance();
+		instance.setTime(new Date());
+		instance.add(Calendar.DATE, n);
+		Date day = instance.getTime();
+
+		SimpleDateFormat sdf = getSdf(pattern);
+		String rs = sdf.format(day);
+		
+		return rs;
 	}
 }

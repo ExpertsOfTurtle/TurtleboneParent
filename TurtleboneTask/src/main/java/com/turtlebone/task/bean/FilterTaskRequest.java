@@ -1,4 +1,4 @@
-package com.turtlebone.bean;
+package com.turtlebone.task.bean;
 
 import lombok.Data;
 

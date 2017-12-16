@@ -27,12 +27,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.turtlebone.bean.FilterTaskRequest;
 import com.turtlebone.core.constants.VMParam;
 import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.model.UserModel;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.StringUtil;
+import com.turtlebone.task.bean.FilterTaskRequest;
 import com.turtlebone.task.model.TaskModel;
 import com.turtlebone.task.model.TaskUserModel;
 import com.turtlebone.task.service.TaskService;
