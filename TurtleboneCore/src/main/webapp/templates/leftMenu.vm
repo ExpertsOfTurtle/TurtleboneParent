@@ -9,9 +9,6 @@
 					<a href="/auth/pages/login">Login</a>
 				</li>
 				<li>
-					<a href="/core/main/decide/list">List Selction</a>
-				</li>
-				<li>
 					<a href="/dream/pages/inputMain">createDream</a>
 				</li>
 				<li>

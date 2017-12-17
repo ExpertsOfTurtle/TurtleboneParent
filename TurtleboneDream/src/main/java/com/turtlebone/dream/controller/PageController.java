@@ -29,6 +29,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.turtlebone.core.constants.VMParam;
 import com.turtlebone.core.model.UserModel;
 import com.turtlebone.core.service.UserService;
+import com.turtlebone.dream.model.ActivityModel;
+import com.turtlebone.dream.service.DreamService;
 
 @Controller
 @EnableAutoConfiguration
@@ -36,6 +38,8 @@ import com.turtlebone.core.service.UserService;
 public class PageController {
 	private static Logger logger = LoggerFactory.getLogger(PageController.class);
 	
+	@Autowired
+	private DreamService activityService;
 	@Autowired
 	private UserService userService;
 		
@@ -54,5 +58,12 @@ public class PageController {
 		List<UserModel> userList = userService.listAllUser();
 		model.put(VMParam.userList, userList);
 		return "dream/inputMain";
+	}
+	
+	@RequestMapping(value = "/detail/{id}")
+	public String queryDetail(ServletRequest request, Map<String, Object> model,  @PathVariable("id") Integer id) {
+		ActivityModel detail = activityService.findByPrimaryKey(id);
+		model.put("detail", detail);
+		return "dream/ajax/detail";
 	}
 }

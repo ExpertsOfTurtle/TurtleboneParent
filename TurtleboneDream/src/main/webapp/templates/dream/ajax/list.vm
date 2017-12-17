@@ -1,10 +1,15 @@
 #foreach ($module in $list)		
 	<li aid="${module.idactivity}">
-		<a href="#dreamDetailDialog"
-		onclick="loadDreamDetails(${module.idactivity});"
+		<a href="/dream/pages/detail/${module.idactivity}"
+		
 		class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
 		data-rel="dialog" data-transition="pop">
-			<h2>${module.datetime}</h2>							
+			<h2>${module.datetime}</h2>		
+			#if("${module.result1}" == "1")
+				<p class="ui-li-aside">私</p>
+			#else
+			
+			#end					
 			<p>${module.username}</p>
 			<p>${module.result}</p>
 		</a>

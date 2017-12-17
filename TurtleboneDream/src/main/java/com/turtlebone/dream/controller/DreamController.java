@@ -90,7 +90,7 @@ public class DreamController {
 			pageNumber = 0;
 		}
 		if (pageSize == null) {
-			pageSize = 10000;
+			pageSize = 10;
 		}
 		List<ActivityModel> list = 
 				activityService.selectMyDream(username, pageSize, pageNumber);
@@ -121,16 +121,5 @@ public class DreamController {
 	    return result.toString();
 	}
 	
-	@RequestMapping(value = "/detail/{id}")
-	public String queryDetail(ServletRequest request, Map<String, Object> model,  @PathVariable("id") Integer id) {
-		ActivityModel detail = activityService.findByPrimaryKey(id);
-		model.put("detail", detail);
-		
-		HttpServletRequest req = (HttpServletRequest) request;
-		String serverName = req.getServerName();
-		int port = req.getServerPort();
-		String serverPath = String.format("http://%s", serverName);
-		model.put("serverPath", serverPath);
-		return "dream/ajax/detail";
-	}
+	
 }

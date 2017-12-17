@@ -2,25 +2,19 @@ var TaskItem = {
 	id : null,
 	action : null
 }
+var TASK_PAGE = {
+	pageNumber : 0,
+	pageSize : 10
+}
 function onInitInputPage() {
 	//$("#taskDifficulty").slider();
 	//$("#taskPercentage").slider();
 	$("input[type=number]").slider();
 }
-function onInitTaskPercentage() {
-	$("#taskPercentage").slider({
-		range : 'min',
-		min : 0,
-		max : 100,
-		value : 0,
-		step : 5,
-		slide : function(event, ui) {
-			$("#labelTaskPercentage").html($(this).val());
-		},
-		stop : function(event, ui) {
-		}
-	});
-
+function onLoadTaskListPage() {
+	$(document).undelegate("#taskListPage", "pageinit", onInitInputPage);
+	TASK_PAGE.pageNumber = 0;
+	loadAllTasks();
 }
 function onSelectTask(id) {
 	TaskItem.id = id;
@@ -183,7 +177,6 @@ function loadTaskDetails(action) {
 		success : function(result) {
 			$("#taskDetailsContent").html(result);
 			$("input[type=Button]").button();
-//			onInitTaskPercentage();
 			onInitInputPage();
 		},
 		error : function() {

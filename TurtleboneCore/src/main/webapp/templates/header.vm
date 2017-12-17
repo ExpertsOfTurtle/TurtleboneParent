@@ -20,10 +20,6 @@
 -->
 
 <script>
-	/*$(document).delegate("#listDreamPage", "pageinit", function(){
-		DREAM_PAGE.pageOffset=0;
-        loadNext();
-    });*/
     $(document).delegate("#decideListPage", "pageinit", function(){
 		loadAllDecideList();
     });

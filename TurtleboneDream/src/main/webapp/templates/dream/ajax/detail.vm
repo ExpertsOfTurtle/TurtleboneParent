@@ -1,4 +1,18 @@
-<h2>${detail.datetime}</h2>							
+<!DOCTYPE html>
+<html>
+	<head>
+		#parse("header.vm")
+	</head>
+	<body>
+		
+		
+		<!-- Task Details page -->
+		<div data-role="dialog" id="dreamDetailDialog">
+			<div data-role="header" data-theme="b">
+				<h1>Details page</h1>
+			</div>
+			<div role="main" class="ui-content" id="dreamDetailsContent">
+				<h2>${detail.datetime}</h2>							
 				<p>${detail.result}</p>
 				<p>By ${detail.username}</p>
 				#if ("${detail.type}" == "DREAM")
@@ -6,3 +20,16 @@
 						<img width="100%" src="$!{serverPath}$!{detail.strresult3}"/>
 					#end
 				#end
+			</div>
+			
+			<div data-role="footer">
+			</div>
+			
+		</div>
+		
+		
+		
+
+	</body>
+</html>
+				

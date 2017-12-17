@@ -7,7 +7,9 @@
 		
 		<div data-role="page" id="taskListPage">
 			<script type="text/javascript" src="/task/js/task/task.js"></script>
-			
+			<script type="text/javascript">
+				$(document).delegate("#taskListPage", "pageinit", onInitInputPage);
+			</script>
 			
 			#set($headerTitle="List Task")
 			#parse("bodyHeader.vm")

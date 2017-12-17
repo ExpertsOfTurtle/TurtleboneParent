@@ -29,6 +29,7 @@
 					</select>
 				</div>
 					
+				<!--
 				<div data-demo-html="true">
 					<label for="select-choice-mini" class="select">Dreamer:</label>
 					<select name="dreamer" id="dreamer" data-native-menu="false">
@@ -38,6 +39,7 @@
 						#end
 					</select>
 				</div>
+				-->
 				
 				<div data-demo-html="true">
 					 <label for="text-basic">Date(yyyy-MM-dd):</label>

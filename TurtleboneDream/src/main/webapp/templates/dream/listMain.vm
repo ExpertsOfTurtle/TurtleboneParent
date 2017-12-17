@@ -8,10 +8,8 @@
 		<div data-role="page" id="listDreamPage">
 			<script type="text/javascript" src="/dream/js/dream/input.js"></script>
 			<script type="text/javascript">
-				$(document).delegate("#listDreamPage", "pageinit", function(){
-					DREAM_PAGE.pageOffset=0;
-			        loadNext();
-			    });
+			
+				$(document).delegate("#listDreamPage", "pageinit", loadFirst);
 			</script>
 			
     
