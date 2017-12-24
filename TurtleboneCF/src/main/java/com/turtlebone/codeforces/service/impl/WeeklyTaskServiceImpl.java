@@ -11,11 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.turtlebone.codeforces.bean.WeeklyResult;
+import com.turtlebone.codeforces.bean.UserResult;
+import com.turtlebone.codeforces.bean.WeeklySummary;
 import com.turtlebone.codeforces.entity.CFSubmission;
 import com.turtlebone.codeforces.mapper.CFUserMapper;
 import com.turtlebone.codeforces.repository.CFSubmissionRepository;
 import com.turtlebone.codeforces.service.WeeklyTaskService;
+import com.turtlebone.core.statistics.bean.StatisticsObject;
 import com.turtlebone.core.statistics.bean.StatisticsResult;
 import com.turtlebone.core.statistics.service.DataStatisticsUtil;
 import com.turtlebone.core.statistics.service.FilterConfig;
@@ -31,15 +33,12 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 	private CFSubmissionRepository cFSubmissionRepo;
 	
 	@Override
-	public WeeklyResult queryWeeklyStatus(String username) {
-		String cfUsername = CFUserMapper.getCFName(username);
-		if (StringUtil.isEmpty(cfUsername)) {
-			logger.warn("{} is empty!", username);
-		}
+	public WeeklySummary queryWeeklyStatus() {
+		WeeklySummary weeklySummary = null;
+		StatisticsResult result = null;
 		String lastMonday = DateUtil.getLastMonday();
 		String thisMonday = DateUtil.getThisMonday();
 		Map<String, Object> queryMap = new HashMap<>();
-		queryMap.put("username", cfUsername);
 		queryMap.put("from", lastMonday);
 		queryMap.put("to", thisMonday);
 		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(queryMap);
@@ -49,21 +48,58 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		filterConfig.setToDate(thisMonday);
 		filterConfig.setSumBy("submittime");
 		filterConfig.setSumByType("DAY");
+		filterConfig.setSeparateBy("username");
 		List<FilterCriteria> filterCriteria = new ArrayList<>();
 		filterCriteria.add(new FilterCriteria("=", "result", "OK"));
 		filterConfig.setFilters(filterCriteria);
 		
 		try {
-			StatisticsResult result = DataStatisticsUtil.groupData(list, filterConfig);
-			System.out.println(JSON.toJSONString(result));
+			result = DataStatisticsUtil.groupData(list, filterConfig);
+			logger.debug(JSON.toJSONString(result));
+			weeklySummary = parseResult(result);			
 		} catch (SecurityException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		
+		filterCriteria = new ArrayList<>();
+		filterCriteria.add(new FilterCriteria("!=", "result", "OK"));
+		filterConfig.setFilters(filterCriteria);
+		try {
+			result = DataStatisticsUtil.groupData(list, filterConfig);
+			logger.debug(JSON.toJSONString(result));
+			parseResult(weeklySummary, result);
+		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return weeklySummary;
 	}
 
+	private WeeklySummary parseResult(StatisticsResult input) {
+		WeeklySummary result = new WeeklySummary();
+		result.setLabels(input.getLabels());
+		List<UserResult> list = new ArrayList<>();
+		for (StatisticsObject so : input.getList()) {
+			UserResult userResult = new UserResult();
+			userResult.setUsername(so.getLabel());
+			userResult.setProblemSolved(so.getTotal());
+			userResult.setDailySolved(so.getData());
+			list.add(userResult);
+		}
+		result.setList(list);
+		return result;
+	}
+	private void parseResult(WeeklySummary weeklySummary, StatisticsResult input) {
+		for (StatisticsObject so : input.getList()) {
+			for (UserResult userResult : weeklySummary.getList()) {
+				if (userResult.getUsername().equals(so.getLabel())) {
+					userResult.setDailyFailed(so.getData());
+					userResult.setFailSubmission(so.getTotal());
+				}
+			}
+		}
+	}
 }

@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 public class StatisticsObject {
 	private String label;
-	private List data;
+	private List<Integer> data;
+	private Integer total;
 }

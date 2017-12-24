@@ -269,9 +269,14 @@ public class DataStatisticsUtil {
 					break;
 				}
 			}
+			int total = 0;
+			for (i = 0; i < data.size(); i++) {
+				total += data.get(i);
+			}
 			StatisticsObject y = new StatisticsObject();
 			y.setLabel(label);
-			y.setData(data);			
+			y.setData(data);
+			y.setTotal(total);
 			yArr.add(y);
 		}
 		result.setLabels(xLabel);
@@ -280,6 +285,9 @@ public class DataStatisticsUtil {
 	}
 
 	private static boolean isMatch(JSONObject obj, List<FilterCriteria> filterConfig) {
+		if (filterConfig == null) {
+			return true;
+		}
 		for (FilterCriteria filter : filterConfig) {
 			if (!isMatch(obj, filter)) {
 				return false;

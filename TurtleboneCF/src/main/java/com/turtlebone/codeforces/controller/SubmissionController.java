@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.turtlebone.codeforces.bean.SyncSubmissionRequest;
+import com.turtlebone.codeforces.bean.WeeklySummary;
 import com.turtlebone.codeforces.model.CFSubmissionModel;
 import com.turtlebone.codeforces.service.CFSubmissionService;
 import com.turtlebone.codeforces.service.FetchSubmissionsService;
@@ -52,8 +53,8 @@ public class SubmissionController {
 
 	@RequestMapping(value = "/test", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> test() {
-		weeklyTaskService.queryWeeklyStatus("DFS");
-		return ResponseEntity.ok("OK");
+		WeeklySummary result = weeklyTaskService.queryWeeklyStatus();
+		return ResponseEntity.ok(result);
 	}
 	
 }

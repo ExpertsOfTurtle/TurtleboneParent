@@ -5,7 +5,7 @@ import java.util.List;
 import lombok.Data;
 
 @Data
-public class WeeklyResult {
+public class UserResult {
 	private String username;
 	private Integer problemSolved;
 	private Integer failSubmission;
