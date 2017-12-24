@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.codeforces.repository.CFProblemRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.codeforces.entity.CFProblem" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="problem_no" property="problemNo" jdbcType="VARCHAR" />
+    <result column="date" property="date" jdbcType="VARCHAR" />
+    <result column="respondent" property="respondent" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="deadline" property="deadline" jdbcType="VARCHAR" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `problem_no`,
+   `date`,
+   `respondent`,
+   `status`,
+   `type`,
+   `deadline`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from problems
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from problems
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.codeforces.entity.CFProblem" >
+    insert into problems ( 
+     `id`,
+     `problem_no`,
+     `date`,
+     `respondent`,
+     `status`,
+     `type`,
+     `deadline`
+    )
+    values (
+     #{id,jdbcType=BIGINT},
+     #{problemNo,jdbcType=VARCHAR},
+     #{date,jdbcType=VARCHAR},
+     #{respondent,jdbcType=VARCHAR},
+     #{status,jdbcType=VARCHAR},
+     #{type,jdbcType=VARCHAR},
+     #{deadline,jdbcType=VARCHAR}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.codeforces.entity.CFProblem" >
+    insert into problems
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="problemNo != null" >
+        `problem_no`,
+      </if>
+      <if test="date != null" >
+        `date`,
+      </if>
+      <if test="respondent != null" >
+        `respondent`,
+      </if>
+      <if test="status != null" >
+        `status`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="deadline != null" >
+        `deadline`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="problemNo != null" >
+        #{problemNo,jdbcType=VARCHAR},
+      </if>
+      <if test="date != null" >
+        #{date,jdbcType=VARCHAR},
+      </if>
+      <if test="respondent != null" >
+        #{respondent,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.codeforces.entity.CFProblem" >
+    update problems
+	  <set>
+       <if test="problemNo != null" >
+        `problem_no`= #{problemNo,jdbcType=VARCHAR},
+       </if>
+       <if test="date != null" >
+        `date`= #{date,jdbcType=VARCHAR},
+       </if>
+       <if test="respondent != null" >
+        `respondent`= #{respondent,jdbcType=VARCHAR},
+       </if>
+       <if test="status != null" >
+        `status`= #{status,jdbcType=VARCHAR},
+       </if>
+       <if test="type != null" >
+        `type`= #{type,jdbcType=VARCHAR},
+       </if>
+       <if test="deadline != null" >
+        `deadline`= #{deadline,jdbcType=VARCHAR},
+       </if>
+          </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.codeforces.entity.CFProblem" >
+    update problems
+    set 
+       `problem_no` = #{problemNo,jdbcType=VARCHAR},
+       `date` = #{date,jdbcType=VARCHAR},
+       `respondent` = #{respondent,jdbcType=VARCHAR},
+       `status` = #{status,jdbcType=VARCHAR},
+       `type` = #{type,jdbcType=VARCHAR},
+       `deadline` = #{deadline,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.codeforces.entity.CFProblem" >
+    select count(*) from problems
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=BIGINT}
+      </if>
+            <if test="problemNo != null" >
+        and `problem_no` = #{problemNo,jdbcType=VARCHAR}
+      </if>
+            <if test="date != null" >
+        and `date` = #{date,jdbcType=VARCHAR}
+      </if>
+            <if test="respondent != null" >
+        and `respondent` = #{respondent,jdbcType=VARCHAR}
+      </if>
+            <if test="status != null" >
+        and `status` = #{status,jdbcType=VARCHAR}
+      </if>
+            <if test="type != null" >
+        and `type` = #{type,jdbcType=VARCHAR}
+      </if>
+            <if test="deadline != null" >
+        and `deadline` = #{deadline,jdbcType=VARCHAR}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from problems where 1 = 1 
+        <if test="cFProblem.id != null" >
+      and `id` = #{cFProblem.id,jdbcType=BIGINT}
+    </if>
+        <if test="cFProblem.problemNo != null" >
+      and `problem_no` = #{cFProblem.problemNo,jdbcType=VARCHAR}
+    </if>
+        <if test="cFProblem.date != null" >
+      and `date` = #{cFProblem.date,jdbcType=VARCHAR}
+    </if>
+        <if test="cFProblem.respondent != null" >
+      and `respondent` = #{cFProblem.respondent,jdbcType=VARCHAR}
+    </if>
+        <if test="cFProblem.status != null" >
+      and `status` = #{cFProblem.status,jdbcType=VARCHAR}
+    </if>
+        <if test="cFProblem.type != null" >
+      and `type` = #{cFProblem.type,jdbcType=VARCHAR}
+    </if>
+        <if test="cFProblem.deadline != null" >
+      and `deadline` = #{cFProblem.deadline,jdbcType=VARCHAR}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'problem_no'
+   || order.property == 'date'
+   || order.property == 'respondent'
+   || order.property == 'status'
+   || order.property == 'type'
+   || order.property == 'deadline'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+ </mapper>
+  
+
+  
+	

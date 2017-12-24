@@ -7,9 +7,6 @@
   </parent>
   <artifactId>TurtleboneContract</artifactId>
   <name>TurtleboneContract</name>
-  
-  
-  
 	<dependencies>
 		<dependency>
 			<groupId>com.turtlebone</groupId>

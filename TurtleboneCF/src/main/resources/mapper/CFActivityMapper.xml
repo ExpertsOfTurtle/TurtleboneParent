@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.codeforces.repository.CFActivityRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.codeforces.entity.CFActivity" >
+    <id column="idactivity" property="idactivity" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="result1" property="result1" jdbcType="BIGINT" />
+    <result column="result2" property="result2" jdbcType="BIGINT" />
+    <result column="result3" property="result3" jdbcType="BIGINT" />
+    <result column="strresult1" property="strresult1" jdbcType="VARCHAR" />
+    <result column="strresult2" property="strresult2" jdbcType="VARCHAR" />
+    <result column="strresult3" property="strresult3" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="LONGVARCHAR" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `idactivity`,
+   `username`,
+   `datetime`,
+   `type`,
+   `description`,
+   `result1`,
+   `result2`,
+   `result3`,
+   `strresult1`,
+   `strresult2`,
+   `strresult3`,
+   `result`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity
+    where idactivity = #{idactivity,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from activity
+    where idactivity = #{idactivity,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.codeforces.entity.CFActivity" >
+    insert into activity ( 
+     `idactivity`,
+     `username`,
+     `datetime`,
+     `type`,
+     `description`,
+     `result1`,
+     `result2`,
+     `result3`,
+     `strresult1`,
+     `strresult2`,
+     `strresult3`,
+     `result`
+    )
+    values (
+     #{idactivity,jdbcType=INTEGER},
+     #{username,jdbcType=VARCHAR},
+     #{datetime,jdbcType=VARCHAR},
+     #{type,jdbcType=VARCHAR},
+     #{description,jdbcType=VARCHAR},
+     #{result1,jdbcType=BIGINT},
+     #{result2,jdbcType=BIGINT},
+     #{result3,jdbcType=BIGINT},
+     #{strresult1,jdbcType=VARCHAR},
+     #{strresult2,jdbcType=VARCHAR},
+     #{strresult3,jdbcType=VARCHAR},
+     #{result,jdbcType=LONGVARCHAR}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.codeforces.entity.CFActivity" >
+    insert into activity
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="idactivity != null" >
+        `idactivity`,
+      </if>
+      <if test="username != null" >
+        `username`,
+      </if>
+      <if test="datetime != null" >
+        `datetime`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="description != null" >
+        `description`,
+      </if>
+      <if test="result1 != null" >
+        `result1`,
+      </if>
+      <if test="result2 != null" >
+        `result2`,
+      </if>
+      <if test="result3 != null" >
+        `result3`,
+      </if>
+      <if test="strresult1 != null" >
+        `strresult1`,
+      </if>
+      <if test="strresult2 != null" >
+        `strresult2`,
+      </if>
+      <if test="strresult3 != null" >
+        `strresult3`,
+      </if>
+      <if test="result != null" >
+        `result`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="idactivity != null" >
+        #{idactivity,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="result1 != null" >
+        #{result1,jdbcType=BIGINT},
+      </if>
+      <if test="result2 != null" >
+        #{result2,jdbcType=BIGINT},
+      </if>
+      <if test="result3 != null" >
+        #{result3,jdbcType=BIGINT},
+      </if>
+      <if test="strresult1 != null" >
+        #{strresult1,jdbcType=VARCHAR},
+      </if>
+      <if test="strresult2 != null" >
+        #{strresult2,jdbcType=VARCHAR},
+      </if>
+      <if test="strresult3 != null" >
+        #{strresult3,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.codeforces.entity.CFActivity" >
+    update activity
+	  <set>
+       <if test="username != null" >
+        `username`= #{username,jdbcType=VARCHAR},
+       </if>
+       <if test="datetime != null" >
+        `datetime`= #{datetime,jdbcType=VARCHAR},
+       </if>
+       <if test="type != null" >
+        `type`= #{type,jdbcType=VARCHAR},
+       </if>
+       <if test="description != null" >
+        `description`= #{description,jdbcType=VARCHAR},
+       </if>
+       <if test="result1 != null" >
+        `result1`= #{result1,jdbcType=BIGINT},
+       </if>
+       <if test="result2 != null" >
+        `result2`= #{result2,jdbcType=BIGINT},
+       </if>
+       <if test="result3 != null" >
+        `result3`= #{result3,jdbcType=BIGINT},
+       </if>
+       <if test="strresult1 != null" >
+        `strresult1`= #{strresult1,jdbcType=VARCHAR},
+       </if>
+       <if test="strresult2 != null" >
+        `strresult2`= #{strresult2,jdbcType=VARCHAR},
+       </if>
+       <if test="strresult3 != null" >
+        `strresult3`= #{strresult3,jdbcType=VARCHAR},
+       </if>
+           <if test="result != null" >
+        `result`= #{result,jdbcType=LONGVARCHAR},
+       </if>
+      </set>
+    where idactivity = #{idactivity,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.codeforces.entity.CFActivity" >
+    update activity
+    set 
+   `result` = #{result,jdbcType=LONGVARCHAR},
+       `username` = #{username,jdbcType=VARCHAR},
+       `datetime` = #{datetime,jdbcType=VARCHAR},
+       `type` = #{type,jdbcType=VARCHAR},
+       `description` = #{description,jdbcType=VARCHAR},
+       `result1` = #{result1,jdbcType=BIGINT},
+       `result2` = #{result2,jdbcType=BIGINT},
+       `result3` = #{result3,jdbcType=BIGINT},
+       `strresult1` = #{strresult1,jdbcType=VARCHAR},
+       `strresult2` = #{strresult2,jdbcType=VARCHAR},
+       `strresult3` = #{strresult3,jdbcType=VARCHAR}
+     where idactivity = #{idactivity,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.codeforces.entity.CFActivity" >
+    select count(*) from activity
+    <where >
+            <if test="idactivity != null" >
+        and `idactivity` = #{idactivity,jdbcType=INTEGER}
+      </if>
+            <if test="username != null" >
+        and `username` = #{username,jdbcType=VARCHAR}
+      </if>
+            <if test="datetime != null" >
+        and `datetime` = #{datetime,jdbcType=VARCHAR}
+      </if>
+            <if test="type != null" >
+        and `type` = #{type,jdbcType=VARCHAR}
+      </if>
+            <if test="description != null" >
+        and `description` = #{description,jdbcType=VARCHAR}
+      </if>
+            <if test="result1 != null" >
+        and `result1` = #{result1,jdbcType=BIGINT}
+      </if>
+            <if test="result2 != null" >
+        and `result2` = #{result2,jdbcType=BIGINT}
+      </if>
+            <if test="result3 != null" >
+        and `result3` = #{result3,jdbcType=BIGINT}
+      </if>
+            <if test="strresult1 != null" >
+        and `strresult1` = #{strresult1,jdbcType=VARCHAR}
+      </if>
+            <if test="strresult2 != null" >
+        and `strresult2` = #{strresult2,jdbcType=VARCHAR}
+      </if>
+            <if test="strresult3 != null" >
+        and `strresult3` = #{strresult3,jdbcType=VARCHAR}
+      </if>
+            <if test="result != null" >
+        and `result` = #{result,jdbcType=LONGVARCHAR}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from activity where 1 = 1 
+        <if test="cFActivity.idactivity != null" >
+      and `idactivity` = #{cFActivity.idactivity,jdbcType=INTEGER}
+    </if>
+        <if test="cFActivity.username != null" >
+      and `username` = #{cFActivity.username,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.datetime != null" >
+      and `datetime` = #{cFActivity.datetime,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.type != null" >
+      and `type` = #{cFActivity.type,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.description != null" >
+      and `description` = #{cFActivity.description,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.result1 != null" >
+      and `result1` = #{cFActivity.result1,jdbcType=BIGINT}
+    </if>
+        <if test="cFActivity.result2 != null" >
+      and `result2` = #{cFActivity.result2,jdbcType=BIGINT}
+    </if>
+        <if test="cFActivity.result3 != null" >
+      and `result3` = #{cFActivity.result3,jdbcType=BIGINT}
+    </if>
+        <if test="cFActivity.strresult1 != null" >
+      and `strresult1` = #{cFActivity.strresult1,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.strresult2 != null" >
+      and `strresult2` = #{cFActivity.strresult2,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.strresult3 != null" >
+      and `strresult3` = #{cFActivity.strresult3,jdbcType=VARCHAR}
+    </if>
+        <if test="cFActivity.result != null" >
+      and `result` = #{cFActivity.result,jdbcType=LONGVARCHAR}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'idactivity' 
+   || order.property == 'username'
+   || order.property == 'datetime'
+   || order.property == 'type'
+   || order.property == 'description'
+   || order.property == 'result1'
+   || order.property == 'result2'
+   || order.property == 'result3'
+   || order.property == 'strresult1'
+   || order.property == 'strresult2'
+   || order.property == 'strresult3'
+   || order.property == 'result'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+ </mapper>
+  
+
+  
+	

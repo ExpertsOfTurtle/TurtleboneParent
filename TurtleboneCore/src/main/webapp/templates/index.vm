@@ -1,62 +1,168 @@
-<!DOCTYPE html>
-<head>
-	<script src="jquery-1.8.3.min.js" type="text/javascript"></script>
-	<script src="jqueryMmenu/jquery.mmenu.all.js" type="text/javascript"></script>
-	<link href="jqueryMmenu/jquery.mmenu.all.css" type="text/css" rel="stylesheet" />
-	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"/>
-</head>
-<body>
-	<div id="my-page">
-		<div id="my-header">
-			<h2>___${wf}...</h2>
-		</div>
-		<div id="my-content">
-			<a href="#my-menu">Open the menu</a>
-			<a href="#my-page">Close the menu</a>
-		</div>
-		<div id="my-footer"/>
-	</div>
-
-	<nav id="my-menu">
-		<ul class="listview-icons">
-			<li><a href="#"><i class="fa fa-home"></i> &nbsp; Choose</a></li>
-			<li>
-		 		<span><i class="fa fa-graduation-cap"></i> &nbsp; Profile</span>
-					<ul>						
-						<li><a href="http://www.turtlebone.top/">TurtleBone</a></li>
-						<li><a href="http://www.baidu.com/">Baidu</a></li>
-					</ul>
-				</li>
-			<li>
-			<li><a href="#"><i class="fa fa-home"></i> &nbsp; CF</a></li>
-			<a href="#"><i class="fa fa-home"></i> &nbsp; Activity</a>
-			</li>
-		</ul>
-	</nav>
-</body>
-
-<script type="text/javascript">
-   $(document).ready(function() {
-      $("#my-menu").mmenu({
-         // options
-      }, {
-         // configuration
-         offCanvas: {
-            pageNodetype: "section"
-         },
-		 classNames: {
-            inset: "inline"
-         }
-      });
-	  
-	  var API = $("#my-menu").data( "mmenu" );      
-      $("#my-button").click(function() {
-         API.open();
-      });
-	  $("#my-button").click(function() {
-         API.close();
-      });
-   });
-</script>
 <html>
-	
+	<head>
+		<meta charset="utf-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="/statics/bootstrap/css/bootstrap.min.css" ></link>
+		<!-- jQuery library -->
+		<script src="/statics/bootstrap/js/jquery-2.2.0.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="/statics/bootstrap/js/bootstrap.min.js"></script>
+		
+		<script src="/statics/turtle.js"></script>
+	</head>
+	<script>
+		$('#myTabs a').click(function (e) {
+		  e.preventDefault();
+		  $(this).tab('show');
+		  wf = e;
+		  console.log(e);
+		})
+	</script>
+	<body>
+		<div >
+
+  <!-- Nav tabs -->
+  <ul id="myTabs" class="nav nav-tabs" role="tablist" style="padding-left:10px">
+    <li role="presentation" class="active">
+    	<a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a>
+    </li>
+	<li class="dropdown">
+		<a href="#" id="taskDropdown" class="dropdown-toggle" 
+		   data-toggle="dropdown">Task<b class="caret"></b></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="taskDropdown">
+			<li><a href="#taskCreation" tabindex="-1" data-toggle="tab">Create</a></li>
+			<li><a href="#taskSummary" tabindex="-1" data-toggle="tab">Summary</a></li>
+		</ul>
+	</li>
+	<li class="dropdown">
+		<a href="#" id="dreamDropdown" class="dropdown-toggle" 
+		   data-toggle="dropdown">Dream<b class="caret"></b></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="taskDropdown">
+			<li><a href="#dreamCreation" tabindex="-1" data-toggle="tab">Create</a></li>
+			<li><a href="#dreamSummary" tabindex="-1" data-toggle="tab">Summary</a></li>
+		</ul>
+	</li>
+    <li role="presentation">
+    	<a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">Activity</a>
+    </li>
+	<li class="dropdown">
+		<a href="#" id="cfDropdown" class="dropdown-toggle" 
+		   data-toggle="dropdown">Codeforces<b class="caret"></b></a>
+		<ul class="dropdown-menu" role="menu" aria-labelledby="taskDropdown">
+			<li><a href="#taskCreation" tabindex="-1" data-toggle="tab">Complete</a></li>
+			<li><a href="#taskSummary" tabindex="-1" data-toggle="tab">Add</a></li>
+		</ul>
+	</li>
+	<li role="presentation">
+		<a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">C</a>
+	</li>
+	<li role="presentation">
+		<a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">CF</a>
+	</li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content"  style="padding:30px">
+    <div role="tabpanel" class="tab-pane active" id="profile">
+		<p>Deposit</p>
+		<p>CF Problems</p>
+	</div>
+    <div role="tabpanel" class="tab-pane" id="taskCreation">
+		<p>Create Task</p>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="taskSummary">
+		<p>Task Summary</p>
+	</div>
+    <div role="tabpanel" class="tab-pane" id="history">
+		<p>列表，按日期筛选</p>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="activity">
+		<p>write something here</p>
+		<table class="table table-condensed table-hover">
+								<thead>
+									<tr onclick="alert('1');">
+										<th>User</th>
+										<th>Date</th>
+										<th>Type</th>
+										<th>Remark</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="success" data-toggle="modal" data-target="#myModal">
+										<td>Worldfinal</td>
+										<td>2017-02-23</td>
+										<td>xxx</td>
+										<td>xxx</td>
+									</tr>
+									<tr class="warning">
+										<td>xx</td>
+										<td>2017-02-23</td>
+										<td>xxx</td>
+										<td>yyy</td>
+									</tr>
+									<tr class="success">
+										<td>Worldfinal</td>
+										<td>2017-02-23</td>
+										<td>xxx</td>
+										<td>yyy</td>
+									</tr>
+									<tr class="success">
+										<td>Worldfinal</td>
+										<td>2017-02-23</td>
+										<td>xxx</td>
+										<td>yyy</td>
+									</tr>
+									<tr class="warning">
+										<td>xx</td>
+										<td>2017-02-24</td>
+										<td>xxx</td>
+										<td>yyy</td>
+									</tr>
+								</tbody>
+							</table>
+							
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							请输入要创建的类别名
+						</h4>
+					</div>
+					<div class="modal-body">
+						<input type="text" class="form-control"
+							name="groupName" value=""></input>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" onclick="insertGroup();">
+							确认
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+	</div>
+  </div>
+
+</div>
+<script>
+			$(function(){
+				$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+					// 获取已激活的标签页的名称
+					var activeTab = $(e.target).text(); 
+					console.log(activeTab);
+					var txt = $(e.target).attr("wf");
+					// 获取前一个激活的标签页的名称
+					var previousTab = $(e.relatedTarget).text(); 
+					$(".active-tab span").html(activeTab + ":" + txt);
+					$(".previous-tab span").html(previousTab);
+				});
+			});
+</script>
+	</body>
+</html>

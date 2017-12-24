@@ -40,5 +40,11 @@ public class HomeController {
 		model.put("ROOT", req.getContextPath());
 		return "turtlebone";
 	}
-	
+	@RequestMapping(value="/turtlebone")
+	public String toIndex(ServletRequest request, Map<String, Object> model) {
+		logger.info("goto index.vm");
+		HttpServletRequest req = (HttpServletRequest) request;
+		model.put("ROOT", req.getContextPath());
+		return "index";
+	}
 }

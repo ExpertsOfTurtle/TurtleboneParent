@@ -132,6 +132,8 @@
 		<module>TurtleboneHome</module>
 		<module>TurtleboneDream</module>
 		<module>TurtleboneDream-api</module>
+		<module>TurtleboneCF</module>
+		<module>TurtleboneCF-api</module>
 	</modules>
 	<build>
 		<plugins>

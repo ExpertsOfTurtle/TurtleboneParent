@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.codeforces.repository.CFSubmissionRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.codeforces.entity.CFSubmission" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="contestId" property="contestid" jdbcType="INTEGER" />
+    <result column="problemIndex" property="problemindex" jdbcType="VARCHAR" />
+    <result column="tags" property="tags" jdbcType="VARCHAR" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="submitTime" property="submittime" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `contestId`,
+   `problemIndex`,
+   `tags`,
+   `result`,
+   `submitTime`,
+   `username`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from submission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from submission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.codeforces.entity.CFSubmission" >
+    insert into submission ( 
+     `id`,
+     `contestId`,
+     `problemIndex`,
+     `tags`,
+     `result`,
+     `submitTime`,
+     `username`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{contestid,jdbcType=INTEGER},
+     #{problemindex,jdbcType=VARCHAR},
+     #{tags,jdbcType=VARCHAR},
+     #{result,jdbcType=VARCHAR},
+     #{submittime,jdbcType=VARCHAR},
+     #{username,jdbcType=VARCHAR}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.codeforces.entity.CFSubmission" >
+    insert into submission
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="contestid != null" >
+        `contestId`,
+      </if>
+      <if test="problemindex != null" >
+        `problemIndex`,
+      </if>
+      <if test="tags != null" >
+        `tags`,
+      </if>
+      <if test="result != null" >
+        `result`,
+      </if>
+      <if test="submittime != null" >
+        `submitTime`,
+      </if>
+      <if test="username != null" >
+        `username`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="contestid != null" >
+        #{contestid,jdbcType=INTEGER},
+      </if>
+      <if test="problemindex != null" >
+        #{problemindex,jdbcType=VARCHAR},
+      </if>
+      <if test="tags != null" >
+        #{tags,jdbcType=VARCHAR},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="submittime != null" >
+        #{submittime,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.codeforces.entity.CFSubmission" >
+    update submission
+	  <set>
+       <if test="contestid != null" >
+        `contestId`= #{contestid,jdbcType=INTEGER},
+       </if>
+       <if test="problemindex != null" >
+        `problemIndex`= #{problemindex,jdbcType=VARCHAR},
+       </if>
+       <if test="tags != null" >
+        `tags`= #{tags,jdbcType=VARCHAR},
+       </if>
+       <if test="result != null" >
+        `result`= #{result,jdbcType=VARCHAR},
+       </if>
+       <if test="submittime != null" >
+        `submitTime`= #{submittime,jdbcType=VARCHAR},
+       </if>
+       <if test="username != null" >
+        `username`= #{username,jdbcType=VARCHAR},
+       </if>
+          </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.codeforces.entity.CFSubmission" >
+    update submission
+    set 
+       `contestId` = #{contestid,jdbcType=INTEGER},
+       `problemIndex` = #{problemindex,jdbcType=VARCHAR},
+       `tags` = #{tags,jdbcType=VARCHAR},
+       `result` = #{result,jdbcType=VARCHAR},
+       `submitTime` = #{submittime,jdbcType=VARCHAR},
+       `username` = #{username,jdbcType=VARCHAR}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.codeforces.entity.CFSubmission" >
+    select count(*) from submission
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="contestid != null" >
+        and `contestId` = #{contestid,jdbcType=INTEGER}
+      </if>
+            <if test="problemindex != null" >
+        and `problemIndex` = #{problemindex,jdbcType=VARCHAR}
+      </if>
+            <if test="tags != null" >
+        and `tags` = #{tags,jdbcType=VARCHAR}
+      </if>
+            <if test="result != null" >
+        and `result` = #{result,jdbcType=VARCHAR}
+      </if>
+            <if test="submittime != null" >
+        and `submitTime` = #{submittime,jdbcType=VARCHAR}
+      </if>
+            <if test="username != null" >
+        and `username` = #{username,jdbcType=VARCHAR}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from submission where 1 = 1 
+        <if test="cFSubmission.id != null" >
+      and `id` = #{cFSubmission.id,jdbcType=INTEGER}
+    </if>
+        <if test="cFSubmission.contestid != null" >
+      and `contestId` = #{cFSubmission.contestid,jdbcType=INTEGER}
+    </if>
+        <if test="cFSubmission.problemindex != null" >
+      and `problemIndex` = #{cFSubmission.problemindex,jdbcType=VARCHAR}
+    </if>
+        <if test="cFSubmission.tags != null" >
+      and `tags` = #{cFSubmission.tags,jdbcType=VARCHAR}
+    </if>
+        <if test="cFSubmission.result != null" >
+      and `result` = #{cFSubmission.result,jdbcType=VARCHAR}
+    </if>
+        <if test="cFSubmission.submittime != null" >
+      and `submitTime` = #{cFSubmission.submittime,jdbcType=VARCHAR}
+    </if>
+        <if test="cFSubmission.username != null" >
+      and `username` = #{cFSubmission.username,jdbcType=VARCHAR}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'contestId'
+   || order.property == 'problemIndex'
+   || order.property == 'tags'
+   || order.property == 'result'
+   || order.property == 'submitTime'
+   || order.property == 'username'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List" >
+    insert into submission ( 
+     `id`,
+     `contestId`,
+     `problemIndex`,
+     `tags`,
+     `result`,
+     `submitTime`,
+     `username`
+    ) values
+    <foreach collection="list" item="item" separator=",">
+    	 (
+	     #{item.id,jdbcType=INTEGER},
+	     #{item.contestid,jdbcType=INTEGER},
+	     #{item.problemindex,jdbcType=VARCHAR},
+	     #{item.tags,jdbcType=VARCHAR},
+	     #{item.result,jdbcType=VARCHAR},
+	     #{item.submittime,jdbcType=VARCHAR},
+	     #{item.username,jdbcType=VARCHAR})
+    </foreach>
+  </insert>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from submission
+    where 1=1 
+    <if test="idList != null">
+    	and id in (
+    	<foreach collection="idList" item="item" separator=",">
+    		#{item,jdbcType=INTEGER}
+    	</foreach>)
+    </if>
+    <if test="username != null">
+     	and username = #{username,jdbcType=VARCHAR}
+    </if>
+    <if test="tag != null">
+    	and tags like #{tag,jdbcType=VARCHAR}
+    </if>
+    <if test="from != null and to != null">
+    	and submitTime between #{from,jdbcType=VARCHAR} and #{to,jdbcType=VARCHAR}
+    </if>
+  </select>
+ </mapper>

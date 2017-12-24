@@ -1,0 +1,131 @@
+<html>
+	<head>
+		<meta charset="utf-8"/> 
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" href="statics/css/bootstrap.min.css" ></link>
+		<!-- jQuery library -->
+		<script src="statics/js/jquery-2.2.0.min.js"></script>
+		<!-- Latest compiled JavaScript -->
+		<script src="statics/js/bootstrap.min.js"></script>
+		
+	</head>
+	<script>
+		$('#myTabs a').click(function (e) {
+  e.preventDefault();
+  $(this).tab('show');
+  wf = e;
+  console.log(e);
+})
+	</script>
+	<body>
+		<div >
+
+  <!-- Nav tabs -->
+  <ul id="myTabs" class="nav nav-tabs" role="tablist" style="padding-left:10px">
+    <li role="presentation" class="active"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+	<li role="presentation"><a href="#task" aria-controls="task" role="tab" data-toggle="tab">Task</a></li>    
+    <li role="presentation"><a href="#taskSummary" aria-controls="taskSummary" role="tab" data-toggle="tab">Task Summary</a></li>
+    <li role="presentation"><a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">History task</a></li>
+	<li role="presentation"><a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">D</a></li>
+	<li role="presentation"><a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">C</a></li>
+	<li role="presentation"><a href="#activity" aria-controls="activity" role="tab" data-toggle="tab">CF</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content"  style="padding:30px">
+    <div role="tabpanel" class="tab-pane active" id="profile">
+		<p>Deposit</p>
+		<p>CF Problems</p>
+	</div>
+    <div role="tabpanel" class="tab-pane" id="task">
+		<p>choice 1, 2, 3</p>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="taskSummary">
+		<p>列表，按日期筛选</p>
+		<p>设置状态</p>
+		<p>增加罚题</p>
+	</div>
+    <div role="tabpanel" class="tab-pane" id="history">
+		<p>列表，按日期筛选</p>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="activity">
+		<p>write something here</p>
+		<table class="table table-condensed table-hover">
+								<thead>
+									<tr onclick="alert('1');">
+										<th>User</th>
+										<th>Date</th>
+										<th>Type</th>
+										<th>Remark</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr class="success" data-toggle="modal" data-target="#myModal">
+										<td>Worldfinal</td>
+										<td>2017-02-23</td>
+										<td>抽任务</td>
+										<td>抽到题目</td>
+									</tr>
+									<tr class="warning">
+										<td>xx</td>
+										<td>2017-02-23</td>
+										<td>抽任务</td>
+										<td>抽到题目</td>
+									</tr>
+									<tr class="success">
+										<td>Worldfinal</td>
+										<td>2017-02-23</td>
+										<td>做任务</td>
+										<td>完成题目777C</td>
+									</tr>
+									<tr class="success">
+										<td>Worldfinal</td>
+										<td>2017-02-23</td>
+										<td>做任务</td>
+										<td>完成罚题777E</td>
+									</tr>
+									<tr class="warning">
+										<td>xx</td>
+										<td>2017-02-24</td>
+										<td>惩罚</td>
+										<td>罚1题</td>
+									</tr>
+								</tbody>
+							</table>
+							
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+							&times;
+						</button>
+						<h4 class="modal-title" id="myModalLabel">
+							请输入要创建的类别名
+						</h4>
+					</div>
+					<div class="modal-body">
+						<input type="text" class="form-control"
+							name="groupName" value=""></input>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+						</button>
+						<button type="button" class="btn btn-primary" onclick="insertGroup();">
+							确认
+						</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal -->
+		</div>
+	</div>
+	
+	
+	
+	
+  </div>
+
+</div>
+		
+	</body>
+</html>
