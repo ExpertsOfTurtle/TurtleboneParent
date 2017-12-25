@@ -35,10 +35,8 @@ public class HomeController {
 		
 	@RequestMapping(value="/main")
 	public String toHomePage(ServletRequest request, Map<String, Object> model) {
-		logger.info("goto main.vm");
-		HttpServletRequest req = (HttpServletRequest) request;
-		model.put("ROOT", req.getContextPath());
-		return "turtlebone";
+		logger.info("goto turtlebone.vm");
+		return "/templates/turtlebone";
 	}
 	@RequestMapping(value="/turtlebone")
 	public String toIndex(ServletRequest request, Map<String, Object> model) {
