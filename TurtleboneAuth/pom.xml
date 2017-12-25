@@ -8,7 +8,6 @@
 	</parent>
 	<artifactId>TurtleboneAuth</artifactId>
 	<name>TurtleboneAuth</name>
-	<packaging>jar</packaging>
 
 	<build>
 		<resources>
@@ -69,7 +68,7 @@
 							<goal>copy-resources</goal>
 						</goals>
 						<configuration>
-							<outputDirectory>target/classes</outputDirectory>
+							<outputDirectory>${basedir}/target/classes</outputDirectory>
 							<resources>
 								<resource>
 									<directory>../TurtleboneCore/src/main/webapp</directory>
