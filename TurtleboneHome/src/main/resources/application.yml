@@ -23,7 +23,7 @@ server:
   contextPath: /home/
 redis.expireTime: 60
 constants:
-  excludeRegex: /*/statics/*|/*/main/*|/contract/list
+  excludeRegex: /nothing
 ---
 spring:
   profiles: prod
@@ -61,4 +61,4 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 3600
 constants:
-  excludeRegex: /contract/list|/contract/detail|*statics*
+  excludeRegex: /nothing
