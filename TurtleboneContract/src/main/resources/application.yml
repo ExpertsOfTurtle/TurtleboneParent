@@ -33,8 +33,7 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 60
 constants:
-  excludeRegexX: /*/statics/*|/*/main/*|/contract/list|/*/js/*|/*/pages/*
-  excludeRegex: contract
+  excludeRegex: nothing
 ---
 spring:
   profiles: prod
@@ -72,4 +71,4 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 3600
 constants:
-  excludeRegex: /contract/list|/contract/detail|*statics*
+  excludeRegex: nothing

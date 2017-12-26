@@ -5,7 +5,7 @@
 		class="ui-shadow ui-btn ui-corner-all ui-btn-inline"
 		data-rel="dialog" data-transition="pop">
 			<h2>${module.datetime}</h2>		
-			#if("${module.result1}" == "1")
+			#if("${module.result1}" == "0")
 				<p class="ui-li-aside">私</p>
 			#else
 			
