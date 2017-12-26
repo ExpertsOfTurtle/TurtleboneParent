@@ -76,6 +76,12 @@
 										<include>**/*</include>
 									</includes>
 								</resource>
+								<resource>
+									<directory>../TurtleboneCore/src/main/resources</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</resource>
 							</resources>
 						</configuration>
 					</execution>

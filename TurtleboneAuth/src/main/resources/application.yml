@@ -32,6 +32,8 @@ server:
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 60
+constants:
+  excludeRegex: nothing
 ---
 spring:
   profiles: prod
@@ -68,3 +70,5 @@ server:
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 3600
+constants:
+  excludeRegex: nothing
