@@ -37,15 +37,15 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		WeeklySummary weeklySummary = null;
 		StatisticsResult result = null;
 		String lastMonday = DateUtil.getLastMonday();
-		String thisMonday = DateUtil.getThisMonday();
+		String lastSunday = DateUtil.getLastSunday() + " 23:59:59";
 		Map<String, Object> queryMap = new HashMap<>();
 		queryMap.put("from", lastMonday);
-		queryMap.put("to", thisMonday);
+		queryMap.put("to", lastSunday);
 		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(queryMap);
 		
 		FilterConfig filterConfig = new FilterConfig();
 		filterConfig.setFromDate(lastMonday);
-		filterConfig.setToDate(thisMonday);
+		filterConfig.setToDate(lastSunday);
 		filterConfig.setSumBy("submittime");
 		filterConfig.setSumByType("DAY");
 		filterConfig.setSeparateBy("username");
