@@ -91,6 +91,14 @@
 									</includes>
 								</resource>
 							</resources>
+							<resources>
+								<resource>
+									<directory>../TurtleboneCore/src/main/resources</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</resource>
+							</resources>
 						</configuration>
 					</execution>
 				</executions>

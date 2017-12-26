@@ -29,7 +29,7 @@ public class SyncCFSubmissionSchedule {
     public void syncSubmissions() {
 		for (String username : ICFConstants.USERLIST) {
 			logger.info("Start sync submissions for {}", username);
-			List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(username, 0, 200);
+			List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(username, 0, 100);
 			cfSubmissionService.insert(list);
 		}
     }
