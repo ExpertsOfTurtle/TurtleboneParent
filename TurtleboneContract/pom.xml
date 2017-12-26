@@ -72,6 +72,36 @@
 					<skip>false</skip>
 				</configuration>
 			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.5</version>
+				<executions>
+					<execution>
+						<id>copy-webapp</id>
+						<phase>process-sources</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>${basedir}/target/classes</outputDirectory>
+							<resources>
+								<resource>
+									<directory>../TurtleboneCore/src/main/webapp</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</resource>
+								<resource>
+									<directory>../TurtleboneCore/src/main/resources</directory>
+									<includes>
+										<include>**/*</include>
+									</includes>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
