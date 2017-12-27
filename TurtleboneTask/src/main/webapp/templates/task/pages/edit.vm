@@ -26,8 +26,8 @@
 		<input type="number" min="1" max="5" step="1" value="$!{detail.difficulty}" name="taskDifficulty" id="taskDifficulty" />
 	</div>
 	<div data-demo-html="true">
-		<label for="taskPercentage">Progress:<div id="labelTaskPercentage"></div></label>
-	 	<input type="number" name="taskPercentage" id="taskPercentage" 
+		<label for="taskProgress">Progress:<div id="labelTaskPercentage"></div></label>
+	 	<input type="number" name="taskProgress" id="taskProgress" 
 	 	data-highlight="true"
 	 	value="$!{detail.percentage}" min="0" max="100" step="5"/>
 	</div>

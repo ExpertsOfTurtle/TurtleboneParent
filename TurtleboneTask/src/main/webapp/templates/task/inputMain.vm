@@ -37,9 +37,14 @@
 				</div>
 				
 				<div data-demo-html="true">
+					 <label for="text-basic">Total:</label>
+					 <input type="number" name="taskTotal" id="taskTotal" value="0"
+					 data-highlight="true" min="1" max="500" step="1">
+				</div>
+				<div data-demo-html="true">
 					 <label for="text-basic">Progress:</label>
-					 <input type="number" name="taskPercentage" id="taskPercentage" value="0"
-					 data-highlight="true" min="0" max="100" step="5">
+					 <input type="number" name="taskProgress" id="taskProgress" value="0"
+					 data-highlight="true" min="0" max="500" step="1">
 				</div>
 				
 				<div data-demo-html="true">

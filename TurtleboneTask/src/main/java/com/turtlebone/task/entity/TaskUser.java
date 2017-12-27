@@ -11,7 +11,8 @@ public class TaskUser{
 	private String assigndatetime;
 	private String deadline;
 	private Integer status;
-	private Integer percentage;
+	private Integer progress;
+
 	
 }
 

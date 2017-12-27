@@ -73,9 +73,18 @@ public class TaskController {
 		taskModel.setPunishmentId(request.getPunishmentId());
 		taskModel.setType(request.getType());
 		taskModel.setDifficulty(request.getDifficulty());
-		taskModel.setPercentage(request.getPercentage() == null ? 0 : request.getPercentage());
+		Integer total = request.getTotal();
+		if (total == null || total == 0) {
+			total = 100;
+		}
+		Integer progress = request.getProgress();
+		if (progress == null) {
+			progress = 0;
+		}
+		taskModel.setTotal(total);
+		taskModel.setProgress(progress);
 		taskModel.setCreatetime(DateUtil.getDateTime());
-		taskModel.setStatus(taskModel.getPercentage() > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
+		taskModel.setStatus(progress > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
 		int id = taskService.create(taskModel);
 		
 		//Asign task to user
@@ -85,8 +94,8 @@ public class TaskController {
 			taskUserModel.setUsername(user);
 			taskUserModel.setDeadline(taskModel.getDeadline());
 			taskUserModel.setAssigndatetime(DateUtil.getDateTime());
-			taskUserModel.setPercentage(request.getPercentage() == null ? 0 : request.getPercentage());
-			taskUserModel.setStatus(taskUserModel.getPercentage() > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
+			taskUserModel.setProgress(progress);
+			taskUserModel.setStatus(progress > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
 			taskUserService.create(taskUserModel);
 		}
 		
@@ -121,7 +130,7 @@ public class TaskController {
 		taskModel.setDeadline(request.getDeadline());
 		taskModel.setPunishmentId(request.getPunishmentId());
 		taskModel.setDifficulty(request.getDifficulty());
-		taskModel.setPercentage(request.getPercentage());
+		taskModel.setProgress(request.getProgress());
 		taskService.updateByPrimaryKey(taskModel);
 		
 		//Update task for task owner
@@ -163,8 +172,14 @@ public class TaskController {
 			throw new TurtleException("", "Please login first", "");
 		}
 		
-		Integer percentage = request.getPercentage();
-		if (percentage == null || percentage < 0 || percentage > 100) {
+		Integer taskId = request.getId();
+		TaskModel task = taskService.findByPrimaryKey(taskId);
+		if (task == null) {
+			throw new TurtleException("", "No such Task", "");
+		}
+		
+		Integer progress = request.getProgress();
+		if (progress == null || progress < 0 || progress > task.getTotal()) {
 			throw new TurtleException("", "Incorrect percentage!", "");
 		}
 		
@@ -179,11 +194,11 @@ public class TaskController {
 			case "STATUS":
 				taskUserModel.setStatus(request.getStatus());
 				if (ITaskStatus.DONE == request.getStatus()) {
-					taskUserModel.setPercentage(100);
+					taskUserModel.setProgress(task.getTotal());
 				}
 				break;
 			case "PERCENTAGE":
-				taskUserModel.setPercentage(request.getPercentage());
+				taskUserModel.setProgress(request.getProgress());
 				taskUserModel.setStatus(ITaskStatus.INPROGRESS);
 				break;
 			default:

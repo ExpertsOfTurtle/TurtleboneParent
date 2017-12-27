@@ -8,7 +8,7 @@
     <result column="assignDatetime" property="assigndatetime" jdbcType="VARCHAR" />
     <result column="deadline" property="deadline" jdbcType="VARCHAR" />
     <result column="status" property="status" jdbcType="INTEGER" />
-    <result column="percentage" property="percentage" jdbcType="INTEGER" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
   </resultMap>
 
  <sql id="Base_Column_List" >
@@ -18,7 +18,7 @@
    `assignDatetime`,
    `deadline`,
    `status`,
-   `percentage`
+   `progress`
  </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -46,7 +46,7 @@
      `assignDatetime`,
      `deadline`,
      `status`,
-     `percentage`
+     `progress`
     )
     values (
      #{id,jdbcType=INTEGER},
@@ -55,7 +55,7 @@
      #{assigndatetime,jdbcType=VARCHAR},
      #{deadline,jdbcType=VARCHAR},
      #{status,jdbcType=INTEGER},
-     #{percentage,jdbcType=INTEGER}
+     #{progress,jdbcType=INTEGER}
  )
   </insert>
   
@@ -82,8 +82,8 @@
       <if test="status != null" >
         `status`,
       </if>
-      <if test="percentage != null" >
-        `percentage`,
+      <if test="progress != null" >
+        `progress`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -105,8 +105,8 @@
       <if test="status != null" >
         #{status,jdbcType=INTEGER},
       </if>
-      <if test="percentage != null" >
-        #{percentage,jdbcType=INTEGER},
+      <if test="progress != null" >
+        #{progress,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -129,8 +129,8 @@
        <if test="status != null" >
         `status`= #{status,jdbcType=INTEGER},
        </if>
-       <if test="percentage != null" >
-        `percentage`= #{percentage,jdbcType=INTEGER},
+       <if test="progress != null" >
+        `progress`= #{progress,jdbcType=INTEGER},
        </if>
           </set>
     where id = #{id,jdbcType=INTEGER}
@@ -144,7 +144,7 @@
        `assignDatetime` = #{assigndatetime,jdbcType=VARCHAR},
        `deadline` = #{deadline,jdbcType=VARCHAR},
        `status` = #{status,jdbcType=INTEGER},
-       `percentage` = #{percentage,jdbcType=INTEGER}
+       `progress` = #{progress,jdbcType=INTEGER}
      where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -171,8 +171,8 @@
             <if test="status != null" >
         and `status` = #{status,jdbcType=INTEGER}
       </if>
-            <if test="percentage != null" >
-        and `percentage` = #{percentage,jdbcType=INTEGER}
+            <if test="progress != null" >
+        and `progress` = #{progress,jdbcType=INTEGER}
       </if>
           </where>
   </select>
@@ -199,8 +199,8 @@
         <if test="taskUser.status != null" >
       and `status` = #{taskUser.status,jdbcType=INTEGER}
     </if>
-        <if test="taskUser.percentage != null" >
-      and `percentage` = #{taskUser.percentage,jdbcType=INTEGER}
+        <if test="taskUser.progress != null" >
+      and `progress` = #{taskUser.progress,jdbcType=INTEGER}
     </if>
         <if test="pageable.sort != null" >
       order by 
@@ -212,7 +212,7 @@
    || order.property == 'assignDatetime'
    || order.property == 'deadline'
    || order.property == 'status'
-   || order.property == 'percentage'
+   || order.property == 'progress'
         " >
         		${order.property} ${order.direction}
         </if>

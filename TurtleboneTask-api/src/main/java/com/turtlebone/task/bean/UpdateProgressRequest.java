@@ -7,7 +7,7 @@ import lombok.Data;
 public class UpdateProgressRequest {
 	private Integer id;
 	private String username;
-	private Integer percentage;
+	private Integer progress;
 	private Integer status;
 	private String actionType;
 }

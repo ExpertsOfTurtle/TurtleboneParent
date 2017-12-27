@@ -12,7 +12,8 @@ public class TaskModel implements Serializable{
 	private String createtime;
 	private String deadline;
 	private Integer difficulty;
-	private Integer percentage;
+	private Integer total;
+	private Integer progress;
 	private Integer type;
 	private Integer status;
 	private Integer punishmentId;

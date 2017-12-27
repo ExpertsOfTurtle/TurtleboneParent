@@ -72,7 +72,8 @@ function onCreateTask() {
 	var party = $("#party").val()
 	var deadline = $("#taskDeadline").val();
 	var difficulty = $("#taskDifficulty").val();
-	var percentage = $("#taskPercentage").val();
+	var progress = $("#taskProgress").val();
+	var total = $("#taskTotal").val();
 	if (creator == null || creator == "") {
 		alert("Login first");
 		return;
@@ -83,8 +84,9 @@ function onCreateTask() {
 		"creator" : creator,
 		"owner" : party,
 		"deadline" : deadline,
-		"percentage" : percentage,
-		"difficulty" : difficulty
+		"progress" : progress,
+		"difficulty" : difficulty,
+		"total" : total
 	}
 	var url = "/task/task/create" + appendQueryURLForRequest();
 	var rs = $.ajax({
@@ -109,7 +111,7 @@ function onModifyTask() {
 	var party = $("#party").val()
 	var deadline = $("#taskDeadline").val();
 	var difficulty = $("#taskDifficulty").val();
-	var percentage = $("#taskPercentage").val();
+	var progress = $("#taskProgress").val();
 	if (creator == null || creator == "") {
 		alert("Login first");
 		return;
@@ -121,7 +123,7 @@ function onModifyTask() {
 		"creator" : creator,
 		"owner" : party,
 		"deadline" : deadline,
-		"percentage" : percentage,
+		"progress" : progress,
 		"difficulty" : difficulty
 	}
 	var url = "/task/task/modify" + appendQueryURLForRequest();
@@ -146,7 +148,7 @@ function doUpdateProgress(actionType, status) {
 		"username" : PROFILE.username,
 		"actionType" : actionType,
 		"status" : status,
-		"percentage" : $("#taskPercentage").val()
+		"progress" : $("#taskProgress").val()
 	}
 	var url = "/task/task/updateProgress" + appendQueryURLForRequest();
 	var rs = $.ajax({

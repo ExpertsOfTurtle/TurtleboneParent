@@ -8,7 +8,8 @@
     <result column="createTime" property="createtime" jdbcType="VARCHAR" />
     <result column="deadline" property="deadline" jdbcType="VARCHAR" />
     <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
-    <result column="percentage" property="percentage" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
     <result column="type" property="type" jdbcType="INTEGER" />
     <result column="status" property="status" jdbcType="INTEGER" />
     <result column="punishment_id" property="punishmentId" jdbcType="INTEGER" />
@@ -22,7 +23,7 @@
    `t`.`createTime`,
    `tu`.`deadline`,
    `t`.`difficulty`,
-   `tu`.`percentage`,
+   `tu`.`progress`,
    `t`.`type`,
    `t`.`status`,
    `t`.`punishment_id`,
@@ -35,7 +36,8 @@
    `createTime`,
    `deadline`,
    `difficulty`,
-   `percentage`,
+   `total`,
+   `progress`,
    `type`,
    `status`,
    `punishment_id`,
@@ -63,7 +65,8 @@
      `createTime`,
      `deadline`,
      `difficulty`,
-     `percentage`,
+     `total`,
+     `progress`,
      `type`,
      `status`,
      `punishment_id`,
@@ -76,7 +79,8 @@
      #{createtime,jdbcType=VARCHAR},
      #{deadline,jdbcType=VARCHAR},
      #{difficulty,jdbcType=INTEGER},
-     #{percentage,jdbcType=INTEGER},
+     #{total,jdbcType=INTEGER},
+     #{progress,jdbcType=INTEGER},
      #{type,jdbcType=INTEGER},
      #{status,jdbcType=INTEGER},
      #{punishmentId,jdbcType=INTEGER},
@@ -107,8 +111,11 @@
       <if test="difficulty != null" >
         `difficulty`,
       </if>
-      <if test="percentage != null" >
-        `percentage`,
+      <if test="total != null" >
+        `total`,
+      </if>
+      <if test="progress != null" >
+        `progress`,
       </if>
       <if test="type != null" >
         `type`,
@@ -142,8 +149,11 @@
       <if test="difficulty != null" >
         #{difficulty,jdbcType=INTEGER},
       </if>
-      <if test="percentage != null" >
-        #{percentage,jdbcType=INTEGER},
+      <if test="total != null" >
+        #{total,jdbcType=INTEGER},
+      </if>
+      <if test="progress != null" >
+        #{progress,jdbcType=INTEGER},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -178,8 +188,11 @@
        <if test="difficulty != null" >
         `difficulty`= #{difficulty,jdbcType=INTEGER},
        </if>
-       <if test="percentage != null" >
-        `percentage`= #{percentage,jdbcType=INTEGER},
+       <if test="total != null" >
+        `total`= #{total,jdbcType=INTEGER},
+       </if>
+       <if test="progress != null" >
+        `progress`= #{progress,jdbcType=INTEGER},
        </if>
        <if test="type != null" >
         `type`= #{type,jdbcType=INTEGER},
@@ -206,7 +219,8 @@
        `createTime` = #{createtime,jdbcType=VARCHAR},
        `deadline` = #{deadline,jdbcType=VARCHAR},
        `difficulty` = #{difficulty,jdbcType=INTEGER},
-       `percentage` = #{percentage,jdbcType=INTEGER},
+       `total` = #{total,jdbcType=INTEGER},
+       `progress` = #{progress,jdbcType=INTEGER},
        `type` = #{type,jdbcType=INTEGER},
        `status` = #{status,jdbcType=INTEGER},
        `punishment_id` = #{punishmentId,jdbcType=INTEGER}
@@ -236,8 +250,11 @@
             <if test="difficulty != null" >
         and `difficulty` = #{difficulty,jdbcType=INTEGER}
       </if>
-            <if test="percentage != null" >
-        and `percentage` = #{percentage,jdbcType=INTEGER}
+            <if test="total != null" >
+        and `total` = #{total,jdbcType=INTEGER}
+      </if>
+            <if test="progress != null" >
+        and `progress` = #{progress,jdbcType=INTEGER}
       </if>
             <if test="type != null" >
         and `type` = #{type,jdbcType=INTEGER}
