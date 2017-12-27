@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.turtlebone.codeforces.bean.QueryStatusRequest;
 import com.turtlebone.codeforces.bean.SyncSubmissionRequest;
 import com.turtlebone.codeforces.bean.WeeklySummary;
 import com.turtlebone.codeforces.model.CFSubmissionModel;
 import com.turtlebone.codeforces.service.CFSubmissionService;
 import com.turtlebone.codeforces.service.FetchSubmissionsService;
 import com.turtlebone.codeforces.service.WeeklyTaskService;
+import com.turtlebone.core.util.StringUtil;
 
 @Controller
 @EnableAutoConfiguration
@@ -51,9 +53,16 @@ public class SubmissionController {
 		return ResponseEntity.ok(list);
 	}
 
-	@RequestMapping(value = "/test", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> test() {
-		WeeklySummary result = weeklyTaskService.queryWeeklyStatus();
+	@RequestMapping(value = "/queryStatus", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> queryStatus(@RequestBody QueryStatusRequest request) {
+		String from = request.getFrom();
+		String to = request.getTo();
+		WeeklySummary result = null;
+		if (StringUtil.isEmpty(from) || StringUtil.isEmpty(to)) {
+			result = weeklyTaskService.queryWeeklyStatus();
+		} else {
+			result = weeklyTaskService.queryStatus(from, to);
+		}
 		return ResponseEntity.ok(result);
 	}
 	

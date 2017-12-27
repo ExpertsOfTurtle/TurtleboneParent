@@ -54,7 +54,7 @@ public class FetchSubmissionsServiceImpl implements FetchSubmissionsService {
 				model.setTags(sb.toString().substring(0, sb.length() - 1));
 			}			
 		}
-		model.setUsername(username);
+		model.setUsername(username.toLowerCase());//codeforces的用户名统一用小写
 		model.setResult(obj.getString("verdict"));
 		long time = obj.getLongValue("creationTimeSeconds");
 		time *= 1000;

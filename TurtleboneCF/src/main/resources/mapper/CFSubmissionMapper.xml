@@ -259,4 +259,9 @@
     	and submitTime between #{from,jdbcType=VARCHAR} and #{to,jdbcType=VARCHAR}
     </if>
   </select>
+  <select id="querySolved" resultMap="BaseResultMap" parameterType="java.util.Map" >
+  	select 
+    <include refid="Base_Column_List" />
+    from submission where result='OK' group by contestId, problemIndex, username
+  </select>
  </mapper>

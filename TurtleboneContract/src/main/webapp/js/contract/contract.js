@@ -5,6 +5,9 @@ function onSelectContract(id) {
 	ContractItem.id = id;
 }
 function loadAllContractList() {
+	$("#listContractUL").html("");
+	$(document).undelegate("#contractListPage", "pageinit", loadAllContractList);
+	
 	var rs = $.ajax({
 		type : "POST",
 		url : "/contract/contract/list" + appendQueryURLForRequest(),

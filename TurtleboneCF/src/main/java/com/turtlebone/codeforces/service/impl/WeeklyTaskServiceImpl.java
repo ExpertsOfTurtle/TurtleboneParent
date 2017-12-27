@@ -33,19 +33,18 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 	private CFSubmissionRepository cFSubmissionRepo;
 	
 	@Override
-	public WeeklySummary queryWeeklyStatus() {
+	public WeeklySummary queryStatus(String from, String to) {
 		WeeklySummary weeklySummary = null;
 		StatisticsResult result = null;
-		String lastMonday = DateUtil.getLastMonday();
-		String lastSunday = DateUtil.getLastSunday() + " 23:59:59";
+		to  += " 23:59:59";
 		Map<String, Object> queryMap = new HashMap<>();
-		queryMap.put("from", lastMonday);
-		queryMap.put("to", lastSunday);
+		queryMap.put("from", from);
+		queryMap.put("to", to);
 		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(queryMap);
 		
 		FilterConfig filterConfig = new FilterConfig();
-		filterConfig.setFromDate(lastMonday);
-		filterConfig.setToDate(lastSunday);
+		filterConfig.setFromDate(from);
+		filterConfig.setToDate(to);
 		filterConfig.setSumBy("submittime");
 		filterConfig.setSumByType("DAY");
 		filterConfig.setSeparateBy("username");
@@ -76,6 +75,13 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 			e.printStackTrace();
 		}
 		return weeklySummary;
+	}
+	
+	@Override
+	public WeeklySummary queryWeeklyStatus() {
+		String lastMonday = DateUtil.getLastMonday();
+		String lastSunday = DateUtil.getLastSunday();
+		return queryStatus(lastMonday, lastSunday);
 	}
 
 	private WeeklySummary parseResult(StatisticsResult input) {
