@@ -18,6 +18,7 @@ spring:
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
     suffix: .vm
+  jmx.default-domain: cf.turtlebone
 server:
   port: 12008
   contextPath: /cf/
@@ -47,6 +48,7 @@ spring:
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
     suffix: .vm
+  jmx.default-domain: cf.turtlebone
 server:
   port: 12008
   contextPath: /cf/

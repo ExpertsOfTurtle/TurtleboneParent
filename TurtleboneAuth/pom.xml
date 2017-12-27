@@ -101,4 +101,5 @@
 			<artifactId>TurtleboneCore</artifactId>
 		</dependency>		
 	</dependencies>
+	<packaging>war</packaging>
 </project>

@@ -12,20 +12,13 @@ spring:
     maxWait: 60000
     testWhileIdle: true
     validationQuery: select 'x'
-  redis:
-    database: 0
-    hostName: 127.0.0.1
-    port: 6379
-    pool.max-idle: 8
-    pool.min-idle: 0
-    pool.max-active: 8
-    pool.max-wait: -1
   velocity:
     charset: UTF-8
     properties.input.encoding: UTF-8
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
     suffix: .vm
+  jmx.default-domain: auth.turtlebone
 server:
   port: 12004
   contextPath: /auth/
@@ -49,21 +42,13 @@ spring:
     maxWait: 60000
     testWhileIdle: true
     validationQuery: select 'x'
-  redis:
-    database: 0
-    hostName: r-wz9dbc5c7dc742e4.redis.rds.aliyuncs.com
-    password: Turtle2017
-    port: 6379
-    pool.max-idle: 8
-    pool.min-idle: 0
-    pool.max-active: 8
-    pool.max-wait: -1
   velocity:
     charset: UTF-8
     properties.input.encoding: UTF-8
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
     suffix: .vm
+  jmx.default-domain: auth.turtlebone
 server:
   port: 12004
   contextPath: /auth/
