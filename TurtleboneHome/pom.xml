@@ -82,9 +82,9 @@
 									</includes>
 								</resource>
 								<resource>
-									<directory>../TurtleboneCore/src/main/config</directory>
+									<directory>../TurtleboneCore/src/main/resources</directory>
 									<includes>
-										<include>application-${profiles.active}.properties</include>
+										<include>**/*</include>
 									</includes>
 								</resource>
 							</resources>
