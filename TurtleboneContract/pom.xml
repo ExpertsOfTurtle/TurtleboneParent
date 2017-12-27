@@ -97,6 +97,12 @@
 										<include>**/*</include>
 									</includes>
 								</resource>
+								<resource>
+									<directory>../TurtleboneCore/src/main/config</directory>
+									<includes>
+										<include>application-${profiles.active}.properties</include>
+									</includes>
+								</resource>
 							</resources>
 						</configuration>
 					</execution>

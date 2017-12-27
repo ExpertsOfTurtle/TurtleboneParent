@@ -8,7 +8,25 @@
 	</parent>
 	<artifactId>TurtleboneCore</artifactId>
 	<name>TurtleboneCore</name>
-
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/config</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>application-dev.properties</exclude>
+					<exclude>application-prod.properties</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/config</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>application-${profiles.active}.properties</include>
+				</includes>
+			</resource>
+		</resources>
+	</build>
 	<dependencies>
 		<dependency>
 			<groupId>org.mybatis</groupId>
