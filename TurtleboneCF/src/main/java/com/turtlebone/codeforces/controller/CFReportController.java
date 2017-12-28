@@ -27,10 +27,12 @@ import com.turtlebone.codeforces.bean.QueryStatusRequest;
 import com.turtlebone.codeforces.bean.SyncSubmissionRequest;
 import com.turtlebone.codeforces.bean.WeeklySummary;
 import com.turtlebone.codeforces.model.CFSubmissionModel;
+import com.turtlebone.codeforces.service.CFReportService;
 import com.turtlebone.codeforces.service.CFSubmissionService;
 import com.turtlebone.codeforces.service.FetchSubmissionsService;
 import com.turtlebone.codeforces.service.WeeklyTaskService;
 import com.turtlebone.core.service.EmailService;
+import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.StringUtil;
 import com.turtlebone.core.velocity.VelocityGenerator;
 
@@ -48,19 +50,12 @@ public class CFReportController {
 	private WeeklyTaskService weeklyTaskService;
 	@Autowired
 	private EmailService emailService;
-
+	@Autowired
+	private CFReportService cfReportService;
 
 	@RequestMapping(value = "/weekly", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> weekly() {
-		WeeklySummary result = null;
-		result = weeklyTaskService.queryWeeklyStatus();
-		
-		Map<String, Object> model = new HashMap<>();
-		model.put("weeklySummary", result);
-		String html = VelocityGenerator.getVMResult("velocity/email/weekly.vm", model);
-		List<String> addressList = new ArrayList<>();
-		addressList.add("133344251@qq.com");
-		emailService.sendEmail(addressList, "CF weekly report", html, "CF_SYS");
+	public @ResponseBody ResponseEntity<?> weekly(@RequestBody QueryStatusRequest request) {
+		String html = cfReportService.generateWeeklyReport(request.getFrom(), request.getTo());
 		return ResponseEntity.ok(html);
 	}
 	

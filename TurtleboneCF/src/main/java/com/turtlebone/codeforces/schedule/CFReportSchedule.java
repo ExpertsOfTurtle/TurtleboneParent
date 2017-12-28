@@ -10,29 +10,27 @@ import org.springframework.stereotype.Component;
 
 import com.turtlebone.codeforces.constants.ICFConstants;
 import com.turtlebone.codeforces.model.CFSubmissionModel;
+import com.turtlebone.codeforces.service.CFReportService;
 import com.turtlebone.codeforces.service.CFSubmissionService;
 import com.turtlebone.codeforces.service.FetchSubmissionsService;
 
 @Component
-public class SyncCFSubmissionSchedule {
-	private static Logger logger = LoggerFactory.getLogger(SyncCFSubmissionSchedule.class);
+public class CFReportSchedule {
+	private static Logger logger = LoggerFactory.getLogger(CFReportSchedule.class);
 	
 	@Autowired
 	private FetchSubmissionsService fetchSubmissionsService;
 	@Autowired
 	private CFSubmissionService cfSubmissionService;
-	
+	@Autowired
+	private CFReportService cfReportService;
+		
 	/**
-	 * 每天0:10 觸發
+	 * 每周一早上八點，生成上周報告
 	 */
-	@Scheduled(cron="0 10 0 * * ?") 
-    public void syncSubmissions() {
-		logger.info("開始同步數據");
-		for (String username : ICFConstants.USERLIST) {
-			logger.info("Start sync submissions for {}", username);
-			List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(username, 0, 100);
-			cfSubmissionService.insert(list);
-		}
+	@Scheduled(cron="0 0 8 * * MON") 
+    public void weeklyReport() {
+		logger.info("開始生成每周CF報告");
+		cfReportService.generateWeeklyReport(null, null);
     }
-	
 }

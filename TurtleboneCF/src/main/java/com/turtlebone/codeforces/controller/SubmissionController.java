@@ -23,6 +23,7 @@ import com.alibaba.fastjson.JSON;
 import com.turtlebone.codeforces.bean.QueryStatusRequest;
 import com.turtlebone.codeforces.bean.SyncSubmissionRequest;
 import com.turtlebone.codeforces.bean.WeeklySummary;
+import com.turtlebone.codeforces.constants.ICFConstants;
 import com.turtlebone.codeforces.model.CFSubmissionModel;
 import com.turtlebone.codeforces.service.CFSubmissionService;
 import com.turtlebone.codeforces.service.FetchSubmissionsService;
@@ -44,13 +45,26 @@ public class SubmissionController {
 
 	@RequestMapping(value = "/syncSubmission", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> syncSubmission(@RequestBody SyncSubmissionRequest request) {
-		logger.info("syncSubmission token:{}", JSON.toJSONString(request));
+		logger.info("syncSubmission request:{}", JSON.toJSONString(request));
 
 		List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(request.getUsername(), request.getFrom(),
 				request.getCount());
 		cfSubmissionService.insert(list);
 		
 		return ResponseEntity.ok(list);
+	}
+	
+	@RequestMapping(value = "/syncSubmission", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> syncSubmission() {
+		logger.info("syncSubmission");
+
+		for (String username : ICFConstants.USERLIST) {
+			logger.info("Start sync submissions for {}", username);
+			List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(username, 0, 100);
+			cfSubmissionService.insert(list);
+		}
+		
+		return ResponseEntity.ok("DONE");
 	}
 
 	@RequestMapping(value = "/queryStatus", method = RequestMethod.POST)

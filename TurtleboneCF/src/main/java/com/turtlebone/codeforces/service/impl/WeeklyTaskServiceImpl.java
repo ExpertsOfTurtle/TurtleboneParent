@@ -79,6 +79,9 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		}
 		parseDaySolve(weeklySummary);
 		
+		//每個用戶添加額外信息，如稱號，提交記錄列表
+		parseUser(weeklySummary, from, to);
+		
 		return weeklySummary;
 	}
 	
@@ -130,7 +133,11 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 			}
 		}
 	}
-	
+	private void parseUser(WeeklySummary weeklySummary, String from, String to) {
+		for (UserResult userResult : weeklySummary.getList()) {
+			parseUser(userResult, from, to);
+		}
+	}
 	private void parseUser(UserResult userResult, String from, String to) {
 		String username = userResult.getUsername();
 		Map<String, Object> map = new HashMap<>();
