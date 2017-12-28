@@ -24,6 +24,7 @@
    `tu`.`deadline`,
    `t`.`difficulty`,
    `tu`.`progress`,
+   `t`.`total`,
    `t`.`type`,
    `t`.`status`,
    `t`.`punishment_id`,

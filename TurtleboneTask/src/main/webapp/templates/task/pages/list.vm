@@ -3,7 +3,8 @@
 #foreach ($module in $list)	
 	<li data-role="list-divider">
 		<h2>${module.title}</h2>
-		<span class="ui-li-count">${module.progress}</span>
+		#set($rate=${module.progress} * 100 / ${module.total})
+		<span class="ui-li-count">$!{rate} %</span>
 	</li>	
 	<li aid="${module.id}">
 		<a _href="/task/task/detail/${module.id}" 
