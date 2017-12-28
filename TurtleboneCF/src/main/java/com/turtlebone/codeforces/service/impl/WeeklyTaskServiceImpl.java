@@ -15,6 +15,7 @@ import com.turtlebone.codeforces.bean.UserResult;
 import com.turtlebone.codeforces.bean.WeeklySummary;
 import com.turtlebone.codeforces.entity.CFSubmission;
 import com.turtlebone.codeforces.mapper.CFUserMapper;
+import com.turtlebone.codeforces.model.CFSubmissionModel;
 import com.turtlebone.codeforces.repository.CFSubmissionRepository;
 import com.turtlebone.codeforces.service.WeeklyTaskService;
 import com.turtlebone.core.statistics.bean.StatisticsObject;
@@ -22,6 +23,7 @@ import com.turtlebone.core.statistics.bean.StatisticsResult;
 import com.turtlebone.core.statistics.service.DataStatisticsUtil;
 import com.turtlebone.core.statistics.service.FilterConfig;
 import com.turtlebone.core.statistics.service.FilterCriteria;
+import com.turtlebone.core.util.BeanCopyUtils;
 import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.StringUtil;
 
@@ -127,5 +129,17 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 				}
 			}
 		}
+	}
+	
+	private void parseUser(UserResult userResult, String from, String to) {
+		String username = userResult.getUsername();
+		Map<String, Object> map = new HashMap<>();
+		map.put("username", username);
+		map.put("from", from);
+		map.put("to", to);
+		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(map);
+		List<CFSubmissionModel> submissionList = BeanCopyUtils.mapList(list, CFSubmissionModel.class);
+		userResult.setSubmission(submissionList);
+		
 	}
 }
