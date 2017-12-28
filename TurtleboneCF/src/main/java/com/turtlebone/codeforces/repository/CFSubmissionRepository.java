@@ -32,4 +32,6 @@ public interface CFSubmissionRepository{
     int batchInsert(List<CFSubmission> list);
     
     List<CFSubmission> selectByCondition(Map map);
+    
+    List<CFSubmission> querySolved(Map map);
 }

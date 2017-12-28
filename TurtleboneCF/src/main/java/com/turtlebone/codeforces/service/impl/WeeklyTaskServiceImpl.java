@@ -40,6 +40,7 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		Map<String, Object> queryMap = new HashMap<>();
 		queryMap.put("from", from);
 		queryMap.put("to", to);
+		List<CFSubmission> solvedList = cFSubmissionRepo.querySolved(queryMap);
 		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(queryMap);
 		
 		FilterConfig filterConfig = new FilterConfig();
@@ -53,7 +54,7 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		filterConfig.setFilters(filterCriteria);
 		
 		try {
-			result = DataStatisticsUtil.groupData(list, filterConfig);
+			result = DataStatisticsUtil.groupData(solvedList, filterConfig);
 			logger.debug(JSON.toJSONString(result));
 			weeklySummary = parseResult(result);			
 		} catch (SecurityException e) {
@@ -74,6 +75,8 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		parseDaySolve(weeklySummary);
+		
 		return weeklySummary;
 	}
 	
@@ -97,6 +100,23 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		}
 		result.setList(list);
 		return result;
+	}
+	private void parseDaySolve(WeeklySummary weeklySummary) {
+		if (weeklySummary == null) {
+			logger.warn("weeklySummary is null");
+			return;
+		}
+		for (UserResult userResult : weeklySummary.getList()) {
+			int cnt = 0;
+			List<Integer> list = userResult.getDailySolved();
+			for (int i = 0; i < list.size(); i++) {
+				int v = list.get(i);
+				if (v > 0) {
+					cnt++;
+				}
+			}
+			userResult.setDaySolved(cnt);
+		}
 	}
 	private void parseResult(WeeklySummary weeklySummary, StatisticsResult input) {
 		for (StatisticsObject so : input.getList()) {

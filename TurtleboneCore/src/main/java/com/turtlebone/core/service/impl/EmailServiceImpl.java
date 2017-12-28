@@ -49,12 +49,12 @@ public class EmailServiceImpl implements EmailService {
 			String address = getAddress(addressList);
 			request.setToAddress(address);
 			request.setSubject(title);
-			String filePath = getFilePath(template);
+			/*String filePath = getFilePath(template);
 			if (StringUtil.isEmpty(filePath)) {
 				return "FAIL";
 			}
-			String html = IOUtil.readTxtFile(filePath);
-			request.setHtmlBody(html);
+			String html = IOUtil.readTxtFile(filePath);*/
+			request.setHtmlBody(template);
 			
 			SingleSendMailResponse httpResponse = client.getAcsResponse(request);
 			logger.debug("Email request id:{}", httpResponse.getRequestId());

@@ -25,4 +25,6 @@ public interface CFSubmissionService {
 
 	public List<CFSubmissionModel> selectByCondition(List<Integer> idList, String username, 
 			String tag, String from, String to);
+	
+	public List<CFSubmissionModel> querySolved(String from, String to);
 }

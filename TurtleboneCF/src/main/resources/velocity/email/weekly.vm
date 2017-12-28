@@ -1,0 +1,8 @@
+<div>
+#foreach($userObj in ${weeklySummary.list})
+	<p>${userObj.username}</p>
+	<p>Solved:${userObj.problemSolved}</p>
+	<p>天数：${userObj.daySolved}</p>
+	<hr>
+#end
+</div>

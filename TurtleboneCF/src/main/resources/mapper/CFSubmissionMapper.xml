@@ -260,8 +260,10 @@
     </if>
   </select>
   <select id="querySolved" resultMap="BaseResultMap" parameterType="java.util.Map" >
-  	select 
-    <include refid="Base_Column_List" />
-    from submission where result='OK' group by contestId, problemIndex, username
+  	select <include refid="Base_Column_List" /> from submission where 1=1
+  	<if test="from != null and to != null">
+    	and submitTime between #{from,jdbcType=VARCHAR} and #{to,jdbcType=VARCHAR}
+    </if>
+	and id in (select id from submission where result='OK' group by contestId, problemIndex, username);
   </select>
  </mapper>

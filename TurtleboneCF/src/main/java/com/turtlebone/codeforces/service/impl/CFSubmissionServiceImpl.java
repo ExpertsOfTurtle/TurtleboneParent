@@ -144,5 +144,15 @@ public class CFSubmissionServiceImpl implements CFSubmissionService {
 	}
 
 
+	@Override
+	public List<CFSubmissionModel> querySolved(String from, String to) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("from", from);
+		map.put("to", to);
+		List<CFSubmission> list = cFSubmissionRepo.querySolved(map);
+		return BeanCopyUtils.mapList(list, CFSubmissionModel.class);
+	}
+
+
 
 }

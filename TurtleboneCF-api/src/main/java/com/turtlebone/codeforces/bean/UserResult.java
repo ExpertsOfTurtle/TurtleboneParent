@@ -11,4 +11,5 @@ public class UserResult {
 	private Integer failSubmission;
 	private List<Integer> dailySolved;
 	private List<Integer> dailyFailed;
+	private Integer daySolved;//有做题的天数
 }
