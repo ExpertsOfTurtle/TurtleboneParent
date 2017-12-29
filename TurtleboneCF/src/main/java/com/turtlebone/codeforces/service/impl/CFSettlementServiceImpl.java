@@ -55,7 +55,7 @@ public class CFSettlementServiceImpl implements CFSettlementService {
 	}
 	
 	private boolean doCompleteProblem(Integer contestId, String problemIndex, String username) {
-		String url = "http://127.0.0.1/task/CF/complete";
+		String url = "http://111.230.249.171:8080/task/CF/complete";
 		String paramUrl = String.format("http://codeforces.com/problemset/problem/%d/%s", 
 				contestId, problemIndex);
 		JSONObject req = new JSONObject();
