@@ -71,7 +71,7 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		try {
 			result = DataStatisticsUtil.groupData(list, filterConfig);
 			logger.debug(JSON.toJSONString(result));
-			parseResult(weeklySummary, result);
+			parseFailResult(weeklySummary, result);
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
@@ -123,15 +123,28 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 			userResult.setDaySolved(cnt);
 		}
 	}
-	private void parseResult(WeeklySummary weeklySummary, StatisticsResult input) {
-		for (StatisticsObject so : input.getList()) {
+	private void parseFailResult(WeeklySummary weeklySummary, StatisticsResult input) {
+		if (input.getList() == null || input.getList().size() == 0) {
+			int n = input.getLabels().size();
+			List<Integer> data = new ArrayList<>();
+			for (int i = 0; i < n; i++) {
+				data.add(0);
+			}
 			for (UserResult userResult : weeklySummary.getList()) {
-				if (userResult.getUsername().equals(so.getLabel())) {
-					userResult.setDailyFailed(so.getData());
-					userResult.setFailSubmission(so.getTotal());
+				userResult.setFailSubmission(0);
+				userResult.setDailyFailed(data);
+			}
+		} else {
+			for (StatisticsObject so : input.getList()) {
+				for (UserResult userResult : weeklySummary.getList()) {
+					if (userResult.getUsername().equals(so.getLabel())) {
+						userResult.setDailyFailed(so.getData());
+						userResult.setFailSubmission(so.getTotal());
+					}
 				}
 			}
 		}
+		
 	}
 	private void parseUser(WeeklySummary weeklySummary, String from, String to) {
 		for (UserResult userResult : weeklySummary.getList()) {

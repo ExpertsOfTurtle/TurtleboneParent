@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.turtlebone.codeforces.bean.CFSettleRequest;
 import com.turtlebone.codeforces.bean.QueryStatusRequest;
 import com.turtlebone.codeforces.bean.SyncSubmissionRequest;
 import com.turtlebone.codeforces.bean.WeeklySummary;
@@ -48,8 +49,10 @@ public class CFSettlementController {
 	
 
 	@RequestMapping(value = "/weekly", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> weekly() {
-		cfSettlementService.calculate(null, null);
+	public @ResponseBody ResponseEntity<?> weekly(@RequestBody CFSettleRequest request) {
+		String from = request.getFrom();
+		String to = request.getTo();
+		cfSettlementService.calculate(from, to);
 		return ResponseEntity.ok("OK");
 	}
 	
