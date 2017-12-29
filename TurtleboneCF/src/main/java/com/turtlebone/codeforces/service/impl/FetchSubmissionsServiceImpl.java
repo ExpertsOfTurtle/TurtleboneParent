@@ -59,6 +59,7 @@ public class FetchSubmissionsServiceImpl implements FetchSubmissionsService {
 		long time = obj.getLongValue("creationTimeSeconds");
 		time *= 1000;
 		model.setSubmittime(DateUtil.format(time, "yyyy-MM-dd HH:mm:ss"));
+		model.setStatus(0);
 		return model;
 	}
 }

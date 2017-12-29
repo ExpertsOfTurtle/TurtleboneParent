@@ -10,6 +10,7 @@ public class CFSubmissionModel implements Serializable{
 	private String result;
 	private String submittime;
 	private String username;
+	private Integer status;
 		
 	public void setId(Integer id){
 		this.id = id;
@@ -67,5 +68,12 @@ public class CFSubmissionModel implements Serializable{
 		return this.username;
 	}
 		
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+	
+	public Integer getStatus(){
+		return this.status;
+	}
 		
 }

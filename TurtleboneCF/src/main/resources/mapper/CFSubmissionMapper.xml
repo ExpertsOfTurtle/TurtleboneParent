@@ -9,6 +9,7 @@
     <result column="result" property="result" jdbcType="VARCHAR" />
     <result column="submitTime" property="submittime" jdbcType="VARCHAR" />
     <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
   </resultMap>
 
  <sql id="Base_Column_List" >
@@ -18,7 +19,8 @@
    `tags`,
    `result`,
    `submitTime`,
-   `username`
+   `username`,
+   `status`
  </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -41,7 +43,8 @@
      `tags`,
      `result`,
      `submitTime`,
-     `username`
+     `username`,
+     `status`
     )
     values (
      #{id,jdbcType=INTEGER},
@@ -50,7 +53,8 @@
      #{tags,jdbcType=VARCHAR},
      #{result,jdbcType=VARCHAR},
      #{submittime,jdbcType=VARCHAR},
-     #{username,jdbcType=VARCHAR}
+     #{username,jdbcType=VARCHAR},
+     #{status,jdbcType=INTEGER}
  )
   </insert>
   
@@ -80,6 +84,9 @@
       <if test="username != null" >
         `username`,
       </if>
+      <if test="status != null" >
+        `status`,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -102,6 +109,9 @@
       </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -127,6 +137,9 @@
        <if test="username != null" >
         `username`= #{username,jdbcType=VARCHAR},
        </if>
+       <if test="status != null" >
+        `status`= #{status,jdbcType=INTEGER},
+       </if>
           </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -139,7 +152,8 @@
        `tags` = #{tags,jdbcType=VARCHAR},
        `result` = #{result,jdbcType=VARCHAR},
        `submitTime` = #{submittime,jdbcType=VARCHAR},
-       `username` = #{username,jdbcType=VARCHAR}
+       `username` = #{username,jdbcType=VARCHAR},
+       `status` = #{status,jdbcType=INTEGER}
      where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -169,6 +183,9 @@
             <if test="username != null" >
         and `username` = #{username,jdbcType=VARCHAR}
       </if>
+            <if test="status != null" >
+        and `status` = #{status,jdbcType=INTEGER}
+      </if>
           </where>
   </select>
 
@@ -196,6 +213,9 @@
     </if>
         <if test="cFSubmission.username != null" >
       and `username` = #{cFSubmission.username,jdbcType=VARCHAR}
+    </if>
+        <if test="cFSubmission.status != null" >
+      and `status` = #{cFSubmission.status,jdbcType=INTEGER}
     </if>
         <if test="pageable.sort != null" >
       order by 
@@ -225,7 +245,8 @@
      `tags`,
      `result`,
      `submitTime`,
-     `username`
+     `username`,
+     `status`
     ) values
     <foreach collection="list" item="item" separator=",">
     	 (
@@ -235,7 +256,8 @@
 	     #{item.tags,jdbcType=VARCHAR},
 	     #{item.result,jdbcType=VARCHAR},
 	     #{item.submittime,jdbcType=VARCHAR},
-	     #{item.username,jdbcType=VARCHAR})
+	     #{item.username,jdbcType=VARCHAR},
+	     #{item.status,jdbcType=INTEGER})
     </foreach>
   </insert>
   <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >

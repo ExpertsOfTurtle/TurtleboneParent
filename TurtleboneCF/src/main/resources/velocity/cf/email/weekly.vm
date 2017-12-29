@@ -1,32 +1,6 @@
 <html>
 	<head>
-		<style>
-		/* Table Head */
-		table thead th {
-		background-color: rgb(81, 130, 187);
-		color: #fff;
-		border-bottom-width: 0;
-		}
 		
-		/* Column Style */
-		table td {
-		color: #000;
-		}
-		/* Heading and Column Style */
-		table tr, table th {
-		border-width: 1px;
-		border-style: solid;
-		border-color: rgb(81, 130, 187);
-		}
-		
-		/* Padding and font style */
-		table td, table th {
-		padding: 5px 10px;
-		font-size: 12px;
-		font-family: Verdana;
-		font-weight: bold;
-		}
-		</style>
 	</head>
 	<body>
 		<p>上周統計</p>
@@ -37,7 +11,7 @@
 			#set($trStyle="border:1px solid rgb(81, 130, 187);")
 			#set($tdStyle="padding: 5px 10px;font-size: 12px;font-family: Verdana;font-weight: bold;")
 			#foreach($userObj in ${weeklySummary.list})
-				<h2>${userObj.username}</h2>
+				<h2>${userObj.username}($userObj.nickName})</h2>
 				<p>做題數:${userObj.problemSolved}</p>
 				<p>天数：${userObj.daySolved}</p>
 				<table>

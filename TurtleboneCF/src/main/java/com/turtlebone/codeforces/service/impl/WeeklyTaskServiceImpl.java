@@ -148,5 +148,26 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		List<CFSubmissionModel> submissionList = BeanCopyUtils.mapList(list, CFSubmissionModel.class);
 		userResult.setSubmission(submissionList);
 		
+		int problemSolve = userResult.getProblemSolved();
+		int failed = userResult.getFailSubmission();
+		String nickName = "";
+		if (problemSolve <= 3) {
+			nickName = "懒惰";
+		} else if (problemSolve <= 6) {
+			nickName = "乖巧";
+		} else {
+			nickName = "积极秒题";
+		}
+		if (failed < problemSolve) {
+			nickName += "聪明";
+		} else {
+			nickName += "笨笨笨";
+		}
+		if ("scorpiowf".equalsIgnoreCase(userResult.getUsername())) {
+			nickName += "小王子";
+		} else {
+			nickName += "小公举";
+		}
+		userResult.setNickName(nickName);
 	}
 }
