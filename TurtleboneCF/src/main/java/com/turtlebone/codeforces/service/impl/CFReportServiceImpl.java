@@ -38,10 +38,11 @@ public class CFReportServiceImpl implements CFReportService {
 		model.put("weeklySummary", result);
 		model.put("from", from);
 		model.put("to", to);
-		String html = VelocityGenerator.getVMResult("velocity/email/weekly.vm", model);
+		String html = VelocityGenerator.getVMResult("velocity/cf/email/weekly.vm", model);
 		List<String> addressList = new ArrayList<>();
 		addressList.add("133344251@qq.com");
-		addressList.add("873847677@qq.com");
+		addressList.add("danny01.feng@vipshop.com");
+//		addressList.add("873847677@qq.com");
 		emailService.sendEmail(addressList, "CF weekly report", html, "TurtleboneCF");
 		return html;
 	}

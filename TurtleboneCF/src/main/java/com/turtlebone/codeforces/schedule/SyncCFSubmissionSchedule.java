@@ -30,7 +30,7 @@ public class SyncCFSubmissionSchedule {
 		logger.info("開始同步數據");
 		for (String username : ICFConstants.USERLIST) {
 			logger.info("Start sync submissions for {}", username);
-			List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(username, 0, 100);
+			List<CFSubmissionModel> list = fetchSubmissionsService.fetchResult(username, 1, 100);
 			cfSubmissionService.insert(list);
 		}
     }

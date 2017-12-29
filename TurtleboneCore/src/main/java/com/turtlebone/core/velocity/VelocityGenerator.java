@@ -28,12 +28,16 @@ public class VelocityGenerator {
 		ve.setProperty(Velocity.INPUT_ENCODING, "UTF-8");
 		ve.setProperty(Velocity.OUTPUT_ENCODING, "UTF-8");
 
-	/*	boolean isLocal = EnvIdentify.isLocalDebug;
-		if (isLocal && !vmName.endsWith("json.vm")) {
-			String rootPath = "E:\\Workspace\\BankSim\\Bronze\\webapp\\";
+		boolean isLocal = com.turtlebone.core.common.EnvIdentify.isLocalDebug;
+		if (isLocal) {
+			String rootPath = "";
+			if (vmName.contains("/cf/")) {
+				rootPath = "E:\\coding\\TurtleboneParent\\TurtleboneCF\\src\\main\\resources";
+			}
+			
 			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "file");
 			ve.setProperty(RuntimeConstants.FILE_RESOURCE_LOADER_PATH, rootPath);
-		}*/
+		}
 		ve.init();
 
 		Template t = ve.getTemplate(vmName);
