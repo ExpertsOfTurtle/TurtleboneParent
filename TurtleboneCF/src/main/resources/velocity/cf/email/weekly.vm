@@ -11,7 +11,7 @@
 			#set($trStyle="border:1px solid rgb(81, 130, 187);")
 			#set($tdStyle="padding: 5px 10px;font-size: 12px;font-family: Verdana;font-weight: bold;")
 			#foreach($userObj in ${weeklySummary.list})
-				<h2>${userObj.username}($userObj.nickName})</h2>
+				<h2>${userObj.username}($userObj.nickName)</h2>
 				<p>做題數:${userObj.problemSolved}</p>
 				<p>天数：${userObj.daySolved}</p>
 				<table>
