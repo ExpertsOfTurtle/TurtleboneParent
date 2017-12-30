@@ -1,0 +1,24 @@
+########################################
+#				project  configuration   for 128
+########################################
+
+project.exportPath=./
+project.name=SudokuOnline
+project.packageName=com.turtlebone
+project.moduleName=sudoku
+project.type=simpleservice,webapp
+#project.type=
+project.buildTool=gradle
+project.templateFile=
+#project.templateFile=D:/vm-simple-webapp-tablesharding.json
+project.domain=www.turtlebone.top
+
+
+########################################
+#				database  configuration
+########################################
+db.driver=com.mysql.jdbc.Driver
+db.url=jdbc:mysql://39.108.103.108:3306/turtle
+db.userId=mysql
+db.pwd=mysql
+db.tables=sudoku:Sudoku
