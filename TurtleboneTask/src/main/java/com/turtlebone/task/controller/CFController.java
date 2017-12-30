@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,7 +102,11 @@ public class CFController {
 	}
 
 	@RequestMapping(value = "/complete", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> complete(@RequestBody CompleteProblemRequest request) {
+	public @ResponseBody ResponseEntity<?> complete(HttpServletRequest httpReq, @RequestBody CompleteProblemRequest request) {
+		String remoteAddr = httpReq.getRemoteAddr();
+		if (!"127.0.0.1".equals(remoteAddr) && !"111.230.249.171".equals(remoteAddr)) {
+			return ResponseEntity.ok("非法访问");
+		}
 		ProblemModel problem = problemService.selectIdOfNextProblem(request.getUsername(), request.getType());
 		if (problem == null) {
 			logger.warn("根本就没有可以完成的题！");
