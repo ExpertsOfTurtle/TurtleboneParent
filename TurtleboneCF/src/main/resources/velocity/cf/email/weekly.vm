@@ -3,7 +3,7 @@
 		
 	</head>
 	<body>
-		<p>上周統計</p>
+		<p>上周统计</p>
 		<p>from $!{from} to ${to}</p>
 		<hr>
 		<div>
@@ -12,7 +12,7 @@
 			#set($tdStyle="padding: 5px 10px;font-size: 12px;font-family: Verdana;font-weight: bold;")
 			#foreach($userObj in ${weeklySummary.list})
 				<h2>${userObj.username}($userObj.nickName)</h2>
-				<p>做題數:${userObj.problemSolved}</p>
+				<p>做题数:${userObj.problemSolved}</p>
 				<p>天数：${userObj.daySolved}</p>
 				<table>
 					<thead>

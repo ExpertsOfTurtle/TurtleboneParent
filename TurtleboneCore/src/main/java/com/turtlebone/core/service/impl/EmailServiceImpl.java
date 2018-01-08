@@ -37,6 +37,7 @@ public class EmailServiceImpl implements EmailService {
 	
 	@Override
 	public String sendEmail(List<String> addressList, String title, String template, String alias) {
+		String rs = "OK";
 		IClientProfile profile = DefaultProfile.getProfile("cn-hangzhou", ACCESS_KEY, SECRET);
 		IAcsClient client = new DefaultAcsClient(profile);
 		SingleSendMailRequest request = new SingleSendMailRequest();
@@ -61,10 +62,12 @@ public class EmailServiceImpl implements EmailService {
 			logger.info("Sending email to {}", address);
 		} catch (ServerException e) {
 			e.printStackTrace();
+			rs = "Fail";
 		} catch (ClientException e) {
 			e.printStackTrace();
+			rs = "Fail";
 		}
-		return "OK";
+		return rs;
 	}
 	private String getAddress(List<String> addressList) {
 		StringBuffer sb = new StringBuffer();
