@@ -32,7 +32,7 @@ public class VelocityGenerator {
 		if (isLocal) {
 			String rootPath = "";
 			if (vmName.contains("/cf/")) {
-				rootPath = "E:\\coding\\TurtleboneParent\\TurtleboneCF\\src\\main\\resources";
+				rootPath = "D:\\workspace\\java\\TurtleboneParent\\TurtleboneCF\\src\\main\\resources";
 			}
 			
 			ve.setProperty(RuntimeConstants.RESOURCE_LOADER, "file");

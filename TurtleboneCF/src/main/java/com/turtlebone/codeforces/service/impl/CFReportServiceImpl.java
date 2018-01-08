@@ -45,15 +45,13 @@ public class CFReportServiceImpl implements CFReportService {
 		
 		addressList.add("fengrenchang86@vip.qq.com");
 //		addressList.add("danny01.feng@vipshop.com");
-		addressList.add("873847677@qq.com");
+//		addressList.add("873847677@qq.com");
 		
+		String rs = emailService.sendEmail(addressList, "Codeforces周报", html, "Turtlebone");
 		for (String addr : addressList) {
-			logger.info("sending email to {}", addr);
-			List<String> li = new ArrayList<>();
-			li.add(addr);
-			String rs = emailService.sendEmail(li, "Codeforces周报", html, "Turtlebone");
 			logger.info("Send email to {}, result:{}", addr, rs);
-		}		
+		}
+		
 		return html;
 	}
 }

@@ -1,39 +1,55 @@
 <html>
 	<head>
-		
+		<style>
+			table th {
+				background-color: rgb(81, 130, 187);
+				color: #fff;
+				border-bottom-width: 0;
+				border:1px solid rgb(81, 130, 187);
+				padding: 5px 10px;
+				font-size: 12px;
+				font-family: Verdana;
+				font-weight: bold;
+			}
+			table tr {
+				border:1px solid rgb(81, 130, 187);
+			}
+			table td {
+				padding: 5px 10px;
+				font-size: 12px;
+				font-family: Verdana;
+				font-weight: bold;
+			}
+		</style>
 	</head>
 	<body>
-		<p>上周统计</p>
-		<p>from $!{from} to ${to}</p>
-		<hr>
 		<div>
 			#set($thStyle="background-color: rgb(81, 130, 187);color: #fff;border-bottom-width: 0;border:1px solid rgb(81, 130, 187);padding: 5px 10px;font-size: 12px;font-family: Verdana;font-weight: bold;")
 			#set($trStyle="border:1px solid rgb(81, 130, 187);")
 			#set($tdStyle="padding: 5px 10px;font-size: 12px;font-family: Verdana;font-weight: bold;")
 			#foreach($userObj in ${weeklySummary.list})
-				<h2>${userObj.username}($userObj.nickName)</h2>
+				<h2>Dear ${userObj.username}($userObj.nickName)</h2>
+				<p>你在$!{from} to ${to}的统计结果如下：</p>
 				<p>做题数:${userObj.problemSolved}</p>
 				<p>天数：${userObj.daySolved}</p>
 				<table>
 					<thead>
-						<th style="$thStyle" width="5%">id</th>
-						<th style="$thStyle" width="8%">Problem</th>
-						<th style="$thStyle" width="10%">Result</th>
-						<th style="$thStyle" width="25%">Time</th>
-						<th style="$thStyle" >Tags</th>
+						<th style="$!thStyle" width="5%">id</th>
+						<th style="$!thStyle" width="8%">Problem</th>
+						<th style="$!thStyle" width="10%">Result</th>
+						<th style="$!thStyle" width="25%">Time</th>
 					</thead>
 					<tbody>
 						#foreach($item in $userObj.submission)
-						<tr style="$trStyle">
-							<td style="$tdStyle">
+						<tr style="$!trStyle">
+							<td style="$!tdStyle">
 								<a href="http://codeforces.com/contest/$!{item.contestid}/submission/$!{item.id}">$!{item.id}</a>
 							</td>
-							<td style="$tdStyle">
+							<td style="$!tdStyle">
 								<a href="http://codeforces.com/problemset/problem/$!{item.contestid}/$!{item.problemindex}">$!{item.contestid}$!{item.problemindex}</a>
 							</td>
-							<td style="$tdStyle">$!{item.result}</td>
-							<td style="$tdStyle">$!{item.submittime}</td>
-							<td style="$tdStyle">$!{item.tags}</td>
+							<td style="$!tdStyle">$!{item.result}</td>
+							<td style="$!tdStyle">$!{item.submittime}</td>
 						</tr>
 						#end
 					</tbody>
