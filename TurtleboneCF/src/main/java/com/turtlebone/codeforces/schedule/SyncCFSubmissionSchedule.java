@@ -25,7 +25,7 @@ public class SyncCFSubmissionSchedule {
 	/**
 	 * 每天0:10 觸發
 	 */
-	@Scheduled(cron="0 10 0 * * ?") 
+	@Scheduled(cron="0 0/30 9-23,0 * * ?") 
     public void syncSubmissions() {
 		logger.info("開始同步數據");
 		for (String username : ICFConstants.USERLIST) {

@@ -51,7 +51,7 @@ public class CFReportServiceImpl implements CFReportService {
 			logger.info("sending email to {}", addr);
 			List<String> li = new ArrayList<>();
 			li.add(addr);
-			String rs = emailService.sendEmail(li, "Codeforces周报", html, "CodeforcesTurtlebone");
+			String rs = emailService.sendEmail(li, "Codeforces周报", html, "Turtlebone");
 			logger.info("Send email to {}, result:{}", addr, rs);
 		}		
 		return html;
