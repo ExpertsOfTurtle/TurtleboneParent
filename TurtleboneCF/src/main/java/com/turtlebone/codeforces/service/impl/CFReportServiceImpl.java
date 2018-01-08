@@ -1,6 +1,7 @@
 package com.turtlebone.codeforces.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,11 +40,18 @@ public class CFReportServiceImpl implements CFReportService {
 		model.put("from", from);
 		model.put("to", to);
 		String html = VelocityGenerator.getVMResult("velocity/cf/email/weekly.vm", model);
+		logger.debug("weekly.vm, length={}", html.length());
 		List<String> addressList = new ArrayList<>();
+		
 		addressList.add("133344251@qq.com");
 //		addressList.add("danny01.feng@vipshop.com");
 		addressList.add("873847677@qq.com");
-		emailService.sendEmail(addressList, "CF weekly report", html, "TurtleboneCF");
+		
+		for (String addr : addressList) {
+			logger.info("sending email to {}", addr);
+		}
+		String rs = emailService.sendEmail(addressList, "CF weekly report", html, "TurtleboneCF");
+		logger.info("Send email result:{}", rs);
 		return html;
 	}
 }

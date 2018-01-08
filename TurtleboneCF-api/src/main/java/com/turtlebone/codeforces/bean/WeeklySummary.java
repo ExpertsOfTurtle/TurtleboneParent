@@ -8,4 +8,7 @@ import lombok.Data;
 public class WeeklySummary {
 	private List<String> labels;
 	private List<UserResult> list;
+	
+	private String from;
+	private String to;
 }
