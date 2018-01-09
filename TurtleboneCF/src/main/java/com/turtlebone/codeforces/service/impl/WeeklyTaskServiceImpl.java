@@ -161,23 +161,31 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		int problemSolve = userResult.getProblemSolved();
 		int failed = userResult.getFailSubmission();
 		String nickName = "";
-		if (problemSolve <= 3) {
-			nickName = "懒惰";
-		} else if (problemSolve <= 6) {
-			nickName = "乖巧";
+		boolean solveGood = problemSolve >= getNeedSolve(userResult.getUsername());
+		if (solveGood && failed <= problemSolve) {
+			nickName = "乖巧机智";
+		} else if (solveGood) {
+			nickName = "勤奋努力";
+		} else if (problemSolve == 0 && failed > 0) {
+			nickName = "笨笨笨";
+		} else if (problemSolve == 0 && failed == 0) {
+			nickName = "懒懒懒";
 		} else {
-			nickName = "积极秒题";
+			nickName = "差少少乖巧";
 		}
-		if (failed < problemSolve) {
-			nickName += "聪明";
-		} else {
-			nickName += "笨笨笨";
-		}
+		
 		if ("scorpiowf".equalsIgnoreCase(userResult.getUsername())) {
 			nickName += "小王子";
 		} else {
 			nickName += "小公举";
 		}
 		userResult.setNickName(nickName);
+	}
+	private int getNeedSolve(String name) {
+		if ("scorpiowf".equalsIgnoreCase(name)) {
+			return 5;
+		} else {
+			return 4;
+		}
 	}
 }
