@@ -134,6 +134,8 @@
 		<module>TurtleboneDream-api</module>
 		<module>TurtleboneCF</module>
 		<module>TurtleboneCF-api</module>
+		<module>TurtleboneLocker</module>
+		<module>TurtleboneLocker-api</module>
 	</modules>
 	<build>
 		<plugins>

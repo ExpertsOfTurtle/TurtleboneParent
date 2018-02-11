@@ -12,6 +12,7 @@ public class UserModel implements Serializable{
 	private String createtime;
 	private Float balance;
 	private Integer usertype;
+	private String openid;
 	private String nickname;
 	
 }

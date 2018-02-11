@@ -17,16 +17,15 @@ spring:
     properties.input.encoding: UTF-8
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
-    suffix: .vm
+    suffix: .vm 
   jmx.default-domain: auth.turtlebone
 server:
   port: 12004
   contextPath: /auth/
 mybatis:
   mapperLocations: classpath:mapper/*.xml
-redis.expireTime: 60
 constants:
-  excludeRegex: nothing
+  excludeRegex: wechat
 ---
 spring:
   profiles: prod
@@ -56,4 +55,4 @@ mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 3600
 constants:
-  excludeRegex: nothing
+  excludeRegex: wechat

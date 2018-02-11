@@ -11,6 +11,7 @@ public class User{
 	private String createtime;
 	private Float balance;
 	private Integer usertype;
+	private String openid;
 	private String nickname;
 		
 }
