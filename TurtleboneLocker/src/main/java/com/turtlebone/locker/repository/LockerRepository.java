@@ -2,6 +2,8 @@ package com.turtlebone.locker.repository;
 
 import com.turtlebone.locker.entity.Locker;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -27,4 +29,5 @@ public interface LockerRepository{
 
     List<Locker> selectPage(@Param("locker") Locker locker, @Param("pageable") Pageable pageable);
 	
+    List<Locker> selectByCondition(Map map);
 }

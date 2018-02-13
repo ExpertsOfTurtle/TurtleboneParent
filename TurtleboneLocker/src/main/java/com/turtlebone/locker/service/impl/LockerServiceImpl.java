@@ -1,6 +1,10 @@
 
 package com.turtlebone.locker.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -91,6 +95,17 @@ public class LockerServiceImpl implements LockerService {
 	@Override
 	public int selectCount(LockerModel lockerModel) {
 		return lockerRepo.selectCount(BeanCopyUtils.map(lockerModel, Locker.class));
+	}
+
+
+	@Override
+	public List<LockerModel> selectByCondition(String name, String category, String location) {
+		Map<String, String> map = new HashMap<>();
+		map.put("name", name);
+		map.put("category", category);
+		map.put("location", location);
+		List<Locker> list = lockerRepo.selectByCondition(map);
+		return BeanCopyUtils.mapList(list, LockerModel.class);
 	}
 
 

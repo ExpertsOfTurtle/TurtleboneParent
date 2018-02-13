@@ -159,6 +159,21 @@
       limit ${pageable.offset}, ${pageable.pageSize}
     </if>
   </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from locker
+    where 1=1
+    <if test="name != null">
+    	and name like CONCAT('%', #{name}, '%') 
+    </if>
+    <if test="category != null">
+    	and category = #{category}
+    </if>
+    <if test="location != null">
+    	and location like CONCAT('%', #{location}, '%') 
+    </if>
+  </select>
  </mapper>
   
 

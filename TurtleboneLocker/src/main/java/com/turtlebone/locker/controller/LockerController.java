@@ -1,5 +1,7 @@
 package com.turtlebone.locker.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.turtlebone.locker.bean.AddLockerRequest;
+import com.turtlebone.locker.bean.QueryLockerRequest;
 import com.turtlebone.locker.model.LockerModel;
 import com.turtlebone.locker.service.LockerService;
 
@@ -27,7 +30,8 @@ public class LockerController {
 	private LockerService lockerService;
 	
 	@RequestMapping(value="/add", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> add(HttpServletRequest httpServletRequest, @RequestBody AddLockerRequest request) {
+	public @ResponseBody ResponseEntity<?> add(HttpServletRequest httpServletRequest, 
+			@RequestBody AddLockerRequest request) {
 		logger.info("Add locker");
 		
 		LockerModel lockerModel = new LockerModel();
@@ -37,5 +41,17 @@ public class LockerController {
 		lockerService.create(lockerModel);
 		
 		return ResponseEntity.ok(lockerModel);
+	}
+	
+	@RequestMapping(value="/query", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> query(HttpServletRequest httpServletRequest, 
+			@RequestBody QueryLockerRequest request) {
+		logger.info("Query locker");
+		
+		List<LockerModel> list = lockerService.selectByCondition(request.getName(), 
+				request.getCategory(), 
+				request.getLocation());
+		
+		return ResponseEntity.ok(list);
 	}
 }
