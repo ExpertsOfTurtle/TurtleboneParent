@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.turtlebone.core.repository.LockerRepository" >
-  <resultMap id="BaseResultMap" type="com.turtlebone.core.entity.Locker" >
+<mapper namespace="com.turtlebone.locker.repository.LockerRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.locker.entity.Locker" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="category" property="category" jdbcType="VARCHAR" />
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="location" property="location" jdbcType="VARCHAR" />
     <result column="updatetime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
 
  <sql id="Base_Column_List" >
@@ -14,7 +15,8 @@
    `category`,
    `name`,
    `location`,
-   `updatetime`
+   `updatetime`,
+   `createtime`
  </sql>
   
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -29,26 +31,23 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
-  <insert id="insert" parameterType="com.turtlebone.core.entity.Locker" >
+  <insert id="insert" parameterType="com.turtlebone.locker.entity.Locker" 
+  useGeneratedKeys="true" keyProperty="id">
     insert into locker ( 
      `id`,
      `category`,
      `name`,
-     `location`,
-     `updatetime`
+     `location`
     )
     values (
      #{id,jdbcType=INTEGER},
      #{category,jdbcType=VARCHAR},
      #{name,jdbcType=VARCHAR},
-     #{location,jdbcType=VARCHAR},
-     #{updatetime,jdbcType=TIMESTAMP}
+     #{location,jdbcType=VARCHAR}
  )
   </insert>
   
-  
-  
-  <insert id="insertSelective" parameterType="com.turtlebone.core.entity.Locker" >
+  <insert id="insertSelective" parameterType="com.turtlebone.locker.entity.Locker" >
     insert into locker
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -62,9 +61,6 @@
       </if>
       <if test="location != null" >
         `location`,
-      </if>
-      <if test="updatetime != null" >
-        `updatetime`,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -80,13 +76,10 @@
       <if test="location != null" >
         #{location,jdbcType=VARCHAR},
       </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
-      </if>
     </trim>
   </insert>
   
-  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.core.entity.Locker" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.locker.entity.Locker" >
     update locker
 	  <set>
        <if test="category != null" >
@@ -98,26 +91,22 @@
        <if test="location != null" >
         `location`= #{location,jdbcType=VARCHAR},
        </if>
-       <if test="updatetime != null" >
-        `updatetime`= #{updatetime,jdbcType=TIMESTAMP},
-       </if>
           </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   
-  <update id="updateByPrimaryKey" parameterType="com.turtlebone.core.entity.Locker" >
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.locker.entity.Locker" >
     update locker
     set 
        `category` = #{category,jdbcType=VARCHAR},
        `name` = #{name,jdbcType=VARCHAR},
-       `location` = #{location,jdbcType=VARCHAR},
-       `updatetime` = #{updatetime,jdbcType=TIMESTAMP}
+       `location` = #{location,jdbcType=VARCHAR}
      where id = #{id,jdbcType=INTEGER}
   </update>
   
 
   
-  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.core.entity.Locker" >
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.locker.entity.Locker" >
     select count(*) from locker
     <where >
             <if test="id != null" >
@@ -131,9 +120,6 @@
       </if>
             <if test="location != null" >
         and `location` = #{location,jdbcType=VARCHAR}
-      </if>
-            <if test="updatetime != null" >
-        and `updatetime` = #{updatetime,jdbcType=TIMESTAMP}
       </if>
           </where>
   </select>
@@ -154,9 +140,6 @@
         <if test="locker.location != null" >
       and `location` = #{locker.location,jdbcType=VARCHAR}
     </if>
-        <if test="locker.updatetime != null" >
-      and `updatetime` = #{locker.updatetime,jdbcType=TIMESTAMP}
-    </if>
         <if test="pageable.sort != null" >
       order by 
       <foreach collection="pageable.sort" item="order" separator="," >
@@ -166,6 +149,7 @@
    || order.property == 'name'
    || order.property == 'location'
    || order.property == 'updatetime'
+   || order.property == 'createtime'
         " >
         		${order.property} ${order.direction}
         </if>

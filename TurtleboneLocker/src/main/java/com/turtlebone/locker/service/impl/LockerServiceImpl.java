@@ -1,15 +1,14 @@
 
-package com.turtlebone.core.service.impl;
+package com.turtlebone.locker.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import com.turtlebone.core.entity.Locker;
-import com.turtlebone.core.repository.LockerRepository;
-import com.turtlebone.core.model.LockerModel;
-import com.turtlebone.core.service.LockerService;
 import com.turtlebone.core.util.BeanCopyUtils;
+import com.turtlebone.locker.entity.Locker;
+import com.turtlebone.locker.repository.LockerRepository;
+import com.turtlebone.locker.model.LockerModel;
+import com.turtlebone.locker.service.LockerService;
 
 @Service
 public class LockerServiceImpl implements LockerService {
@@ -68,7 +67,10 @@ public class LockerServiceImpl implements LockerService {
 	 */
 	@Override
 	public int create(LockerModel lockerModel) {
-		return lockerRepo.insert(BeanCopyUtils.map(lockerModel, Locker.class));
+		Locker locker = BeanCopyUtils.map(lockerModel, Locker.class);
+		lockerRepo.insert(locker);
+		lockerModel.setId(locker.getId());
+		return locker.getId();
 	}
 
 	/*

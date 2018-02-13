@@ -1,4 +1,4 @@
-package com.turtlebone.core.entity;
+package com.turtlebone.locker.entity;
 
 import java.util.Date;
 
@@ -9,6 +9,7 @@ public class Locker{
 	private String name;
 	private String location;
 	private Date updatetime;
+	private Date createtime;
 		
 	public void setId(Integer id){
 		this.id = id;
@@ -50,6 +51,13 @@ public class Locker{
 		return this.updatetime;
 	}
 		
+	public void setCreatetime(Date createtime){
+		this.createtime = createtime;
+	}
+	
+	public Date getCreatetime(){
+		return this.createtime;
+	}
 		
 }
 

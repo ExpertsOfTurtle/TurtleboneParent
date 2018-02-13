@@ -1,7 +1,7 @@
 
-package com.turtlebone.core.service;
+package com.turtlebone.locker.service;
 
-import com.turtlebone.core.model.LockerModel;
+import com.turtlebone.locker.model.LockerModel;
 import java.util.Date;
 
 public interface LockerService{

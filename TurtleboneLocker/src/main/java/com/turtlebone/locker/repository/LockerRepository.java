@@ -1,6 +1,6 @@
-package com.turtlebone.core.repository;
+package com.turtlebone.locker.repository;
 
-import com.turtlebone.core.entity.Locker;
+import com.turtlebone.locker.entity.Locker;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;

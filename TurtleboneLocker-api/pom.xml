@@ -8,4 +8,11 @@
   <artifactId>TurtleboneLocker-api</artifactId>
   <name>TurtleboneLocker-api</name>
   <description>TurtleboneLocker-api</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>com.turtlebone</groupId>
+  		<artifactId>TurtleboneCore</artifactId>
+  		<version>0.0.1-SNAPSHOT</version>
+  	</dependency>
+  </dependencies>
 </project>

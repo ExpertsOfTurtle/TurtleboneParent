@@ -1,4 +1,4 @@
-package com.turtlebone.core.model;
+package com.turtlebone.locker.model;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,6 +9,7 @@ public class LockerModel implements Serializable{
 	private String name;
 	private String location;
 	private Date updatetime;
+	private Date createtime;
 		
 	public void setId(Integer id){
 		this.id = id;
@@ -50,5 +51,12 @@ public class LockerModel implements Serializable{
 		return this.updatetime;
 	}
 		
+	public void setCreatetime(Date createtime){
+		this.createtime = createtime;
+	}
+	
+	public Date getCreatetime(){
+		return this.createtime;
+	}
 		
 }
