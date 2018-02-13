@@ -23,7 +23,7 @@ spring:
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
     suffix: .vm
-  jmx.default-domain: task.turtlebone
+  jmx.default-domain: locker.turtlebone
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 60
@@ -55,7 +55,7 @@ spring:
     properties.output.encoding: UTF-8 
     resourceLoaderPath: classpath:templates/
     suffix: .vm
-  jmx.default-domain: task.turtlebone
+  jmx.default-domain: locker.turtlebone
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 3600
