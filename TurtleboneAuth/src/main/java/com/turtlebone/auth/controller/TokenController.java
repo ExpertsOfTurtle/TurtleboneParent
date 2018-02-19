@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.alibaba.fastjson.JSON;
 import com.turtlebone.auth.bean.CreateTokenRequest;
 import com.turtlebone.auth.bean.RenewTokenRequest;
 import com.turtlebone.auth.bean.VerifyTokenRequest;
@@ -27,7 +28,11 @@ import com.turtlebone.auth.model.ProfileModel;
 import com.turtlebone.auth.model.TokenModel;
 import com.turtlebone.auth.service.ProfileService;
 import com.turtlebone.auth.service.TokenService;
+import com.turtlebone.core.bean.UserDetails;
 import com.turtlebone.core.exception.TurtleException;
+import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.RedisService;
+import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.MD5Util;
 import com.turtlebone.core.util.StringUtil;
@@ -42,6 +47,10 @@ public class TokenController {
 	private ProfileService profileService;
 	@Autowired
 	private TokenService tokenService;
+	@Autowired
+	private RedisService redisService;
+	@Autowired
+	private UserService userService;
 	
 	@RequestMapping(value="/create", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> create(@RequestBody CreateTokenRequest request) {
@@ -96,7 +105,8 @@ public class TokenController {
 		int rt = tokenService.create(token);
 		
 		if (rt == 1) {
-			logger.info("Modify done!");
+			logger.info("Create done!");
+			putToRedis(token);
 			return ResponseEntity.ok(token);
 		} else {
 			logger.warn("Fail! But I don't know why!");
@@ -162,4 +172,15 @@ public class TokenController {
 		String str = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 32);
 		return str;
 	}	
+	
+	private void putToRedis(TokenModel token) {
+		UserModel um = userService.selectByUsername(token.getUsername());
+		UserDetails user = new UserDetails();
+		user.setTokenType("TB");
+		user.setTokenId(token.getTokenid());
+		user.setLoginName(token.getUsername());
+		user.setNickName(um.getNickname());
+		
+		redisService.set(token.getTokenid(), JSON.toJSONString(user));
+	}
 }

@@ -130,6 +130,11 @@ public class CFSubmissionServiceImpl implements CFSubmissionService {
 		}
 		List<CFSubmissionModel> existingList = selectByCondition(idList, null, null, null, null);
 		for (CFSubmissionModel existing : existingList) {
+			CFSubmissionModel cf = map.get(existing.getId());
+			String result = cf.getResult();
+			if (StringUtil.isEmpty(result) || "TESTING".equalsIgnoreCase(result)) {
+				updateByPrimaryKey(cf);
+			}
 			map.remove(existing.getId());
 		}
 		List<CFSubmissionModel> insertList = new ArrayList<>();
