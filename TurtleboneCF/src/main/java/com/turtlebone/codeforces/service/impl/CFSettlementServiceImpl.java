@@ -43,7 +43,22 @@ public class CFSettlementServiceImpl implements CFSettlementService {
 			for (CFSubmissionModel submission : list) {
 				if ("OK".equals(submission.getResult()) && submission.getStatus() == 0) {
 					String username = CFUserMapper.getTurtleName(submission.getUsername());
-					if (doCompleteProblem(submission.getContestid(), submission.getProblemindex(), username)) {
+					String problemIndex = submission.getProblemindex();
+					int count = 1;
+					for (int i = 0; i < 10; i++) {
+						String str = String.format("%c", 'A' + i);
+						if (problemIndex.equalsIgnoreCase(str)) {
+							count = i + 1;
+							logger.debug("ProblemIndex = {}, 等价于{}题", str, count);							
+							break;
+						}
+					}
+					boolean flag = false;
+					logger.debug("完成题目数：{}", count);			
+					for (int i = 0; i < count; i++) {
+						flag |= doCompleteProblem(submission.getContestid(), submission.getProblemindex(), username);
+					}
+					if (flag) {
 						submission.setStatus(1);	//标记为已经处理过
 						CFSubmission sub = BeanCopyUtils.map(submission, CFSubmission.class);
 						cFSubmissionRepo.updateByPrimaryKeySelective(sub);
