@@ -18,7 +18,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.turtlebone.auth.bean.WechatLoginRequest;
+import com.turtlebone.core.bean.UserDetails;
+import com.turtlebone.core.model.UserModel;
 import com.turtlebone.core.service.RedisService;
+import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.SendHTTPUtil;
 
 
@@ -34,11 +38,14 @@ public class WechatLoginController {
 	
 	@Autowired
 	private RedisService redisService;
+	@Autowired
+	private UserService userService;
 	
-	@RequestMapping(value="/getOpenId", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> getOpenId(@RequestParam(value="code") String code) {
+	@RequestMapping(value="/getOpenId", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> getOpenId(@RequestBody WechatLoginRequest request) {
 		logger.info("getOpenId:{}");
 	
+		String code = request.getCode();
 		String url = String.format("%s?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code", 
 				WECHAT_URL, APPID, SECRET, code);
 		String result = "{}";
@@ -47,8 +54,15 @@ public class WechatLoginController {
 			JSONObject rs = JSON.parseObject(result);
 			String openId = rs.getString("openid");
 			
+			UserDetails userDetails = new UserDetails();
+			userDetails.setTokenId(openId);
+			userDetails.setAvatarUrl(request.getAvatarUrl());
+			userDetails.setNickName(request.getNickName());
+			userDetails.setTokenType("WX");
+			userDetails.setLoginName(getUsername(openId));
+			
 			//把openId存放到redis中，维持30分钟
-			redisService.set(openId, result);
+			redisService.set(openId, JSON.toJSONString(userDetails));
 			redisService.expire(openId, 60 * 30);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -57,4 +71,13 @@ public class WechatLoginController {
 		return ResponseEntity.ok(result);
 	}
 		
+	private String getUsername(String tokenId) {
+		UserModel user = userService.selectByCondition(null, tokenId);
+		if (user != null) {
+			return user.getLoginName();
+		} else {
+			return null;
+		}
+	}
+	
 }

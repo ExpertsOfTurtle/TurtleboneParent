@@ -1,6 +1,6 @@
 package com.turtlebone.locker.bean;
 
-import com.turtlebone.core.bean.CoreRequest;
+import com.turtlebone.auth.bean.CoreRequest;
 
 import lombok.Data;
 

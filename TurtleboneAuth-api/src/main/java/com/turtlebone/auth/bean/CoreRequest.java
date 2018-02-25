@@ -1,4 +1,4 @@
-package com.turtlebone.core.bean;
+package com.turtlebone.auth.bean;
 
 import lombok.Data;
 

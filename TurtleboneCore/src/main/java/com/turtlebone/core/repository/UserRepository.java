@@ -2,6 +2,8 @@ package com.turtlebone.core.repository;
 
 import com.turtlebone.core.entity.User;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -32,4 +34,6 @@ public interface UserRepository{
     List<User> selectByUserList(List<String> userList);
     
     List<User> listAllUser();
+    
+    User selectByCondition(Map<String, String> map);
 }

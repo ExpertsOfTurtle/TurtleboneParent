@@ -26,12 +26,12 @@
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from turtle.user
     where id = #{id,jdbcType=INTEGER}
   </select>
   
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from user
+    delete from turtle.user
     where id = #{id,jdbcType=INTEGER}
   </delete>
   
@@ -156,7 +156,7 @@
 
   
   <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.core.entity.User" >
-    select count(*) from user
+    select count(*) from turtle.user
     <where >
             <if test="id != null" >
         and `id` = #{id,jdbcType=INTEGER}
@@ -188,7 +188,7 @@
     <select id="selectPage" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
-    from user where 1 = 1 
+    from turtle.user where 1 = 1 
         <if test="user.id != null" >
       and `id` = #{user.id,jdbcType=INTEGER}
     </if>
@@ -237,24 +237,35 @@
   <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from turtle.user
     where login_name = #{username,jdbcType=VARCHAR}
     limit 1
   </select>
   <select id="listAllUser" resultMap="BaseResultMap" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from turtle.user
   </select>
   <select id="selectByUserList" resultMap="BaseResultMap" parameterType="java.util.List" >
     select 
     <include refid="Base_Column_List" />
-    from user
+    from turtle.user
     where login_name in (
     <foreach collection ="list" item="item" index= "index" separator ="," >
     	#{item,jdbcType=VARCHAR}
     </foreach>)
-     
+  </select>
+  <select id="selectByCondition" resultMap="BaseResultMap" parameterType="java.util.Map" >
+    select 
+    <include refid="Base_Column_List" />
+    from turtle.user where 1=1
+    <if test="openid != null" >
+      and `openid` = #{openid,jdbcType=VARCHAR}
+    </if>
+    <if test="loginName != null" >
+      and `login_name` = #{loginName,jdbcType=VARCHAR}
+    </if>
+    limit 1
   </select>
  </mapper>
   

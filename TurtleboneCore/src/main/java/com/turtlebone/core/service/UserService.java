@@ -26,4 +26,6 @@ public interface UserService{
 	public List<UserModel> selectByUserList(List<String> userList);
 	
 	public List<UserModel> listAllUser();
+	
+	public UserModel selectByCondition(String username, String openId);
 }

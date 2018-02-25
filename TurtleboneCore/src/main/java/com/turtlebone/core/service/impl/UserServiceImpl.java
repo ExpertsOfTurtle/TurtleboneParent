@@ -1,7 +1,9 @@
 
 package com.turtlebone.core.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -110,6 +112,16 @@ public class UserServiceImpl implements UserService {
 	public List<UserModel> listAllUser() {
 		List<User> list = userRepo.listAllUser();
 		return BeanCopyUtils.mapList(list, UserModel.class);
+	}
+
+
+	@Override
+	public UserModel selectByCondition(String username, String openId) {
+		Map<String, String> map = new HashMap<>();
+		map.put("username", username);
+		map.put("openId", openId);
+		User user = userRepo.selectByCondition(map);
+		return BeanCopyUtils.map(user, UserModel.class);
 	}
 
 
