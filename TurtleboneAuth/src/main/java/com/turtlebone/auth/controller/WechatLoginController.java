@@ -24,6 +24,7 @@ import com.turtlebone.core.model.UserModel;
 import com.turtlebone.core.service.RedisService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.SendHTTPUtil;
+import com.turtlebone.core.util.StringUtil;
 
 
 @Controller
@@ -73,6 +74,9 @@ public class WechatLoginController {
 	}
 		
 	private String getUsername(String tokenId) {
+		if (StringUtil.isEmpty(tokenId)) {
+			return null;
+		}
 		UserModel user = userService.selectByCondition(null, tokenId);
 		if (user != null) {
 			return user.getLoginName();

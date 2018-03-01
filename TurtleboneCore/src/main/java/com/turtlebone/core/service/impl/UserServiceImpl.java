@@ -118,8 +118,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserModel selectByCondition(String username, String openId) {
 		Map<String, String> map = new HashMap<>();
-		map.put("username", username);
-		map.put("openId", openId);
+		map.put("loginName", username);
+		map.put("openid", openId);
 		User user = userRepo.selectByCondition(map);
 		return BeanCopyUtils.map(user, UserModel.class);
 	}
