@@ -136,6 +136,8 @@
 		<module>TurtleboneCF-api</module>
 		<module>TurtleboneLocker</module>
 		<module>TurtleboneLocker-api</module>
+		<module>TurtleboneChoice</module>
+		<module>TurtleboneChoice-api</module>
 	</modules>
 	<build>
 		<plugins>

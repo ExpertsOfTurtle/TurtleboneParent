@@ -30,7 +30,7 @@ public class DeciderActivityBuilder {
 		model.setStrresult2(optionName);
 		model.setStrresult3(probability.toString());
 		
-		String description = String.format("[%s]参与命运轮盘[%s],命运选中了[%s],概率是[%.2lf]%%", 
+		String description = String.format("[%s]参与命运轮盘[%s],命运选中了[%s],概率是[%.2f]%%", 
 				username, groupName, optionName, probability*100);
 		model.setDescription(description);
 		logger.info(description);

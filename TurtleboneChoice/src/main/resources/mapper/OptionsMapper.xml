@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.choice.repository.OptionsRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.choice.entity.Options" >
+    <id column="optionid" property="optionid" jdbcType="INTEGER" />
+    <result column="groupid" property="groupid" jdbcType="INTEGER" />
+    <result column="optionname" property="optionname" jdbcType="VARCHAR" />
+    <result column="probability" property="probability" jdbcType="INTEGER" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `optionid`,
+   `groupid`,
+   `optionname`,
+   `probability`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from options
+    where optionid = #{optionid,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from options
+    where optionid = #{optionid,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.choice.entity.Options" >
+    insert into options ( 
+     `optionid`,
+     `groupid`,
+     `optionname`,
+     `probability`
+    )
+    values (
+     #{optionid,jdbcType=INTEGER},
+     #{groupid,jdbcType=INTEGER},
+     #{optionname,jdbcType=VARCHAR},
+     #{probability,jdbcType=INTEGER}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.choice.entity.Options" >
+    insert into options
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="optionid != null" >
+        `optionid`,
+      </if>
+      <if test="groupid != null" >
+        `groupid`,
+      </if>
+      <if test="optionname != null" >
+        `optionname`,
+      </if>
+      <if test="probability != null" >
+        `probability`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="optionid != null" >
+        #{optionid,jdbcType=INTEGER},
+      </if>
+      <if test="groupid != null" >
+        #{groupid,jdbcType=INTEGER},
+      </if>
+      <if test="optionname != null" >
+        #{optionname,jdbcType=VARCHAR},
+      </if>
+      <if test="probability != null" >
+        #{probability,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.choice.entity.Options" >
+    update options
+	  <set>
+       <if test="groupid != null" >
+        `groupid`= #{groupid,jdbcType=INTEGER},
+       </if>
+       <if test="optionname != null" >
+        `optionname`= #{optionname,jdbcType=VARCHAR},
+       </if>
+       <if test="probability != null" >
+        `probability`= #{probability,jdbcType=INTEGER},
+       </if>
+          </set>
+    where optionid = #{optionid,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.choice.entity.Options" >
+    update options
+    set 
+       `groupid` = #{groupid,jdbcType=INTEGER},
+       `optionname` = #{optionname,jdbcType=VARCHAR},
+       `probability` = #{probability,jdbcType=INTEGER}
+     where optionid = #{optionid,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.choice.entity.Options" >
+    select count(*) from options
+    <where >
+            <if test="optionid != null" >
+        and `optionid` = #{optionid,jdbcType=INTEGER}
+      </if>
+            <if test="groupid != null" >
+        and `groupid` = #{groupid,jdbcType=INTEGER}
+      </if>
+            <if test="optionname != null" >
+        and `optionname` = #{optionname,jdbcType=VARCHAR}
+      </if>
+            <if test="probability != null" >
+        and `probability` = #{probability,jdbcType=INTEGER}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from options where 1 = 1 
+        <if test="options.optionid != null" >
+      and `optionid` = #{options.optionid,jdbcType=INTEGER}
+    </if>
+        <if test="options.groupid != null" >
+      and `groupid` = #{options.groupid,jdbcType=INTEGER}
+    </if>
+        <if test="options.optionname != null" >
+      and `optionname` = #{options.optionname,jdbcType=VARCHAR}
+    </if>
+        <if test="options.probability != null" >
+      and `probability` = #{options.probability,jdbcType=INTEGER}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'optionid' 
+   || order.property == 'groupid'
+   || order.property == 'optionname'
+   || order.property == 'probability'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into options ( 
+    `groupid`,
+     `optionname`,
+     `probability`
+    )
+    values     
+    <foreach collection="list" item="item" index="index" separator="," >  
+     (#{item.groupid,jdbcType=INTEGER},
+     #{item.optionname,jdbcType=VARCHAR},
+     #{item.probability,jdbcType=INTEGER})  
+    </foreach>    
+  </insert>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from options
+  </select>
+  <delete id="deleteByGroupId" parameterType="java.lang.Integer" >
+    delete from options
+    where groupid = #{groupid,jdbcType=INTEGER}
+  </delete>
+ </mapper>
+  
+
+  
+	
