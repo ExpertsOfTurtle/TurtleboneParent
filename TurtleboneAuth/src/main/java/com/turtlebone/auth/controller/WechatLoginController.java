@@ -49,12 +49,13 @@ public class WechatLoginController {
 		String url = String.format("%s?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code", 
 				WECHAT_URL, APPID, SECRET, code);
 		String result = "{}";
+		
+		UserDetails userDetails = new UserDetails();
 		try {
 			result = SendHTTPUtil.callApiServer(url, "GET", "", null);
 			JSONObject rs = JSON.parseObject(result);
 			String openId = rs.getString("openid");
 			
-			UserDetails userDetails = new UserDetails();
 			userDetails.setTokenId(openId);
 			userDetails.setAvatarUrl(request.getAvatarUrl());
 			userDetails.setNickName(request.getNickName());
@@ -68,7 +69,7 @@ public class WechatLoginController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return ResponseEntity.ok(result);
+		return ResponseEntity.ok(userDetails);
 	}
 		
 	private String getUsername(String tokenId) {
