@@ -31,7 +31,9 @@ import com.turtlebone.choice.service.OptionGroupService;
 import com.turtlebone.choice.service.OptionsService;
 import com.turtlebone.core.builder.activity.DeciderActivityBuilder;
 import com.turtlebone.core.model.ActivityModel;
+import com.turtlebone.core.model.UserModel;
 import com.turtlebone.core.service.ActivityService;
+import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.BeanCopyUtils;
 
 @Controller
@@ -42,12 +44,12 @@ public class ChooseController {
 
 	@Autowired
 	private OptionGroupService optionGroupService;
-
 	@Autowired
-	private OptionsService optionsService;
-	
+	private OptionsService optionsService;	
 	@Autowired
 	private ActivityService activityService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/random", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> random(HttpServletRequest request, @RequestBody ChooseInfo chooseInfo) {
@@ -75,6 +77,8 @@ public class ChooseController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> create(HttpServletRequest request, @RequestBody ChooseInfo chooseInfo) {
+		String username = (String)request.getAttribute("username");
+		
 		if (chooseInfo.getGroup() == null) {
 			logger.error("group is null");
 			return ResponseEntity.ok("Group is null");
@@ -82,6 +86,13 @@ public class ChooseController {
 			logger.error("options is null");
 			return ResponseEntity.ok("options is empty");
 		}
+		UserModel user = userService.selectByUsername(username);
+		if (user == null) {
+			logger.error("user is null");
+			return ResponseEntity.ok("user is null");
+		}
+		OptionGroupModel group = chooseInfo.getGroup();
+		group.setType(user.getUsertype() == null ? 2 :user.getUsertype());
 
 		Integer groupId = optionGroupService.create(chooseInfo.getGroup());
 		if (groupId == null || groupId == 0) {
@@ -141,6 +152,16 @@ public class ChooseController {
 	public @ResponseBody ResponseEntity<?> query() {
 		List<ChooseInfo> result = selectAllOptions();
 		return ResponseEntity.ok(result);
+	}
+	
+	@RequestMapping(value = "/query/{id}", method = RequestMethod.GET)
+	public @ResponseBody ResponseEntity<?> queryById(@PathVariable("id")Integer id) {
+		OptionGroupModel group = optionGroupService.findByPrimaryKey(id);
+		List<OptionsModel> options = optionsService.selectByGroupId(id);
+		ChooseInfo ci = new ChooseInfo();
+		ci.setGroup(group);
+		ci.setOptions(options);
+		return ResponseEntity.ok(ci);
 	}
 
 	@RequestMapping(value = "/selectpage")
