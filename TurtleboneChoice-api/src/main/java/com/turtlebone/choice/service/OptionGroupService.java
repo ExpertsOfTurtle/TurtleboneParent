@@ -23,4 +23,6 @@ public interface OptionGroupService{
 	public int selectCount(OptionGroupModel optionGroupModel);
 	
 	public List<OptionGroupModel> selectAll();
+	
+	public List<OptionGroupModel> selectByCondition(Integer type, Integer pageSize, Integer pageNumber);
 }

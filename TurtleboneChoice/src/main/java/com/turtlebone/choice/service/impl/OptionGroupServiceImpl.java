@@ -3,6 +3,7 @@ package com.turtlebone.choice.service.impl;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
@@ -106,6 +107,17 @@ public class OptionGroupServiceImpl implements OptionGroupService {
 	@Override
 	public List<OptionGroupModel> selectAll() {
 		List<OptionGroup> list = optionGroupRepo.selectAll();
+		return BeanCopyUtils.mapList(list, OptionGroupModel.class);
+	}
+
+
+	@Override
+	public List<OptionGroupModel> selectByCondition(Integer type, Integer pageSize, Integer pageNumber) {
+		OptionGroup optionGroup = new OptionGroup();
+		optionGroup.setType(type);
+		int ps = pageSize == null ? 100 : pageSize;
+		int pn = pageNumber == null ? 0 : pageNumber;
+		List<OptionGroup> list = optionGroupRepo.selectPage(optionGroup, new PageRequest(pn, ps));
 		return BeanCopyUtils.mapList(list, OptionGroupModel.class);
 	}
 

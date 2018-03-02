@@ -25,6 +25,7 @@ import com.turtlebone.auth.model.TokenModel;
 import com.turtlebone.core.bean.ResultVO;
 import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.RedisService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.SendHTTPUtil;
 import com.turtlebone.core.util.StringUtil;
@@ -41,6 +42,9 @@ public class MockSecurityFilter implements Filter {
 	private Environment env;
 	
 	private UserService userService;
+	private RedisService redisService;
+
+	private String BASEHOST;
 	
 	@Override
 	public void destroy() {

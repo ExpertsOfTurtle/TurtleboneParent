@@ -177,6 +177,17 @@
     delete from options
     where groupid = #{groupid,jdbcType=INTEGER}
   </delete>
+  <select id="selectByGroupId" resultMap="BaseResultMap" parameterType="java.util.List">
+    select 
+    <include refid="Base_Column_List" />
+    from options
+    where groupid in (
+    <foreach collection="list" item="item" index="index" separator="," >
+    #{item}
+    </foreach>  
+    )
+  </select>
+  
  </mapper>
   
 

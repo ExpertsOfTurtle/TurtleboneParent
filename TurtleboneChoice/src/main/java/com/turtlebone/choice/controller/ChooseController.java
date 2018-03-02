@@ -35,6 +35,7 @@ import com.turtlebone.core.model.UserModel;
 import com.turtlebone.core.service.ActivityService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.BeanCopyUtils;
+import com.turtlebone.core.util.StringUtil;
 
 @Controller
 @EnableAutoConfiguration
@@ -54,6 +55,7 @@ public class ChooseController {
 	@RequestMapping(value = "/random", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> random(HttpServletRequest request, @RequestBody ChooseInfo chooseInfo) {
 		String username = (String)request.getAttribute("username");
+		
 		if (chooseInfo.getGroup() == null) {
 			logger.error("group is null");
 			return ResponseEntity.ok("Group is null");
@@ -77,6 +79,7 @@ public class ChooseController {
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> create(HttpServletRequest request, @RequestBody ChooseInfo chooseInfo) {
+		logger.debug("Create group");
 		String username = (String)request.getAttribute("username");
 		
 		if (chooseInfo.getGroup() == null) {
@@ -109,6 +112,8 @@ public class ChooseController {
 
 	@RequestMapping(value = "/update", method = RequestMethod.PUT)
 	public @ResponseBody ResponseEntity<?> modify(@RequestBody ChooseInfo chooseInfo) {
+		logger.debug("Create group");
+		
 		if (chooseInfo.getGroup() == null) {
 			logger.error("group is null");
 			return ResponseEntity.ok("Group is null");
@@ -149,8 +154,11 @@ public class ChooseController {
 	}
 
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
-	public @ResponseBody ResponseEntity<?> query() {
-		List<ChooseInfo> result = selectAllOptions();
+	public @ResponseBody ResponseEntity<?> query(HttpServletRequest request) {
+		String username = (String)request.getAttribute("username");
+		UserModel user = userService.selectByUsername(username);
+		
+		List<ChooseInfo> result = selectAllOptions(user.getUsertype());
 		return ResponseEntity.ok(result);
 	}
 	
@@ -165,17 +173,29 @@ public class ChooseController {
 	}
 
 	@RequestMapping(value = "/selectpage")
-	public String selectpage(Map<String, Object> model) {
+	public String selectpage(HttpServletRequest request, Map<String, Object> model) {
 		logger.debug("selectpage");
-		List<ChooseInfo> result = selectAllOptions();
+		String username = (String)request.getAttribute("username");
+		UserModel user = userService.selectByUsername(username);
+		
+		List<ChooseInfo> result = selectAllOptions(user.getUsertype());
 
 		model.put("chooseList", result);
 		return "decide/ajax/list";
 	}
 
-	private List<ChooseInfo> selectAllOptions() {
-		List<OptionGroupModel> groupList = optionGroupService.selectAll();
-		List<OptionsModel> optionList = optionsService.selectAll();
+	private List<ChooseInfo> selectAllOptions(Integer userType) {
+		List<OptionGroupModel> groupList = null;
+		List<OptionsModel> optionList = null;
+		if (userType <= 1) {
+			groupList = optionGroupService.selectAll();
+			optionList = optionsService.selectAll();	
+		} else {
+			groupList = optionGroupService.selectByCondition(userType, null, null);
+			List<Integer> groupIdList = getGroupId(groupList);
+			optionList = optionsService.selectByGroupId(groupIdList);
+		}
+		
 		Map<Integer, ChooseInfo> map = new HashMap<>();
 		for (OptionGroupModel group : groupList) {
 			ChooseInfo info = new ChooseInfo();
@@ -230,5 +250,12 @@ public class ChooseController {
 			activityService.create(activity);
 		} catch (Exception e) {e.printStackTrace();}
 		
+	}
+	private List<Integer> getGroupId(List<OptionGroupModel> groupList) {
+		List<Integer> groupIdList = new ArrayList<>();
+		for (OptionGroupModel group : groupList) {
+			groupIdList.add(group.getGroupid());
+		}
+		return groupIdList;
 	}
 }

@@ -126,5 +126,9 @@ public class OptionsServiceImpl implements OptionsService {
 	}
 
 
-
+	@Override
+	public List<OptionsModel> selectByGroupId(List<Integer> groupIdList) {
+		List<Options> list = optionsRepo.selectByGroupId(groupIdList);
+		return BeanCopyUtils.mapList(list, OptionsModel.class);
+	}
 }

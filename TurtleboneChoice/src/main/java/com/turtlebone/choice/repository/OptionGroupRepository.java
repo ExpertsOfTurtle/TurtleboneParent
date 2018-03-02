@@ -30,6 +30,7 @@ public interface OptionGroupRepository{
     OptionGroup selectByName(String groupname);
     
     List<OptionGroup> selectAll();
+    
     List<OptionGroup> selectPageLimit(Integer offset, Integer pageSize);
     
 }

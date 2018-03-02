@@ -27,4 +27,6 @@ public interface OptionsService{
 	public int deleteByGroupId(Integer groupId);
 	
 	public List<OptionsModel> selectByGroupId(Integer groupId);
+	
+	public List<OptionsModel> selectByGroupId(List<Integer> groupIdList);
 }

@@ -32,4 +32,6 @@ public interface OptionsRepository{
     List<Options> selectAll();
     
     int deleteByGroupId(Integer groupId);
+    
+    List<Options> selectByGroupId(List<Integer> groupIdList);
 }

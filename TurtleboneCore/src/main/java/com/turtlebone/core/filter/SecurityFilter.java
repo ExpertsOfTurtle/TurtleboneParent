@@ -23,8 +23,10 @@ import com.alibaba.fastjson.JSON;
 import com.turtlebone.auth.bean.VerifyTokenRequest;
 import com.turtlebone.auth.model.TokenModel;
 import com.turtlebone.core.bean.ResultVO;
+import com.turtlebone.core.bean.UserDetails;
 import com.turtlebone.core.exception.TurtleException;
 import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.RedisService;
 import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.SendHTTPUtil;
 import com.turtlebone.core.util.StringUtil;
@@ -41,6 +43,9 @@ public class SecurityFilter implements Filter {
 	private Environment env;
 	
 	private UserService userService;
+	private RedisService redisService;
+	
+	private String BASEHOST;
 	
 	@Override
 	public void destroy() {
@@ -65,8 +70,8 @@ public class SecurityFilter implements Filter {
 			filterChain.doFilter(req, rsp);	
 			return;
 		}
-		TokenModel token = verifyToken(tokenId, username);
-		if (token == null) {
+		
+		if (!verifyToken(tokenId, username, request)) {
 			//verification fail
 			rsp.setContentType("application/json");
 			rsp.getWriter().print(JSON.toJSONString(new ResultVO<String>(ResultVO.PARAMERROR, "Token verification fail", "")));
@@ -74,7 +79,6 @@ public class SecurityFilter implements Filter {
 		}
 		
 		logger.info("Verification success");
-		
 		
 		if (StringUtil.isEmpty(tokenId)) {
 			rsp.setContentType("application/json");
@@ -102,20 +106,39 @@ public class SecurityFilter implements Filter {
         return false;
 	}
 	
-	private TokenModel verifyToken(String tokenId, String username) {
+	private boolean verifyToken(String tokenId, String username, HttpServletRequest httpServletRequest) {
+		//先从redis读取，如果有数据，则表示通过验证
+		String val = redisService.get(tokenId);
+		if (!StringUtil.isEmpty(val)) {
+			try {
+				UserDetails userDetails = JSON.parseObject(val, UserDetails.class);
+				String un = userDetails.getLoginName();
+				if (StringUtil.isEmpty(un)) {
+					logger.error("username is empty");
+					return false;
+				}
+				httpServletRequest.setAttribute("username", un);
+				httpServletRequest.setAttribute("tokenId", tokenId);
+				logger.info("验证成功，username={}, tokenId={}", userDetails.getLoginName(), tokenId);
+				return true;
+			} catch (Exception e) {
+				logger.error(e.getMessage());
+			}
+		}
+		
 		VerifyTokenRequest request = new VerifyTokenRequest();
 		request.setUsername(username);
 		request.setTokenId(tokenId);
-		String url = "http://turtlebone.top/auth/token/verify";
+		String url = BASEHOST + "/auth/token/verify";
 		try {
 			String result = SendHTTPUtil.callApiServer(url, "POST", JSON.toJSONString(request), null);
 			TokenModel token = JSON.parseObject(result, TokenModel.class);
-			return token;
+			return true;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return false;
 	}
 
 	@Override
