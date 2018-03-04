@@ -335,6 +335,15 @@
      <if test="type != null" >
      	and `type` = #{type,jdbcType=VARCHAR}
      </if>
+     <if test="result1 != null" >
+     	and `result1` = #{result1,jdbcType=BIGINT}
+     </if>
+     <if test="result2 != null" >
+     	and `result2` = #{result1,jdbcType=BIGINT}
+     </if>
+     <if test="result3 != null" >
+     	and `result3` = #{result1,jdbcType=BIGINT}
+     </if>
      <if test="from != null and to != null">
      	and `datetime` between #{from,jdbcType=VARCHAR} and #{to,jdbcType=VARCHAR}
      </if>

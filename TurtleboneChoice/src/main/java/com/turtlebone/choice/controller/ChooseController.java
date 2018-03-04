@@ -52,15 +52,11 @@ public class ChooseController {
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/random", method = RequestMethod.POST)
-	public @ResponseBody ResponseEntity<?> random(HttpServletRequest request, @RequestBody ChooseInfo chooseInfo) {
+	@RequestMapping(value = "/random/{groupId}", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> random(HttpServletRequest request, 
+			@PathVariable("groupId")Integer groupId) {
 		String username = (String)request.getAttribute("username");
 		
-		if (chooseInfo.getGroup() == null) {
-			logger.error("group is null");
-			return ResponseEntity.ok("Group is null");
-		}
-		Integer groupId = chooseInfo.getGroup().getGroupid();
 		if (groupId == null) {
 			logger.error("groupId is null");
 			return ResponseEntity.ok("groupId is null");
