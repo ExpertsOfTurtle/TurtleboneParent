@@ -29,6 +29,7 @@ import com.turtlebone.choice.model.OptionGroupModel;
 import com.turtlebone.choice.model.OptionsModel;
 import com.turtlebone.choice.service.OptionGroupService;
 import com.turtlebone.choice.service.OptionsService;
+import com.turtlebone.core.bean.ResultVO;
 import com.turtlebone.core.builder.activity.DeciderActivityBuilder;
 import com.turtlebone.core.model.ActivityModel;
 import com.turtlebone.core.model.UserModel;
@@ -56,6 +57,9 @@ public class ChooseController {
 	public @ResponseBody ResponseEntity<?> random(HttpServletRequest request, 
 			@PathVariable("groupId")Integer groupId) {
 		String username = (String)request.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			username = "Guest";
+		}
 		
 		if (groupId == null) {
 			logger.error("groupId is null");
@@ -85,13 +89,17 @@ public class ChooseController {
 			logger.error("options is null");
 			return ResponseEntity.ok("options is empty");
 		}
-		UserModel user = userService.selectByUsername(username);
-		if (user == null) {
-			logger.error("user is null");
-			return ResponseEntity.ok("user is null");
+		int userType = 2;
+		if (!StringUtil.isEmpty(username)) {
+			UserModel user = userService.selectByUsername(username);
+			if (user == null) {
+				logger.error("user is null");
+				return ResponseEntity.ok("user is null");
+			}
+			userType = user.getUsertype();
 		}
 		OptionGroupModel group = chooseInfo.getGroup();
-		group.setType(user.getUsertype() == null ? 2 :user.getUsertype());
+		group.setType(userType);
 
 		Integer groupId = optionGroupService.create(chooseInfo.getGroup());
 		if (groupId == null || groupId == 0) {
@@ -140,8 +148,19 @@ public class ChooseController {
 	}
 
 	@RequestMapping(value = "/delete/{groupId}", method = RequestMethod.DELETE)
-	public @ResponseBody ResponseEntity<?> delete(@PathVariable("groupId") Integer groupId) {
+	public @ResponseBody ResponseEntity<?> delete(HttpServletRequest request,
+			@PathVariable("groupId") Integer groupId) {
 		logger.debug("Delete group {}", groupId);
+		String username = (String)request.getAttribute("username");
+		if (StringUtil.isEmpty(username)) {
+			logger.warn("You haven't authority to operate!");
+			return ResponseEntity.ok(new ResultVO<String>("E2017", "Operation not allow", ""));
+		}
+		UserModel user = userService.selectByUsername(username);
+		if (user == null || user.getUsertype() != 1) {
+			logger.warn("You haven't authority to operate!");
+			return ResponseEntity.ok(new ResultVO<String>("E2017", "Operation not allow", ""));
+		}
 
 		int rt = optionGroupService.deleteByPrimaryKey(groupId);
 		rt += optionsService.deleteByGroupId(groupId);
@@ -152,9 +171,14 @@ public class ChooseController {
 	@RequestMapping(value = "/query", method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<?> query(HttpServletRequest request) {
 		String username = (String)request.getAttribute("username");
-		UserModel user = userService.selectByUsername(username);
 		
-		List<ChooseInfo> result = selectAllOptions(user.getUsertype());
+		int userType = 2;
+		if (!StringUtil.isEmpty(username)) {
+			UserModel user = userService.selectByUsername(username);
+			userType = user.getUsertype();
+		}
+		
+		List<ChooseInfo> result = selectAllOptions(userType);
 		return ResponseEntity.ok(result);
 	}
 	
