@@ -72,6 +72,16 @@ public class WechatLoginController {
 		}
 		return ResponseEntity.ok(userDetails);
 	}
+	
+	@RequestMapping(value="/validate")
+	public @ResponseBody String weiXinValidation(@RequestParam("signature") String signature,
+			@RequestParam("timestamp") String timestamp,
+			@RequestParam("nonce") String nonce,
+			@RequestParam("echostr") String echostr) {
+		logger.debug("Validation");
+		
+		return echostr;
+	}
 		
 	private String getUsername(String tokenId) {
 		if (StringUtil.isEmpty(tokenId)) {
