@@ -25,6 +25,8 @@ server:
 mybatis:
   mapperLocations: classpath:mapper/*.xml
 redis.expireTime: 60
+url:
+  codeforcesHost: http://127.0.0.1:12345
 constants:
   excludeRegex: cf
 ---
@@ -57,3 +59,5 @@ mybatis:
 redis.expireTime: 3600
 constants:
   excludeRegex: cf
+url:
+  codeforcesHost: http://turtlebone.top/birth

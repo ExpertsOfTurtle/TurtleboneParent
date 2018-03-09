@@ -17,7 +17,9 @@ import org.apache.commons.digester.annotations.rules.PathCallParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -52,6 +54,10 @@ public class CodeforcesController {
 	private static Logger logger = LoggerFactory.getLogger(CodeforcesController.class);
 
 	@Autowired
+	private Environment env;
+	@Value("${url.codeforcesHost}")
+	private String HOST;
+	@Autowired
 	private ResolveHtmlService resolveHtmlService;
 	
 	@RequestMapping(value = "/problem/{id}/{idx}", method = RequestMethod.GET)
@@ -63,7 +69,7 @@ public class CodeforcesController {
 		File file = new File(String.format("/data/web/codeforces/%d_%s.html", id, idx));
 		if (file.exists()) {
 			logger.info("文件存在，直接返回");
-			String location = String.format("http://%s:12345/web/codeforces/%d_%s.html", request.getServerName(), id, idx);
+			String location = String.format("%s/web/codeforces/%d_%s.html", HOST, id, idx);
 			try {
 				response.sendRedirect(location);
 			} catch (IOException e) {
@@ -86,7 +92,7 @@ public class CodeforcesController {
 			e.printStackTrace();
 		}
 		
-		String location = String.format("http://%s:12345/web/codeforces/%d_%s.html", request.getServerName(), id, idx);
+		String location = String.format("%s/web/codeforces/%d_%s.html", HOST, id, idx);
 		try {
 			response.sendRedirect(location);
 		} catch (IOException e) {
