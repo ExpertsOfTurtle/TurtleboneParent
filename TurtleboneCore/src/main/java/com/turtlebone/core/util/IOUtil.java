@@ -131,9 +131,11 @@ public class IOUtil {
             sb.append(str);
             out.write(sb.toString().getBytes("utf-8"));
             out.close();
+            file.setReadable(true, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
     }
     public static void writeStringToFile(String path, String str, boolean append) {
         try {
@@ -146,6 +148,7 @@ public class IOUtil {
             sb.append(str);
             out.write(sb.toString().getBytes("utf-8"));
             out.close();
+            file.setReadable(true, false);
         } catch (IOException e) {
             e.printStackTrace();
         }
