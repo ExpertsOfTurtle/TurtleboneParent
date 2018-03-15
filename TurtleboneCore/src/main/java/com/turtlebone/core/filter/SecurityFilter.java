@@ -66,12 +66,13 @@ public class SecurityFilter implements Filter {
 		request.setAttribute("tokenId", tokenId);
 		logger.info("tokenId={}, username={}", tokenId, username);
 		
+		boolean verifyStatus = verifyToken(tokenId, username, request);
 		if (checkExclude(path)) {
 			filterChain.doFilter(req, rsp);	
 			return;
 		}
 		
-		if (!verifyToken(tokenId, username, request)) {
+		if (!verifyStatus) {
 			//verification fail
 			rsp.setContentType("application/json");
 			rsp.getWriter().print(JSON.toJSONString(new ResultVO<String>(ResultVO.PARAMERROR, "Token verification fail", "")));
