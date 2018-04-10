@@ -9,5 +9,6 @@ public class BetInfo {
 	private String creator;
 	private String title;
 	private String id;
+	private Date publicTime;
 	private Date expireTime;
 }
