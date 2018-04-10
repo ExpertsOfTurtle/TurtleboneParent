@@ -15,6 +15,21 @@
     <result column="punishment_id" property="punishmentId" jdbcType="INTEGER" />
     <result column="content" property="content" jdbcType="LONGVARCHAR" />
   </resultMap>
+  <resultMap id="AdvanceResultMap" type="com.turtlebone.task.entity.TaskResult" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="VARCHAR" />
+    <result column="deadline" property="deadline" jdbcType="VARCHAR" />
+    <result column="difficulty" property="difficulty" jdbcType="INTEGER" />
+    <result column="total" property="total" jdbcType="INTEGER" />
+    <result column="progress" property="progress" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="punishment_id" property="punishmentId" jdbcType="INTEGER" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+  </resultMap>
 
  <sql id="Advance_Column_List" >
    `t`.`id`,
@@ -28,7 +43,8 @@
    `t`.`type`,
    `t`.`status`,
    `t`.`punishment_id`,
-   `t`.`content`
+   `t`.`content`,
+   `tu`.`username`
  </sql>
  <sql id="Base_Column_List" >
    `id`,
@@ -272,43 +288,67 @@
           </where>
   </select>
 
-	<select id="selectPage" resultMap="BaseResultMap" parameterType="java.util.Map">
+	<select id="selectPage" resultMap="AdvanceResultMap" parameterType="java.util.Map">
 		select
 		<include refid="Advance_Column_List" />
 		from task t left join task_user tu on `t`.id=`tu`.taskid
 		 where 1 = 1
-		<if test="id != null">
-			and `t`.`id` = #{id,jdbcType=INTEGER}
+		<if test="task.id != null">
+			and `t`.`id` = #{task.id,jdbcType=INTEGER}
 		</if>
-		<if test="creator != null">
-			and `t`.`creator` = #{creator,jdbcType=VARCHAR}
+		<if test="task.creator != null">
+			and `t`.`creator` = #{task.creator,jdbcType=VARCHAR}
 		</if>
-		<if test="owner != null">
-			and `tu`.`username` = #{owner,jdbcType=VARCHAR}
+		<if test="task.owner != null">
+			and `tu`.`username` = #{task.owner,jdbcType=VARCHAR}
 		</if>
-		<if test="title != null">
-			and `t`.`title` = #{title,jdbcType=VARCHAR}
+		<if test="task.title != null">
+			and `t`.`title` = #{task.title,jdbcType=VARCHAR}
 		</if>
-		<if test="deadline != null">
-			and `tu`.`deadline` = #{deadline,jdbcType=VARCHAR}
+		<if test="task.deadline != null">
+			and `tu`.`deadline` = #{task.deadline,jdbcType=VARCHAR}
 		</if>
-		<if test="punishmentId != null">
-			and `t`.`punishment_id` = #{punishmentId,jdbcType=INTEGER}
+		<if test="task.punishmentId != null">
+			and `t`.`punishment_id` = #{task.punishmentId,jdbcType=INTEGER}
 		</if>
-		<if test="type != null">
-			and `t`.`type` = #{type,jdbcType=INTEGER}
+		<if test="task.type != null">
+			and `t`.`type` = #{task.type,jdbcType=INTEGER}
 		</if>
-		<if test="status != null">
-			and `tu`.`status` = #{status,jdbcType=INTEGER}
+		<if test="task.status != null">
+			and `tu`.`status` = #{task.status,jdbcType=INTEGER}
 		</if>
-		<if test="content != null">
-			and `t`.`content` = #{content,jdbcType=LONGVARCHAR}
+		<if test="task.content != null">
+			and `t`.`content` = #{task.content,jdbcType=LONGVARCHAR}
 		</if>
-		<if test="from != null and to != null">
-			and `t`.`deadline` between #{from,jdbcType=VARCHAR} and
-			#{to,jdbcType=VARCHAR}
+		<if test="task.from != null and task.to != null">
+			and `t`.`deadline` between #{task.from,jdbcType=VARCHAR} and
+			#{task.to,jdbcType=VARCHAR}
 		</if>
-		order by `tu`.`deadline` is null or `tu`.`deadline` = "", `tu`.`deadline` asc
+		<if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'creator'
+   || order.property == 'title'
+   || order.property == 'createTime'
+   || order.property == 'deadline'
+   || order.property == 'difficulty'
+   || order.property == 'total'
+   || order.property == 'progress'
+   || order.property == 'type'
+   || order.property == 'status'
+   || order.property == 'punishment_id'
+   || order.property == 'content'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+    
 	</select>
 </mapper>
   

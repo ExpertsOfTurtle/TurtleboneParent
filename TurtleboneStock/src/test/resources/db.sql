@@ -1,0 +1,25 @@
+CREATE TABLE `astock` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(10) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  `datetime` datetime DEFAULT NULL,
+  `changePercentage` double DEFAULT NULL COMMENT '涨幅',
+  `price` double DEFAULT NULL COMMENT '成交价',
+  `volume` bigint(20) DEFAULT NULL COMMENT '总量',
+  `turnoverRate` varchar(45) DEFAULT NULL COMMENT '换手率',
+  `startPrice` double DEFAULT NULL COMMENT '开市价',
+  `topPrice` double DEFAULT NULL COMMENT '最高价位\n',
+  `lowPrice` double DEFAULT NULL COMMENT '最低价',
+  `prePrice` double DEFAULT NULL COMMENT '昨天价',
+  `PE` double DEFAULT NULL COMMENT '市盈率\n',
+  `totalAmount` bigint(20) DEFAULT NULL COMMENT '总金额',
+  `qrr` double DEFAULT NULL COMMENT '量比\n',
+  `category` varchar(45) DEFAULT NULL COMMENT '行业分类\n',
+  `amplitude` double DEFAULT NULL COMMENT '振幅',
+  `buy` bigint(20) DEFAULT NULL COMMENT '外盘',
+  `sell` bigint(20) DEFAULT NULL COMMENT '内盘',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `uniqueIndex` (`code`,`datetime`),
+  KEY `datetime` (`datetime`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='沪深A股';
+

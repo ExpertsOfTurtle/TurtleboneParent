@@ -1,0 +1,542 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.stock.repository.AStockRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.stock.entity.AStock" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="datetime" property="datetime" jdbcType="TIMESTAMP" />
+    <result column="changePercentage" property="changepercentage" jdbcType="DOUBLE" />
+    <result column="change" property="change" jdbcType="DOUBLE" />
+    <result column="price" property="price" jdbcType="DOUBLE" />
+    <result column="volume" property="volume" jdbcType="BIGINT" />
+    <result column="turnoverRate" property="turnoverrate" jdbcType="DOUBLE" />
+    <result column="startPrice" property="startprice" jdbcType="DOUBLE" />
+    <result column="topPrice" property="topprice" jdbcType="DOUBLE" />
+    <result column="lowPrice" property="lowprice" jdbcType="DOUBLE" />
+    <result column="prePrice" property="preprice" jdbcType="DOUBLE" />
+    <result column="PE" property="pe" jdbcType="DOUBLE" />
+    <result column="totalAmount" property="totalamount" jdbcType="BIGINT" />
+    <result column="qrr" property="qrr" jdbcType="DOUBLE" />
+    <result column="category" property="category" jdbcType="VARCHAR" />
+    <result column="amplitude" property="amplitude" jdbcType="DOUBLE" />
+    <result column="buy" property="buy" jdbcType="BIGINT" />
+    <result column="sell" property="sell" jdbcType="BIGINT" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `code`,
+   `name`,
+   `datetime`,
+   `changePercentage`,
+   `change`,
+   `price`,
+   `volume`,
+   `turnoverRate`,
+   `startPrice`,
+   `topPrice`,
+   `lowPrice`,
+   `prePrice`,
+   `PE`,
+   `totalAmount`,
+   `qrr`,
+   `category`,
+   `amplitude`,
+   `buy`,
+   `sell`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from astock
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from astock
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.stock.entity.AStock" >
+    insert into astock ( 
+     `id`,
+     `code`,
+     `name`,
+     `datetime`,
+     `changePercentage`,
+     `change`,
+     `price`,
+     `volume`,
+     `turnoverRate`,
+     `startPrice`,
+     `topPrice`,
+     `lowPrice`,
+     `prePrice`,
+     `PE`,
+     `totalAmount`,
+     `qrr`,
+     `category`,
+     `amplitude`,
+     `buy`,
+     `sell`
+    )
+    values (
+     #{id,jdbcType=INTEGER},
+     #{code,jdbcType=VARCHAR},
+     #{name,jdbcType=VARCHAR},
+     #{datetime,jdbcType=TIMESTAMP},
+     #{changepercentage,jdbcType=DOUBLE},
+     #{change,jdbcType=DOUBLE},
+     #{price,jdbcType=DOUBLE},
+     #{volume,jdbcType=BIGINT},
+     #{turnoverrate,jdbcType=DOUBLE},
+     #{startprice,jdbcType=DOUBLE},
+     #{topprice,jdbcType=DOUBLE},
+     #{lowprice,jdbcType=DOUBLE},
+     #{preprice,jdbcType=DOUBLE},
+     #{pe,jdbcType=DOUBLE},
+     #{totalamount,jdbcType=BIGINT},
+     #{qrr,jdbcType=DOUBLE},
+     #{category,jdbcType=VARCHAR},
+     #{amplitude,jdbcType=DOUBLE},
+     #{buy,jdbcType=BIGINT},
+     #{sell,jdbcType=BIGINT}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.stock.entity.AStock" >
+    insert into astock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="code != null" >
+        `code`,
+      </if>
+      <if test="name != null" >
+        `name`,
+      </if>
+      <if test="datetime != null" >
+        `datetime`,
+      </if>
+      <if test="changepercentage != null" >
+        `changePercentage`,
+      </if>
+      <if test="change != null" >
+        `change`,
+      </if>
+      <if test="price != null" >
+        `price`,
+      </if>
+      <if test="volume != null" >
+        `volume`,
+      </if>
+      <if test="turnoverrate != null" >
+        `turnoverRate`,
+      </if>
+      <if test="startprice != null" >
+        `startPrice`,
+      </if>
+      <if test="topprice != null" >
+        `topPrice`,
+      </if>
+      <if test="lowprice != null" >
+        `lowPrice`,
+      </if>
+      <if test="preprice != null" >
+        `prePrice`,
+      </if>
+      <if test="pe != null" >
+        `PE`,
+      </if>
+      <if test="totalamount != null" >
+        `totalAmount`,
+      </if>
+      <if test="qrr != null" >
+        `qrr`,
+      </if>
+      <if test="category != null" >
+        `category`,
+      </if>
+      <if test="amplitude != null" >
+        `amplitude`,
+      </if>
+      <if test="buy != null" >
+        `buy`,
+      </if>
+      <if test="sell != null" >
+        `sell`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="datetime != null" >
+        #{datetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="changepercentage != null" >
+        #{changepercentage,jdbcType=DOUBLE},
+      </if>
+      <if test="change != null" >
+        #{change,jdbcType=DOUBLE},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="volume != null" >
+        #{volume,jdbcType=BIGINT},
+      </if>
+      <if test="turnoverrate != null" >
+        #{turnoverrate,jdbcType=DOUBLE},
+      </if>
+      <if test="startprice != null" >
+        #{startprice,jdbcType=DOUBLE},
+      </if>
+      <if test="topprice != null" >
+        #{topprice,jdbcType=DOUBLE},
+      </if>
+      <if test="lowprice != null" >
+        #{lowprice,jdbcType=DOUBLE},
+      </if>
+      <if test="preprice != null" >
+        #{preprice,jdbcType=DOUBLE},
+      </if>
+      <if test="pe != null" >
+        #{pe,jdbcType=DOUBLE},
+      </if>
+      <if test="totalamount != null" >
+        #{totalamount,jdbcType=BIGINT},
+      </if>
+      <if test="qrr != null" >
+        #{qrr,jdbcType=DOUBLE},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=VARCHAR},
+      </if>
+      <if test="amplitude != null" >
+        #{amplitude,jdbcType=DOUBLE},
+      </if>
+      <if test="buy != null" >
+        #{buy,jdbcType=BIGINT},
+      </if>
+      <if test="sell != null" >
+        #{sell,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.stock.entity.AStock" >
+    update astock
+	  <set>
+       <if test="code != null" >
+        `code`= #{code,jdbcType=VARCHAR},
+       </if>
+       <if test="name != null" >
+        `name`= #{name,jdbcType=VARCHAR},
+       </if>
+       <if test="datetime != null" >
+        `datetime`= #{datetime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="changepercentage != null" >
+        `changePercentage`= #{changepercentage,jdbcType=DOUBLE},
+       </if>
+       <if test="change != null" >
+        `change`= #{change,jdbcType=DOUBLE},
+       </if>
+       <if test="price != null" >
+        `price`= #{price,jdbcType=DOUBLE},
+       </if>
+       <if test="volume != null" >
+        `volume`= #{volume,jdbcType=BIGINT},
+       </if>
+       <if test="turnoverrate != null" >
+        `turnoverRate`= #{turnoverrate,jdbcType=DOUBLE},
+       </if>
+       <if test="startprice != null" >
+        `startPrice`= #{startprice,jdbcType=DOUBLE},
+       </if>
+       <if test="topprice != null" >
+        `topPrice`= #{topprice,jdbcType=DOUBLE},
+       </if>
+       <if test="lowprice != null" >
+        `lowPrice`= #{lowprice,jdbcType=DOUBLE},
+       </if>
+       <if test="preprice != null" >
+        `prePrice`= #{preprice,jdbcType=DOUBLE},
+       </if>
+       <if test="pe != null" >
+        `PE`= #{pe,jdbcType=DOUBLE},
+       </if>
+       <if test="totalamount != null" >
+        `totalAmount`= #{totalamount,jdbcType=BIGINT},
+       </if>
+       <if test="qrr != null" >
+        `qrr`= #{qrr,jdbcType=DOUBLE},
+       </if>
+       <if test="category != null" >
+        `category`= #{category,jdbcType=VARCHAR},
+       </if>
+       <if test="amplitude != null" >
+        `amplitude`= #{amplitude,jdbcType=DOUBLE},
+       </if>
+       <if test="buy != null" >
+        `buy`= #{buy,jdbcType=BIGINT},
+       </if>
+       <if test="sell != null" >
+        `sell`= #{sell,jdbcType=BIGINT},
+       </if>
+          </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.stock.entity.AStock" >
+    update astock
+    set 
+       `code` = #{code,jdbcType=VARCHAR},
+       `name` = #{name,jdbcType=VARCHAR},
+       `datetime` = #{datetime,jdbcType=TIMESTAMP},
+       `changePercentage` = #{changepercentage,jdbcType=DOUBLE},
+       `change` = #{change,jdbcType=DOUBLE},
+       `price` = #{price,jdbcType=DOUBLE},
+       `volume` = #{volume,jdbcType=BIGINT},
+       `turnoverRate` = #{turnoverrate,jdbcType=DOUBLE},
+       `startPrice` = #{startprice,jdbcType=DOUBLE},
+       `topPrice` = #{topprice,jdbcType=DOUBLE},
+       `lowPrice` = #{lowprice,jdbcType=DOUBLE},
+       `prePrice` = #{preprice,jdbcType=DOUBLE},
+       `PE` = #{pe,jdbcType=DOUBLE},
+       `totalAmount` = #{totalamount,jdbcType=BIGINT},
+       `qrr` = #{qrr,jdbcType=DOUBLE},
+       `category` = #{category,jdbcType=VARCHAR},
+       `amplitude` = #{amplitude,jdbcType=DOUBLE},
+       `buy` = #{buy,jdbcType=BIGINT},
+       `sell` = #{sell,jdbcType=BIGINT}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.stock.entity.AStock" >
+    select count(*) from astock
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="code != null" >
+        and `code` = #{code,jdbcType=VARCHAR}
+      </if>
+            <if test="name != null" >
+        and `name` = #{name,jdbcType=VARCHAR}
+      </if>
+            <if test="datetime != null" >
+        and `datetime` = #{datetime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="changepercentage != null" >
+        and `changePercentage` = #{changepercentage,jdbcType=DOUBLE}
+      </if>
+            <if test="change != null" >
+        and `change` = #{change,jdbcType=DOUBLE}
+      </if>
+            <if test="price != null" >
+        and `price` = #{price,jdbcType=DOUBLE}
+      </if>
+            <if test="volume != null" >
+        and `volume` = #{volume,jdbcType=BIGINT}
+      </if>
+            <if test="turnoverrate != null" >
+        and `turnoverRate` = #{turnoverrate,jdbcType=DOUBLE}
+      </if>
+            <if test="startprice != null" >
+        and `startPrice` = #{startprice,jdbcType=DOUBLE}
+      </if>
+            <if test="topprice != null" >
+        and `topPrice` = #{topprice,jdbcType=DOUBLE}
+      </if>
+            <if test="lowprice != null" >
+        and `lowPrice` = #{lowprice,jdbcType=DOUBLE}
+      </if>
+            <if test="preprice != null" >
+        and `prePrice` = #{preprice,jdbcType=DOUBLE}
+      </if>
+            <if test="pe != null" >
+        and `PE` = #{pe,jdbcType=DOUBLE}
+      </if>
+            <if test="totalamount != null" >
+        and `totalAmount` = #{totalamount,jdbcType=BIGINT}
+      </if>
+            <if test="qrr != null" >
+        and `qrr` = #{qrr,jdbcType=DOUBLE}
+      </if>
+            <if test="category != null" >
+        and `category` = #{category,jdbcType=VARCHAR}
+      </if>
+            <if test="amplitude != null" >
+        and `amplitude` = #{amplitude,jdbcType=DOUBLE}
+      </if>
+            <if test="buy != null" >
+        and `buy` = #{buy,jdbcType=BIGINT}
+      </if>
+            <if test="sell != null" >
+        and `sell` = #{sell,jdbcType=BIGINT}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from astock where 1 = 1 
+        <if test="aStock.id != null" >
+      and `id` = #{aStock.id,jdbcType=INTEGER}
+    </if>
+        <if test="aStock.code != null" >
+      and `code` = #{aStock.code,jdbcType=VARCHAR}
+    </if>
+        <if test="aStock.name != null" >
+      and `name` = #{aStock.name,jdbcType=VARCHAR}
+    </if>
+        <if test="aStock.datetime != null" >
+      and `datetime` = #{aStock.datetime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="aStock.changepercentage != null" >
+      and `changePercentage` = #{aStock.changepercentage,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.change != null" >
+      and `change` = #{aStock.change,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.price != null" >
+      and `price` = #{aStock.price,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.volume != null" >
+      and `volume` = #{aStock.volume,jdbcType=BIGINT}
+    </if>
+        <if test="aStock.turnoverrate != null" >
+      and `turnoverRate` = #{aStock.turnoverrate,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.startprice != null" >
+      and `startPrice` = #{aStock.startprice,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.topprice != null" >
+      and `topPrice` = #{aStock.topprice,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.lowprice != null" >
+      and `lowPrice` = #{aStock.lowprice,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.preprice != null" >
+      and `prePrice` = #{aStock.preprice,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.pe != null" >
+      and `PE` = #{aStock.pe,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.totalamount != null" >
+      and `totalAmount` = #{aStock.totalamount,jdbcType=BIGINT}
+    </if>
+        <if test="aStock.qrr != null" >
+      and `qrr` = #{aStock.qrr,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.category != null" >
+      and `category` = #{aStock.category,jdbcType=VARCHAR}
+    </if>
+        <if test="aStock.amplitude != null" >
+      and `amplitude` = #{aStock.amplitude,jdbcType=DOUBLE}
+    </if>
+        <if test="aStock.buy != null" >
+      and `buy` = #{aStock.buy,jdbcType=BIGINT}
+    </if>
+        <if test="aStock.sell != null" >
+      and `sell` = #{aStock.sell,jdbcType=BIGINT}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'code'
+   || order.property == 'name'
+   || order.property == 'datetime'
+   || order.property == 'changePercentage'
+   || order.property == 'change'
+   || order.property == 'price'
+   || order.property == 'volume'
+   || order.property == 'turnoverRate'
+   || order.property == 'startPrice'
+   || order.property == 'topPrice'
+   || order.property == 'lowPrice'
+   || order.property == 'prePrice'
+   || order.property == 'PE'
+   || order.property == 'totalAmount'
+   || order.property == 'qrr'
+   || order.property == 'category'
+   || order.property == 'amplitude'
+   || order.property == 'buy'
+   || order.property == 'sell'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  <insert id="batchInsert" parameterType="java.util.List">
+    insert into astock ( 
+    `code`,
+     `name`,
+     `datetime`,
+     `changePercentage`,
+     `change`,
+     `price`,
+     `volume`,
+     `turnoverRate`,
+     `startPrice`,
+     `topPrice`,
+     `lowPrice`,
+     `prePrice`,
+     `PE`,
+     `totalAmount`,
+     `qrr`,
+     `category`,
+     `amplitude`,
+     `buy`,
+     `sell`
+    ) values
+    <foreach collection="list" item="item" separator=",">
+    	 (
+	    #{code,jdbcType=VARCHAR},
+     #{name,jdbcType=VARCHAR},
+     #{datetime,jdbcType=TIMESTAMP},
+     #{changepercentage,jdbcType=DOUBLE},
+     #{change,jdbcType=DOUBLE},
+     #{price,jdbcType=DOUBLE},
+     #{volume,jdbcType=BIGINT},
+     #{turnoverrate,jdbcType=DOUBLE},
+     #{startprice,jdbcType=DOUBLE},
+     #{topprice,jdbcType=DOUBLE},
+     #{lowprice,jdbcType=DOUBLE},
+     #{preprice,jdbcType=DOUBLE},
+     #{pe,jdbcType=DOUBLE},
+     #{totalamount,jdbcType=BIGINT},
+     #{qrr,jdbcType=DOUBLE},
+     #{category,jdbcType=VARCHAR},
+     #{amplitude,jdbcType=DOUBLE},
+     #{buy,jdbcType=BIGINT},
+     #{sell,jdbcType=BIGINT}
+    </foreach>
+  </insert>
+ </mapper>
+  
+
+  
+	

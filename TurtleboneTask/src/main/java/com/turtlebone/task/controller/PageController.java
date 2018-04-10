@@ -33,6 +33,7 @@ import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.StringUtil;
 import com.turtlebone.task.bean.FilterTaskRequest;
 import com.turtlebone.task.model.TaskModel;
+import com.turtlebone.task.model.TaskResultModel;
 import com.turtlebone.task.model.TaskUserModel;
 import com.turtlebone.task.service.TaskService;
 import com.turtlebone.task.service.TaskUserService;
@@ -95,7 +96,7 @@ public class PageController {
 		Integer status = request.getStatus();
 		String deadlineFrom = request.getDeadlineFrom();
 		String deadlineTo = request.getDeadlineTo();
-		List<TaskModel> list = taskService.selectPage(null, type, username, status, deadlineFrom, deadlineTo);
+		List<TaskResultModel> list = taskService.selectPage(null, type, username, status, deadlineFrom, deadlineTo, 0, 100);
 		model.put("list", list);
 		
 		return "task/pages/list";

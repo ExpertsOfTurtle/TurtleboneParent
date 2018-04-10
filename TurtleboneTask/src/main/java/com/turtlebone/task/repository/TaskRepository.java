@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 import com.turtlebone.task.entity.Task;
+import com.turtlebone.task.entity.TaskResult;
 
 @Repository
 public interface TaskRepository{
@@ -28,6 +29,6 @@ public interface TaskRepository{
 
     int selectCount(Task task);
 
-    List<Task> selectPage(Map map);
+    List<TaskResult> selectPage(@Param("task")Map map, @Param("pageable") Pageable pageable);
 	
 }

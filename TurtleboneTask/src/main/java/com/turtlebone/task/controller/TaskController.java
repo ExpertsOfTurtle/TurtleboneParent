@@ -20,15 +20,19 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.turtlebone.task.bean.CreateTaskRequest;
+import com.turtlebone.task.bean.QueryTaskRequest;
 import com.turtlebone.task.bean.UpdateProgressRequest;
 import com.turtlebone.task.constants.ITaskStatus;
 import com.turtlebone.task.constants.ITaskType;
 import com.turtlebone.task.model.TaskModel;
+import com.turtlebone.task.model.TaskResultModel;
 import com.turtlebone.task.model.TaskUserModel;
 import com.turtlebone.task.service.TaskService;
 import com.turtlebone.task.service.TaskUserService;
 import com.alibaba.fastjson.JSON;
 import com.turtlebone.core.exception.TurtleException;
+import com.turtlebone.core.model.UserModel;
+import com.turtlebone.core.service.UserService;
 import com.turtlebone.core.util.DateUtil;
 import com.turtlebone.core.util.StringUtil;
 
@@ -42,6 +46,8 @@ public class TaskController {
 	private TaskService taskService;
 	@Autowired
 	private TaskUserService taskUserService;
+	@Autowired
+	private UserService userService;
 		
 	@RequestMapping(value="/queryMyTask", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> queryMyTask(HttpServletRequest request) throws TurtleException {
@@ -51,7 +57,32 @@ public class TaskController {
 			throw new TurtleException("", "Please login first", "");
 		}
 		
-		List<TaskModel> list = taskService.selectPage(null, null, username, null, null, null);
+		List<TaskResultModel> list = taskService.selectPage(null, null, username, null, null, null, 0, 100);
+		return ResponseEntity.ok(list);
+	}
+	
+	@RequestMapping(value="/query", method = RequestMethod.POST)
+	public @ResponseBody ResponseEntity<?> query(HttpServletRequest httpReq, @RequestBody QueryTaskRequest request) throws TurtleException {
+		String username = (String)httpReq.getAttribute("username");
+		
+		Integer userType = 2;
+		if (StringUtil.isEmpty(username)) {
+			throw new TurtleException("", "Please login first", "");
+		}
+		UserModel userModel = userService.selectByUsername(username);
+		
+		if (userModel != null) {
+			userType = userModel.getUsertype();
+		}
+		String owner = request.getOwner();
+		if (userType > 1) {
+			//不是管理员，只能查询自己
+			owner = username;
+		}
+		
+		List<TaskResultModel> list = taskService.selectPage(null, request.getType(), owner, request.getStatus(), 
+				request.getDeadlineFrom(), request.getDeadlineTo(), 
+				request.getPageNumber(), request.getPageSize());
 		return ResponseEntity.ok(list);
 	}
 	
@@ -84,7 +115,7 @@ public class TaskController {
 		taskModel.setTotal(total);
 		taskModel.setProgress(progress);
 		taskModel.setCreatetime(DateUtil.getDateTime());
-		taskModel.setStatus(progress > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
+		taskModel.setStatus(ITaskStatus.INPROGRESS);
 		int id = taskService.create(taskModel);
 		
 		//Asign task to user
@@ -95,7 +126,7 @@ public class TaskController {
 			taskUserModel.setDeadline(taskModel.getDeadline());
 			taskUserModel.setAssigndatetime(DateUtil.getDateTime());
 			taskUserModel.setProgress(progress);
-			taskUserModel.setStatus(progress > 0 ? ITaskStatus.INPROGRESS : ITaskStatus.NEW);
+			taskUserModel.setStatus(ITaskStatus.INPROGRESS);
 			taskUserService.create(taskUserModel);
 		}
 		

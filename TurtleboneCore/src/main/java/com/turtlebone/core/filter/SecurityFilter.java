@@ -66,12 +66,14 @@ public class SecurityFilter implements Filter {
 		request.setAttribute("tokenId", tokenId);
 		logger.info("tokenId={}, username={}", tokenId, username);
 		
+		boolean isSucess = verifyToken(tokenId, username ,request);
+		
 		if (checkExclude(path)) {
 			filterChain.doFilter(req, rsp);	
 			return;
 		}
 		
-		if (!verifyToken(tokenId, username, request)) {
+		if (!isSucess) {
 			//verification fail
 			rsp.setContentType("application/json");
 			rsp.getWriter().print(JSON.toJSONString(new ResultVO<String>(ResultVO.PARAMERROR, "Token verification fail", "")));
@@ -107,6 +109,10 @@ public class SecurityFilter implements Filter {
 	}
 	
 	private boolean verifyToken(String tokenId, String username, HttpServletRequest httpServletRequest) {
+		if (StringUtil.isEmpty(tokenId)) {
+			return false;
+		}
+		
 		//先从redis读取，如果有数据，则表示通过验证
 		String val = redisService.get(tokenId);
 		if (!StringUtil.isEmpty(val)) {
@@ -133,7 +139,7 @@ public class SecurityFilter implements Filter {
 		try {
 			String result = SendHTTPUtil.callApiServer(url, "POST", JSON.toJSONString(request), null);
 			TokenModel token = JSON.parseObject(result, TokenModel.class);
-			return true;
+			return token != null;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

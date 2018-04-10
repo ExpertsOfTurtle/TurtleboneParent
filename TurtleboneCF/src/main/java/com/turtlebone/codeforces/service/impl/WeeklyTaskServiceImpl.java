@@ -45,6 +45,10 @@ public class WeeklyTaskServiceImpl implements WeeklyTaskService {
 		List<CFSubmission> solvedList = cFSubmissionRepo.querySolved(queryMap);
 		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(queryMap);
 		
+//		logger.info("WeeklyTaskService.classLoader:{}", WeeklyTaskService.class.getClassLoader());
+//		logger.info("cFSubmissionRepo.classLoader:{}", cFSubmissionRepo.getClass().getClassLoader());
+//		logger.info("this(WeeklyTaskServiceImpl).classLoader:{}", this.getClass().getClassLoader());
+		
 		FilterConfig filterConfig = new FilterConfig();
 		filterConfig.setFromDate(from);
 		filterConfig.setToDate(to);

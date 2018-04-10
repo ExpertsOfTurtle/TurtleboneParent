@@ -138,6 +138,9 @@
 		<module>TurtleboneLocker-api</module>
 		<module>TurtleboneChoice</module>
 		<module>TurtleboneChoice-api</module>
+		<module>TurtleboneStock</module>
+		<module>TurtleboneStock-api</module>
+		<module>TurtleboneBet</module>
 	</modules>
 	<build>
 		<plugins>

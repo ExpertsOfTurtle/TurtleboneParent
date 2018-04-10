@@ -97,10 +97,9 @@ public class IOUtil {
         }
         return result;
     }
-    public static String readTxtFile(String filePath) {
+    public static String readTxtFile(String filePath, String encoding) {
         StringBuffer fileContent = new StringBuffer();
         try {
-            String encoding = "UTF-8";
             File file = new File(filePath);
             if (file.isFile() && file.exists()) { // 判断文件是否存在
                 InputStreamReader read = new InputStreamReader(
@@ -108,7 +107,7 @@ public class IOUtil {
                 BufferedReader bufferedReader = new BufferedReader(read);
                 String lineTxt = null;
                 while ((lineTxt = bufferedReader.readLine()) != null) {
-                    fileContent.append(lineTxt);
+                    fileContent.append(lineTxt).append("\n");
                 }
                 read.close();
             } else {
@@ -119,6 +118,9 @@ public class IOUtil {
             e.printStackTrace();
         }
         return fileContent.toString();
+    }
+    public static String readTxtFile(String filePath) {
+        return readTxtFile(filePath, "UTF-8");
     }
     public static void writeStringToFile(String path, String str) {
         try {
