@@ -66,6 +66,7 @@ public class SecurityFilter implements Filter {
 		request.setAttribute("tokenId", tokenId);
 		logger.info("tokenId={}, username={}", tokenId, username);
 		
+
 		boolean isSucess = verifyToken(tokenId, username ,request);
 		
 		if (checkExclude(path)) {
