@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.codeforces.repository.CFTaskRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.codeforces.entity.CFTask" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="deadline" property="deadline" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="INTEGER" />
+    <result column="reason" property="reason" jdbcType="VARCHAR" />
+    <result column="finish" property="finish" jdbcType="INTEGER" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `username`,
+   `deadline`,
+   `amount`,
+   `reason`,
+   `finish`,
+   `createTime`,
+   `updateTime`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cftask
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cftask
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.codeforces.entity.CFTask" >
+    insert into cftask ( 
+     `username`,
+     `deadline`,
+     `amount`,
+     `reason`,
+     `finish`
+    )
+    values (
+     #{username,jdbcType=VARCHAR},
+     #{deadline,jdbcType=VARCHAR},
+     #{amount,jdbcType=INTEGER},
+     #{reason,jdbcType=VARCHAR},
+     #{finish,jdbcType=INTEGER}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.codeforces.entity.CFTask" >
+    insert into cftask
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="username != null" >
+        `username`,
+      </if>
+      <if test="deadline != null" >
+        `deadline`,
+      </if>
+      <if test="amount != null" >
+        `amount`,
+      </if>
+      <if test="reason != null" >
+        `reason`,
+      </if>
+      <if test="finish != null" >
+        `finish`,
+      </if>
+      <if test="createtime != null" >
+        `createTime`,
+      </if>
+      <if test="updatetime != null" >
+        `updateTime`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="deadline != null" >
+        #{deadline,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="reason != null" >
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="finish != null" >
+        #{finish,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.codeforces.entity.CFTask" >
+    update cftask
+	  <set>
+       <if test="username != null" >
+        `username`= #{username,jdbcType=VARCHAR},
+       </if>
+       <if test="deadline != null" >
+        `deadline`= #{deadline,jdbcType=VARCHAR},
+       </if>
+       <if test="amount != null" >
+        `amount`= #{amount,jdbcType=INTEGER},
+       </if>
+       <if test="reason != null" >
+        `reason`= #{reason,jdbcType=VARCHAR},
+       </if>
+       <if test="finish != null" >
+        `finish`= #{finish,jdbcType=INTEGER},
+       </if>
+       <if test="createtime != null" >
+        `createTime`= #{createtime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="updatetime != null" >
+        `updateTime`= #{updatetime,jdbcType=TIMESTAMP},
+       </if>
+          </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.codeforces.entity.CFTask" >
+    update cftask
+    set 
+       `username` = #{username,jdbcType=VARCHAR},
+       `deadline` = #{deadline,jdbcType=VARCHAR},
+       `amount` = #{amount,jdbcType=INTEGER},
+       `reason` = #{reason,jdbcType=VARCHAR},
+       `finish` = #{finish,jdbcType=INTEGER},
+       `createTime` = #{createtime,jdbcType=TIMESTAMP},
+       `updateTime` = #{updatetime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.codeforces.entity.CFTask" >
+    select count(*) from cftask
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="username != null" >
+        and `username` = #{username,jdbcType=VARCHAR}
+      </if>
+            <if test="deadline != null" >
+        and `deadline` = #{deadline,jdbcType=VARCHAR}
+      </if>
+            <if test="amount != null" >
+        and `amount` = #{amount,jdbcType=INTEGER}
+      </if>
+            <if test="reason != null" >
+        and `reason` = #{reason,jdbcType=VARCHAR}
+      </if>
+            <if test="finish != null" >
+        and `finish` = #{finish,jdbcType=INTEGER}
+      </if>
+            <if test="createtime != null" >
+        and `createTime` = #{createtime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="updatetime != null" >
+        and `updateTime` = #{updatetime,jdbcType=TIMESTAMP}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from cftask where 1 = 1 
+        <if test="cFTask.id != null" >
+      and `id` = #{cFTask.id,jdbcType=INTEGER}
+    </if>
+        <if test="cFTask.username != null" >
+      and `username` = #{cFTask.username,jdbcType=VARCHAR}
+    </if>
+        <if test="cFTask.deadline != null" >
+      and `deadline` = #{cFTask.deadline,jdbcType=VARCHAR}
+    </if>
+        <if test="cFTask.amount != null" >
+      and `amount` = #{cFTask.amount,jdbcType=INTEGER}
+    </if>
+        <if test="cFTask.reason != null" >
+      and `reason` = #{cFTask.reason,jdbcType=VARCHAR}
+    </if>
+        <if test="cFTask.finish != null" >
+      and `finish` = #{cFTask.finish,jdbcType=INTEGER}
+    </if>
+        <if test="cFTask.createtime != null" >
+      and `createTime` = #{cFTask.createtime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="cFTask.updatetime != null" >
+      and `updateTime` = #{cFTask.updatetime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'username'
+   || order.property == 'deadline'
+   || order.property == 'amount'
+   || order.property == 'reason'
+   || order.property == 'finish'
+   || order.property == 'createTime'
+   || order.property == 'updateTime'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+  <select id="selectForCompleteTask" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from cftask
+    where `username` = #{username,jdbcType=VARCHAR}
+    and finish &lt; amount
+    order by deadline asc
+  </select>
+ </mapper>
+  
+
+  
+	

@@ -16,6 +16,7 @@ import com.turtlebone.codeforces.mapper.CFUserMapper;
 import com.turtlebone.codeforces.model.CFSubmissionModel;
 import com.turtlebone.codeforces.repository.CFSubmissionRepository;
 import com.turtlebone.codeforces.service.CFSettlementService;
+import com.turtlebone.codeforces.service.CFTaskService;
 import com.turtlebone.codeforces.service.WeeklyTaskService;
 import com.turtlebone.core.util.BeanCopyUtils;
 import com.turtlebone.core.util.DateUtil;
@@ -30,6 +31,8 @@ public class CFSettlementServiceImpl implements CFSettlementService {
 	private WeeklyTaskService weeklyTaskService;
 	@Autowired
 	private CFSubmissionRepository cFSubmissionRepo;
+	@Autowired
+	private CFTaskService cfTaskService;
 	
 	@Override
 	public String calculate(String from, String to) {
@@ -40,9 +43,9 @@ public class CFSettlementServiceImpl implements CFSettlementService {
 		WeeklySummary weeklySummary = weeklyTaskService.queryStatus(from, to);
 		for (UserResult userResult : weeklySummary.getList()) {
 			List<CFSubmissionModel> list = userResult.getSubmission();
+			int totalCount = 0;
 			for (CFSubmissionModel submission : list) {
 				if ("OK".equals(submission.getResult()) && submission.getStatus() == 0) {
-					String username = CFUserMapper.getTurtleName(submission.getUsername());
 					String problemIndex = submission.getProblemindex();
 					int count = 1;
 					for (int i = 0; i < 10; i++) {
@@ -53,18 +56,16 @@ public class CFSettlementServiceImpl implements CFSettlementService {
 							break;
 						}
 					}
-					boolean flag = false;
-					logger.debug("完成题目数：{}", count);			
-					for (int i = 0; i < count; i++) {
-						flag |= doCompleteProblem(submission.getContestid(), submission.getProblemindex(), username);
-					}
-					if (flag) {
-						submission.setStatus(1);	//标记为已经处理过
-						CFSubmission sub = BeanCopyUtils.map(submission, CFSubmission.class);
-						cFSubmissionRepo.updateByPrimaryKeySelective(sub);
-					}
+					totalCount += count;
+					submission.setStatus(1);	//标记为已经处理过
+					CFSubmission sub = BeanCopyUtils.map(submission, CFSubmission.class);
+					cFSubmissionRepo.updateByPrimaryKeySelective(sub);
 				}
 			}
+			logger.debug("{} 完成题目数：{}", userResult.getUsername(), totalCount);	
+			if (totalCount > 0) {
+				cfTaskService.completeTask(CFUserMapper.getTurtleName(userResult.getUsername()), totalCount);	
+			}			
 		}
 		return null;
 	}

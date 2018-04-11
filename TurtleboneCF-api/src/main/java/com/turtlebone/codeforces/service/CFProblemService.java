@@ -1,6 +1,8 @@
 
 package com.turtlebone.codeforces.service;
 
+import java.util.List;
+
 import com.turtlebone.codeforces.model.CFProblemModel;
 
 public interface CFProblemService{
@@ -19,5 +21,7 @@ public interface CFProblemService{
 	
 
 	public int selectCount(CFProblemModel cFProblemModel);
+	
+	public List<CFProblemModel> selectByCondition(String status, String type);
 	
 }

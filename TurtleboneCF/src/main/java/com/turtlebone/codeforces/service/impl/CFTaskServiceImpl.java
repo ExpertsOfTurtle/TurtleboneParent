@@ -4,21 +4,21 @@ package com.turtlebone.codeforces.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 
-import com.turtlebone.codeforces.entity.CFProblem;
-import com.turtlebone.codeforces.repository.CFProblemRepository;
-import com.turtlebone.codeforces.model.CFProblemModel;
-import com.turtlebone.codeforces.service.CFProblemService;
+import com.turtlebone.codeforces.entity.CFTask;
+import com.turtlebone.codeforces.repository.CFTaskRepository;
+import com.turtlebone.codeforces.model.CFTaskModel;
+import com.turtlebone.codeforces.service.CFTaskService;
 import com.turtlebone.core.util.BeanCopyUtils;
 
 @Service
-public class CFProblemServiceImpl implements CFProblemService {
+public class CFTaskServiceImpl implements CFTaskService {
+
 
 	@Autowired
-	private CFProblemRepository cFProblemRepo;
+	private CFTaskRepository cFTaskRepo;
 	
 
 	/*
@@ -27,8 +27,8 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public int deleteByPrimaryKey(Long id) {
-		return cFProblemRepo.deleteByPrimaryKey(id);
+	public int deleteByPrimaryKey(Integer id) {
+		return cFTaskRepo.deleteByPrimaryKey(id);
 	}
 	
 
@@ -38,9 +38,9 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public CFProblemModel findByPrimaryKey(Long id) {
-		CFProblem cFProblem = cFProblemRepo.selectByPrimaryKey(id);
-		return BeanCopyUtils.map(cFProblem, CFProblemModel.class);
+	public CFTaskModel findByPrimaryKey(Integer id) {
+		CFTask cFTask = cFTaskRepo.selectByPrimaryKey(id);
+		return BeanCopyUtils.map(cFTask, CFTaskModel.class);
 	}
 	
 	/*
@@ -49,8 +49,8 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public int updateByPrimaryKey(CFProblemModel cFProblemModel) {
-		return cFProblemRepo.updateByPrimaryKey(BeanCopyUtils.map(cFProblemModel, CFProblem.class));
+	public int updateByPrimaryKey(CFTaskModel cFTaskModel) {
+		return cFTaskRepo.updateByPrimaryKey(BeanCopyUtils.map(cFTaskModel, CFTask.class));
 	}
 	
 	/*
@@ -59,8 +59,8 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public int updateByPrimaryKeySelective(CFProblemModel cFProblemModel) {
-		return cFProblemRepo.updateByPrimaryKeySelective(BeanCopyUtils.map(cFProblemModel, CFProblem.class));
+	public int updateByPrimaryKeySelective(CFTaskModel cFTaskModel) {
+		return cFTaskRepo.updateByPrimaryKeySelective(BeanCopyUtils.map(cFTaskModel, CFTask.class));
 	}
 	
 
@@ -70,8 +70,8 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public int create(CFProblemModel cFProblemModel) {
-		return cFProblemRepo.insert(BeanCopyUtils.map(cFProblemModel, CFProblem.class));
+	public int create(CFTaskModel cFTaskModel) {
+		return cFTaskRepo.insert(BeanCopyUtils.map(cFTaskModel, CFTask.class));
 	}
 
 	/*
@@ -80,8 +80,8 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public int createSelective(CFProblemModel cFProblemModel) {
-		return cFProblemRepo.insertSelective(BeanCopyUtils.map(cFProblemModel, CFProblem.class));
+	public int createSelective(CFTaskModel cFTaskModel) {
+		return cFTaskRepo.insertSelective(BeanCopyUtils.map(cFTaskModel, CFTask.class));
 	}
 
 	/*
@@ -90,19 +90,30 @@ public class CFProblemServiceImpl implements CFProblemService {
 	 * if read only,please config as "@Transactional(readOnly = true)",otherwise "@Transactional"
 	 */
 	@Override
-	public int selectCount(CFProblemModel cFProblemModel) {
-		return cFProblemRepo.selectCount(BeanCopyUtils.map(cFProblemModel, CFProblem.class));
+	public int selectCount(CFTaskModel cFTaskModel) {
+		return cFTaskRepo.selectCount(BeanCopyUtils.map(cFTaskModel, CFTask.class));
 	}
 
 
 	@Override
-	public List<CFProblemModel> selectByCondition(String status, String type) {
-		PageRequest pr = new PageRequest(0, 10000);
-		CFProblem cFProblem = new CFProblem();
-		cFProblem.setStatus(status);
-		cFProblem.setType(type);
-		List<CFProblem> list = cFProblemRepo.selectPage(cFProblem, pr);
-		return BeanCopyUtils.mapList(list, CFProblemModel.class);
+	public void completeTask(String username, int count) {
+		List<CFTask> list = cFTaskRepo.selectForCompleteTask(username);
+		for (CFTask task : list) {
+			int finish = task.getFinish();
+			int amount = task.getAmount();
+			int rest = amount - finish;
+			if (rest >= count) {
+				task.setFinish(finish + count);
+				task.setUpdatetime(null);
+				cFTaskRepo.updateByPrimaryKeySelective(task);
+				break;
+			} else {
+				task.setFinish(amount);
+				task.setUpdatetime(null);
+				cFTaskRepo.updateByPrimaryKeySelective(task);
+				count -= rest;
+			}
+		}
 	}
 
 

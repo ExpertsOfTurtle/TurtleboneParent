@@ -24,7 +24,7 @@ public class CFSettlementSchedule {
 	private CFSettlementService cfSettlementService;
 
 	/**
-	 * 每天早上八點，生成上周報告
+	 * 每隔一段时间，结算罚题
 	 */
 	@Scheduled(cron = "0 0 0,1,2,8,10,12,18,20,22,23 * * ?")
 	public void weeklyReport() {
