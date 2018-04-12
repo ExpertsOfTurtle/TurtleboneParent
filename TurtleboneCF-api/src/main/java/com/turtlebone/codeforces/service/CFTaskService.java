@@ -1,8 +1,10 @@
 
 package com.turtlebone.codeforces.service;
 
+import com.turtlebone.codeforces.bean.FilterCFTaskRequest;
 import com.turtlebone.codeforces.model.CFTaskModel;
 import java.util.Date;
+import java.util.List;
 
 public interface CFTaskService{
 	
@@ -23,4 +25,6 @@ public interface CFTaskService{
 	
 	public void completeTask(String username, int count);
 	
+	public List<CFTaskModel> filter(FilterCFTaskRequest filter);
+	public int filterCount(FilterCFTaskRequest filter);
 }

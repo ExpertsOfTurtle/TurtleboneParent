@@ -4,9 +4,11 @@ package com.turtlebone.codeforces.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-
+import com.turtlebone.codeforces.bean.FilterCFTaskRequest;
 import com.turtlebone.codeforces.entity.CFTask;
 import com.turtlebone.codeforces.repository.CFTaskRepository;
 import com.turtlebone.codeforces.model.CFTaskModel;
@@ -105,6 +107,7 @@ public class CFTaskServiceImpl implements CFTaskService {
 			if (rest >= count) {
 				task.setFinish(finish + count);
 				task.setUpdatetime(null);
+				task.setStatus(1);
 				cFTaskRepo.updateByPrimaryKeySelective(task);
 				break;
 			} else {
@@ -117,5 +120,30 @@ public class CFTaskServiceImpl implements CFTaskService {
 	}
 
 
+	@Override
+	public List<CFTaskModel> filter(FilterCFTaskRequest filter) {
+		Integer pageSize = filter.getPageSize();
+		Integer pageNumber = filter.getPageNumber();
+		if (pageSize == null || pageSize <= 0) {
+			pageSize = 20;
+		}
+		if (pageNumber == null) {
+			pageNumber = 0;
+		}
+		PageRequest pr = new PageRequest(pageNumber, pageSize, new Sort(Sort.Direction.DESC, "deadline"));
+		CFTask cFTask = new CFTask();
+		cFTask.setStatus(filter.getStatus());
+		cFTask.setUsername(filter.getUsername());
+		List<CFTask> list = cFTaskRepo.selectPage(cFTask, pr);
+		return BeanCopyUtils.mapList(list, CFTaskModel.class);
+	}
 
+
+	@Override
+	public int filterCount(FilterCFTaskRequest filter) {
+		CFTask cFTask = new CFTask();
+		cFTask.setStatus(filter.getStatus());
+		cFTask.setUsername(filter.getUsername());
+		return cFTaskRepo.selectCount(cFTask);
+	}
 }

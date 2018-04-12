@@ -13,6 +13,7 @@ public class CFTask{
 	private Integer finish;
 	private Date createtime;
 	private Date updatetime;
+	private Integer status;
 		
 	public void setId(Integer id){
 		this.id = id;
@@ -78,6 +79,13 @@ public class CFTask{
 		return this.updatetime;
 	}
 		
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+	
+	public Integer getStatus(){
+		return this.status;
+	}
 		
 }
 

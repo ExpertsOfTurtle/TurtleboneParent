@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.turtlebone.codeforces.bean.FilterCFTaskRequest;
 import com.turtlebone.codeforces.bean.InsertCFTaskRequest;
 import com.turtlebone.codeforces.bean.QueryStatusRequest;
 import com.turtlebone.codeforces.bean.SyncSubmissionRequest;
@@ -61,6 +62,21 @@ public class CFTaskController {
 	@Autowired
 	private CFProblemService cfProblemService;
 
+	@RequestMapping(value = "/filter")
+	public @ResponseBody ResponseEntity<?> filter(@RequestBody FilterCFTaskRequest request) {
+		JSONObject result = new JSONObject();
+		
+		int total = cfTaskService.filterCount(request);
+		if (total > 0) {
+			List<CFTaskModel> list = cfTaskService.filter(request);
+			result.put("list", list);
+		} else {
+			result.put("list", null);
+		}
+		result.put("total", total);		
+		
+		return ResponseEntity.ok(result);
+	}
 	@RequestMapping(value = "/insert")
 	public @ResponseBody ResponseEntity<?> insert(@RequestBody InsertCFTaskRequest request) {
 		String validateResult = validate(request);
