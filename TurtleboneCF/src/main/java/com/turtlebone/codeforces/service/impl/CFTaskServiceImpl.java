@@ -130,7 +130,7 @@ public class CFTaskServiceImpl implements CFTaskService {
 		if (pageNumber == null) {
 			pageNumber = 0;
 		}
-		PageRequest pr = new PageRequest(pageNumber, pageSize, new Sort(Sort.Direction.DESC, "deadline"));
+		PageRequest pr = new PageRequest(pageNumber, pageSize, new Sort(Sort.Direction.DESC, "deadline", "id"));
 		CFTask cFTask = new CFTask();
 		cFTask.setStatus(filter.getStatus());
 		cFTask.setUsername(filter.getUsername());

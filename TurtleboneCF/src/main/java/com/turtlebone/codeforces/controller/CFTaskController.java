@@ -77,6 +77,11 @@ public class CFTaskController {
 		
 		return ResponseEntity.ok(result);
 	}
+	@RequestMapping(value = "/delete/{id}")
+	public @ResponseBody ResponseEntity<?> deleteTask(@PathVariable("id") Integer id) {
+		int rt = cfTaskService.deleteByPrimaryKey(id);
+		return ResponseEntity.ok(rt);
+	}
 	@RequestMapping(value = "/insert")
 	public @ResponseBody ResponseEntity<?> insert(@RequestBody InsertCFTaskRequest request) {
 		String validateResult = validate(request);

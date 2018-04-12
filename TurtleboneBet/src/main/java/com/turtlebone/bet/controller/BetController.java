@@ -85,4 +85,12 @@ public class BetController {
 		
 		return ResponseEntity.ok(list);
 	}
+	
+	@RequestMapping(value="/deleteBet/{bid}")
+	public @ResponseBody ResponseEntity<?> deleteBet(@PathVariable("bid") String id) {
+		Query query = new Query(Criteria.where("id").is(id));
+		mongoTemplate.findAndRemove(query, BetInfo.class);
+		
+		return ResponseEntity.ok("OK");
+	}
 }
