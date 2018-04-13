@@ -6,4 +6,5 @@ import lombok.Data;
 public class QueryStatusRequest {
 	private String from;
 	private String to;
+	private String email;
 }

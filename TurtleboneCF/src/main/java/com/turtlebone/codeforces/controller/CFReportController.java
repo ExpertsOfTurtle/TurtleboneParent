@@ -15,6 +15,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +56,12 @@ public class CFReportController {
 
 	@RequestMapping(value = "/weekly", method = RequestMethod.POST)
 	public @ResponseBody ResponseEntity<?> weekly(@RequestBody QueryStatusRequest request) {
-		String html = cfReportService.generateWeeklyReport(request.getFrom(), request.getTo());
+		String html = "";
+		if (StringUtils.isEmpty(request.getEmail())) {
+			html = cfReportService.generateWeeklyReport(request.getFrom(), request.getTo());	
+		} else {
+			html = cfReportService.generateWeeklyReport(request.getFrom(), request.getTo(), request.getEmail());
+		}
 		return ResponseEntity.ok(html);
 	}
 	

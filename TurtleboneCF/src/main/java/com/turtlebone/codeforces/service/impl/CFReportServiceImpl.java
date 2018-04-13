@@ -54,4 +54,31 @@ public class CFReportServiceImpl implements CFReportService {
 		
 		return html;
 	}
+	
+	@Override
+	public String generateWeeklyReport(String from, String to, String email) {
+		WeeklySummary result = null;
+		if (StringUtil.isEmpty(from) || StringUtil.isEmpty(to)) {
+			from = DateUtil.getLastMonday();
+			to = DateUtil.getLastSunday();
+		}
+		result = weeklyTaskService.queryStatus(from, to);
+		
+		Map<String, Object> model = new HashMap<>();
+		model.put("weeklySummary", result);
+		model.put("from", from);
+		model.put("to", to);
+		String html = VelocityGenerator.getVMResult("velocity/cf/email/weekly.vm", model);
+		logger.debug("weekly.vm, length={}", html.length());
+		List<String> addressList = new ArrayList<>();
+		
+		addressList.add(email);
+		
+		String rs = emailService.sendEmail(addressList, "Codeforces周报", html, "Turtlebone");
+		for (String addr : addressList) {
+			logger.info("Send email to {}, result:{}", addr, rs);
+		}
+		
+		return html;
+	}
 }
