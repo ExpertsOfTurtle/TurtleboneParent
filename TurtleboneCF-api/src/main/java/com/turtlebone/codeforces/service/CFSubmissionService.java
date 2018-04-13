@@ -20,11 +20,13 @@ public interface CFSubmissionService {
 	public int deleteByPrimaryKey(Integer id);
 
 	public int selectCount(CFSubmissionModel cFSubmissionModel);
-	
+
 	public int insert(List<CFSubmissionModel> list);
 
-	public List<CFSubmissionModel> selectByCondition(List<Integer> idList, String username, 
-			String tag, String from, String to);
-	
+	public List<CFSubmissionModel> selectByCondition(List<Integer> idList, String username, String tag, String from,
+			String to, Integer pageNumber, Integer pageSize);
+
+	public List<CFSubmissionModel> selectByCondition(CFSubmissionModel filter, Integer pageNumber, Integer pageSize);
+
 	public List<CFSubmissionModel> querySolved(String from, String to);
 }

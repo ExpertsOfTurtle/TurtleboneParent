@@ -8,6 +8,9 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 
@@ -101,7 +104,7 @@ public class CFSubmissionServiceImpl implements CFSubmissionService {
 
 	@Override
 	public List<CFSubmissionModel> selectByCondition(List<Integer> idList, String username, String tag, String from,
-			String to) {
+			String to, Integer pageNumber, Integer pageSize) {
 		Map<String, Object> map = new HashMap<>();
 		if (idList != null && idList.size() > 0) {
 			map.put("idList", idList);
@@ -109,10 +112,20 @@ public class CFSubmissionServiceImpl implements CFSubmissionService {
 		map.put("username", username);
 		map.put("from", from);
 		map.put("to", to);
-		if (!StringUtil.isEmpty(tag)) {
-			map.put("tag", "%" + tag + "%");
-		}
+		map.put("tag", tag);
+		Sort sort = new Sort(Direction.DESC, "id");
+		PageRequest pr = new PageRequest(pageNumber == null ? 0 : pageNumber, pageSize != null && pageSize > 0 ? pageSize : 20, sort);
+		map.put("pageable", pr);
 		List<CFSubmission> list = cFSubmissionRepo.selectByCondition(map);
+		return BeanCopyUtils.mapList(list, CFSubmissionModel.class);
+	}
+
+	@Override
+	public List<CFSubmissionModel> selectByCondition(CFSubmissionModel filter, Integer pageNumber, Integer pageSize) {
+		CFSubmission sub = BeanCopyUtils.map(filter, CFSubmission.class);
+		Sort sort = new Sort(Direction.DESC, "id");
+		PageRequest pr = new PageRequest(pageNumber == null ? 0 : pageNumber, pageSize != null && pageSize > 0 ? pageSize : 20, sort);
+		List<CFSubmission> list = cFSubmissionRepo.selectPage(sub, pr);
 		return BeanCopyUtils.mapList(list, CFSubmissionModel.class);
 	}
 
@@ -128,7 +141,7 @@ public class CFSubmissionServiceImpl implements CFSubmissionService {
 			idList.add(cf.getId());
 			map.put(cf.getId(), cf);
 		}
-		List<CFSubmissionModel> existingList = selectByCondition(idList, null, null, null, null);
+		List<CFSubmissionModel> existingList = selectByCondition(idList, null, null, null, null, null, 1000);
 		for (CFSubmissionModel existing : existingList) {
 			CFSubmissionModel cf = map.get(existing.getId());
 			String result = existing.getResult();
@@ -157,7 +170,4 @@ public class CFSubmissionServiceImpl implements CFSubmissionService {
 		List<CFSubmission> list = cFSubmissionRepo.querySolved(map);
 		return BeanCopyUtils.mapList(list, CFSubmissionModel.class);
 	}
-
-
-
 }
