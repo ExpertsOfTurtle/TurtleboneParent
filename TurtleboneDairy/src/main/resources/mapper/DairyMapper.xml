@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.turtlebone.dairy.repository.DairyRepository" >
+  <resultMap id="BaseResultMap" type="com.turtlebone.dairy.entity.Dairy" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updatetime" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="subtype" property="subtype" jdbcType="INTEGER" />
+    <result column="expireTime" property="expiretime" jdbcType="TIMESTAMP" />
+    <result column="content" property="content" jdbcType="LONGVARBINARY" />
+  </resultMap>
+
+ <sql id="Base_Column_List" >
+   `id`,
+   `title`,
+   `creator`,
+   `createTime`,
+   `updateTime`,
+   `type`,
+   `subtype`,
+   `expireTime`,
+   `content`
+ </sql>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from dairy
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from dairy
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insert" parameterType="com.turtlebone.dairy.entity.Dairy" 
+  useGeneratedKeys="true" keyProperty="id">
+    insert into dairy ( 
+     `title`,
+     `creator`,
+     `type`,
+     `subtype`,
+     `expireTime`,
+     `content`
+    )
+    values (
+     #{title,jdbcType=VARCHAR},
+     #{creator,jdbcType=VARCHAR},
+     #{type,jdbcType=INTEGER},
+     #{subtype,jdbcType=INTEGER},
+     #{expiretime,jdbcType=TIMESTAMP},
+     #{content,jdbcType=LONGVARBINARY}
+ )
+  </insert>
+  
+  
+  
+  <insert id="insertSelective" parameterType="com.turtlebone.dairy.entity.Dairy" >
+    insert into dairy
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        `id`,
+      </if>
+      <if test="title != null" >
+        `title`,
+      </if>
+      <if test="creator != null" >
+        `creator`,
+      </if>
+      <if test="createtime != null" >
+        `createTime`,
+      </if>
+      <if test="updatetime != null" >
+        `updateTime`,
+      </if>
+      <if test="type != null" >
+        `type`,
+      </if>
+      <if test="subtype != null" >
+        `subtype`,
+      </if>
+      <if test="expiretime != null" >
+        `expireTime`,
+      </if>
+      <if test="content != null" >
+        `content`,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="subtype != null" >
+        #{subtype,jdbcType=INTEGER},
+      </if>
+      <if test="expiretime != null" >
+        #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=LONGVARBINARY},
+      </if>
+    </trim>
+  </insert>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.turtlebone.dairy.entity.Dairy" >
+    update dairy
+	  <set>
+       <if test="title != null" >
+        `title`= #{title,jdbcType=VARCHAR},
+       </if>
+       <if test="creator != null" >
+        `creator`= #{creator,jdbcType=VARCHAR},
+       </if>
+       <if test="createtime != null" >
+        `createTime`= #{createtime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="updatetime != null" >
+        `updateTime`= #{updatetime,jdbcType=TIMESTAMP},
+       </if>
+       <if test="type != null" >
+        `type`= #{type,jdbcType=INTEGER},
+       </if>
+       <if test="subtype != null" >
+        `subtype`= #{subtype,jdbcType=INTEGER},
+       </if>
+       <if test="expiretime != null" >
+        `expireTime`= #{expiretime,jdbcType=TIMESTAMP},
+       </if>
+           <if test="content != null" >
+        `content`= #{content,jdbcType=LONGVARBINARY},
+       </if>
+      </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPrimaryKey" parameterType="com.turtlebone.dairy.entity.Dairy" >
+    update dairy
+    set 
+   `content` = #{content,jdbcType=LONGVARBINARY},
+       `title` = #{title,jdbcType=VARCHAR},
+       `creator` = #{creator,jdbcType=VARCHAR},
+       `createTime` = #{createtime,jdbcType=TIMESTAMP},
+       `updateTime` = #{updatetime,jdbcType=TIMESTAMP},
+       `type` = #{type,jdbcType=INTEGER},
+       `subtype` = #{subtype,jdbcType=INTEGER},
+       `expireTime` = #{expiretime,jdbcType=TIMESTAMP}
+     where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+
+  
+  <select id="selectCount" resultType="java.lang.Integer" parameterType="com.turtlebone.dairy.entity.Dairy" >
+    select count(*) from dairy
+    <where >
+            <if test="id != null" >
+        and `id` = #{id,jdbcType=INTEGER}
+      </if>
+            <if test="title != null" >
+        and `title` like  CONCAT('%',#{title},'%')
+      </if>
+            <if test="creator != null" >
+        and `creator` = #{creator,jdbcType=VARCHAR}
+      </if>
+            <if test="createtime != null" >
+        and `createTime` = #{createtime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="updatetime != null" >
+        and `updateTime` = #{updatetime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="type != null" >
+        and `type` = #{type,jdbcType=INTEGER}
+      </if>
+            <if test="subtype != null" >
+        and `subtype` = #{subtype,jdbcType=INTEGER}
+      </if>
+            <if test="expiretime != null" >
+        and `expireTime` = #{expiretime,jdbcType=TIMESTAMP}
+      </if>
+            <if test="content != null" >
+        and `content` = #{content,jdbcType=LONGVARBINARY}
+      </if>
+          </where>
+  </select>
+
+    <select id="selectPage" resultMap="BaseResultMap" >
+    select 
+    <include refid="Base_Column_List" />
+    from dairy where 1 = 1 
+        <if test="dairy.id != null" >
+      and `id` = #{dairy.id,jdbcType=INTEGER}
+    </if>
+        <if test="dairy.title != null" >
+      and `title` like  CONCAT('%',#{dairy.title},'%')
+    </if>
+        <if test="dairy.creator != null" >
+      and `creator` = #{dairy.creator,jdbcType=VARCHAR}
+    </if>
+        <if test="dairy.createtime != null" >
+      and `createTime` = #{dairy.createtime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="dairy.updatetime != null" >
+      and `updateTime` = #{dairy.updatetime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="dairy.type != null" >
+      and `type` = #{dairy.type,jdbcType=INTEGER}
+    </if>
+        <if test="dairy.subtype != null" >
+      and `subtype` = #{dairy.subtype,jdbcType=INTEGER}
+    </if>
+        <if test="dairy.expiretime != null" >
+      and `expireTime` = #{dairy.expiretime,jdbcType=TIMESTAMP}
+    </if>
+        <if test="dairy.content != null" >
+      and `content` = #{dairy.content,jdbcType=LONGVARBINARY}
+    </if>
+        <if test="pageable.sort != null" >
+      order by 
+      <foreach collection="pageable.sort" item="order" separator="," >
+        <if test="
+   order.property == 'id' 
+   || order.property == 'title'
+   || order.property == 'creator'
+   || order.property == 'createTime'
+   || order.property == 'updateTime'
+   || order.property == 'type'
+   || order.property == 'subtype'
+   || order.property == 'expireTime'
+   || order.property == 'content'
+        " >
+        		${order.property} ${order.direction}
+        </if>
+      </foreach>
+    </if>
+    <if test="pageable.offset >= 0 and pageable.pageSize > 0" >
+      limit ${pageable.offset}, ${pageable.pageSize}
+    </if>
+  </select>
+ </mapper>
+  
+
+  
+	

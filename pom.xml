@@ -141,6 +141,8 @@
 		<module>TurtleboneStock</module>
 		<module>TurtleboneStock-api</module>
 		<module>TurtleboneBet</module>
+		<module>TurtleboneDairy</module>
+		<module>TurtleboneDairy-api</module>
 	</modules>
 	<build>
 		<plugins>

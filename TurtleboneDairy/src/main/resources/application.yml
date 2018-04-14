@@ -1,0 +1,69 @@
+spring:
+  profiles: default
+  datasource:
+    type: org.apache.commons.dbcp2.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/turtle?allowMultiQueries=true
+    username: mysql
+    password: mysql
+    initialSize: 10
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    testWhileIdle: true
+    validationQuery: select 'x'
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+  velocity:
+    charset: UTF-8
+    properties.input.encoding: UTF-8
+    properties.output.encoding: UTF-8 
+    resourceLoaderPath: classpath:templates/
+    suffix: .vm
+  jmx.default-domain: dairy.turtlebone
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+redis.expireTime: 60
+server:
+  port: 8802
+  contextPath: /dairy/
+constants:
+  excludeRegex: dairy
+---
+spring:
+  profiles: prod
+  datasource:
+    type: org.apache.commons.dbcp2.BasicDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://turtlebone.top:3306/turtle?allowMultiQueries=true
+    username: mysql
+    password: mysql
+    initialSize: 10
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    testWhileIdle: true
+    validationQuery: select 'x'
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 20MB
+      max-request-size: 20MB
+  velocity:
+    charset: UTF-8
+    properties.input.encoding: UTF-8
+    properties.output.encoding: UTF-8 
+    resourceLoaderPath: classpath:templates/
+    suffix: .vm
+  jmx.default-domain: dairy.turtlebone
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+redis.expireTime: 3600
+server:
+  port: 8802
+  contextPath: /dairy/
+constants:
+  excludeRegex: dairy
