@@ -107,12 +107,12 @@ public class CFTaskServiceImpl implements CFTaskService {
 			if (rest >= count) {
 				task.setFinish(finish + count);
 				task.setUpdatetime(null);
-				task.setStatus(1);
 				cFTaskRepo.updateByPrimaryKeySelective(task);
 				break;
 			} else {
 				task.setFinish(amount);
 				task.setUpdatetime(null);
+				task.setStatus(1);
 				cFTaskRepo.updateByPrimaryKeySelective(task);
 				count -= rest;
 			}
