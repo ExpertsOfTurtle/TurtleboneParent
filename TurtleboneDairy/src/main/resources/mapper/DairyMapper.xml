@@ -169,8 +169,8 @@
             <if test="subtype != null" >
         and `subtype` = #{subtype,jdbcType=INTEGER}
       </if>
-            <if test="expiretime != null" >
-        and `expireTime` = #{expiretime,jdbcType=TIMESTAMP}
+      <if test="expiretime != null" >
+        and (`expireTime` is null or `expireTime` &gt; #{expiretime,jdbcType=TIMESTAMP})
       </if>
             <if test="content != null" >
         and `content` = #{content,jdbcType=LONGVARBINARY}
@@ -204,7 +204,7 @@
       and `subtype` = #{dairy.subtype,jdbcType=INTEGER}
     </if>
         <if test="dairy.expiretime != null" >
-      and `expireTime` = #{dairy.expiretime,jdbcType=TIMESTAMP}
+      and (`expireTime` is null or `expireTime` &gt; #{dairy.expiretime,jdbcType=TIMESTAMP})
     </if>
         <if test="dairy.content != null" >
       and `content` = #{dairy.content,jdbcType=LONGVARBINARY}

@@ -6,6 +6,7 @@ public enum SubDairyType {
 	cfFav(1),		//收藏题目
 	cfAnalysis(2),	//题解
 	
+	
 	//Normal
 	Idea(10),
 	Study(11),

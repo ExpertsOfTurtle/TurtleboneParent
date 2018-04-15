@@ -8,6 +8,7 @@ public class FilterDairyRequest {
 	private Integer type;
 	private Integer subtype;
 	private String title;
+	private String checkExpire;
 	
 	private Integer pageNumber;
 	private Integer pageSize;

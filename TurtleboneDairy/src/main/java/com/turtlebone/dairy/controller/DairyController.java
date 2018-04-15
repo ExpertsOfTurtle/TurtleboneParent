@@ -2,6 +2,7 @@ package com.turtlebone.dairy.controller;
 
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -92,6 +93,9 @@ public class DairyController {
 			filter.setTitle(request.getTitle());
 		filter.setType(request.getType());
 		filter.setSubtype(request.getSubtype());
+		if ("Y".equalsIgnoreCase(request.getCheckExpire())) {
+			filter.setExpiretime(new Date());
+		}
 		int total = dairyService.selectCount(filter);
 		List<DairyModel> list = null;
 		List<DairyVO> dairyList = new ArrayList<>();
