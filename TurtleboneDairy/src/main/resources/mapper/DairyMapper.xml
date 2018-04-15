@@ -62,20 +62,11 @@
   <insert id="insertSelective" parameterType="com.turtlebone.dairy.entity.Dairy" >
     insert into dairy
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        `id`,
-      </if>
       <if test="title != null" >
         `title`,
       </if>
       <if test="creator != null" >
         `creator`,
-      </if>
-      <if test="createtime != null" >
-        `createTime`,
-      </if>
-      <if test="updatetime != null" >
-        `updateTime`,
       </if>
       <if test="type != null" >
         `type`,
@@ -99,12 +90,6 @@
       </if>
       <if test="creator != null" >
         #{creator,jdbcType=VARCHAR},
-      </if>
-      <if test="createtime != null" >
-        #{createtime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updatetime != null" >
-        #{updatetime,jdbcType=TIMESTAMP},
       </if>
       <if test="type != null" >
         #{type,jdbcType=INTEGER},
@@ -130,12 +115,6 @@
        <if test="creator != null" >
         `creator`= #{creator,jdbcType=VARCHAR},
        </if>
-       <if test="createtime != null" >
-        `createTime`= #{createtime,jdbcType=TIMESTAMP},
-       </if>
-       <if test="updatetime != null" >
-        `updateTime`= #{updatetime,jdbcType=TIMESTAMP},
-       </if>
        <if test="type != null" >
         `type`= #{type,jdbcType=INTEGER},
        </if>
@@ -158,8 +137,6 @@
    `content` = #{content,jdbcType=LONGVARBINARY},
        `title` = #{title,jdbcType=VARCHAR},
        `creator` = #{creator,jdbcType=VARCHAR},
-       `createTime` = #{createtime,jdbcType=TIMESTAMP},
-       `updateTime` = #{updatetime,jdbcType=TIMESTAMP},
        `type` = #{type,jdbcType=INTEGER},
        `subtype` = #{subtype,jdbcType=INTEGER},
        `expireTime` = #{expiretime,jdbcType=TIMESTAMP}
