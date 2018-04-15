@@ -73,15 +73,25 @@ public class BetController {
 	
 	@RequestMapping(value="/queryBet/{bid}")
 	public @ResponseBody ResponseEntity<?> inputBet(@PathVariable("bid") String id) {
-		System.out.println(System.currentTimeMillis());
-		Query query = new Query(Criteria.where("id").is(id).and("publicTime").lt(new Date(System.currentTimeMillis())));
+		logger.debug("当前时间：{}", System.currentTimeMillis());
+		Query query = new Query(Criteria.where("id").is(id));
 		List<BetInfo> betInfoList = mongoTemplate.find(query, BetInfo.class);
 		if (betInfoList == null || betInfoList.size() != 1) {
 			return ResponseEntity.ok("找不到这个id~~");
 		}
+		BetInfo betInfo = betInfoList.get(0);
+		boolean hasPublic = true;
+		if (betInfo.getPublicTime() == null || betInfo.getPublicTime().getTime() > System.currentTimeMillis()) {
+			hasPublic = false;
+		}
 		
 		query = new Query(Criteria.where("bid").is(id));
 		List<BetInput> list = mongoTemplate.find(query, BetInput.class);
+		if (list != null && !hasPublic) {
+			for (BetInput bi : list) {
+				bi.setData("**** (未到公开时间)");
+			}
+		}
 		
 		return ResponseEntity.ok(list);
 	}
