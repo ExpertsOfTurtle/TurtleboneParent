@@ -13,4 +13,5 @@ public class CreateDairyRequest {
 	private Integer subtype;
 	private Date expiretime;
 	private String content;
+	private Integer status;
 }

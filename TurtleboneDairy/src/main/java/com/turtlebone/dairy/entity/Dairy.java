@@ -12,6 +12,7 @@ public class Dairy{
 	private Integer type;
 	private Integer subtype;
 	private Date expiretime;
+	private Integer status;
 	private byte[] content;
 		
 	public void setId(Integer id){
@@ -76,6 +77,14 @@ public class Dairy{
 	
 	public Date getExpiretime(){
 		return this.expiretime;
+	}
+		
+	public void setStatus(Integer status){
+		this.status = status;
+	}
+	
+	public Integer getStatus(){
+		return this.status;
 	}
 		
 	public void setContent(byte[] content){

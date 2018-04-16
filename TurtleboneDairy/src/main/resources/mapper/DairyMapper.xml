@@ -22,6 +22,7 @@
    `type`,
    `subtype`,
    `expireTime`,
+   `status`,
    `content`
  </sql>
   
@@ -45,6 +46,7 @@
      `type`,
      `subtype`,
      `expireTime`,
+     `status`,
      `content`
     )
     values (
@@ -53,6 +55,7 @@
      #{type,jdbcType=INTEGER},
      #{subtype,jdbcType=INTEGER},
      #{expiretime,jdbcType=TIMESTAMP},
+     #{status,jdbcType=INTEGER},
      #{content,jdbcType=LONGVARBINARY}
  )
   </insert>
@@ -77,6 +80,9 @@
       <if test="expiretime != null" >
         `expireTime`,
       </if>
+      <if test="status != null" >
+        `status`,
+      </if>
       <if test="content != null" >
         `content`,
       </if>
@@ -99,6 +105,9 @@
       </if>
       <if test="expiretime != null" >
         #{expiretime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
       </if>
       <if test="content != null" >
         #{content,jdbcType=LONGVARBINARY},
@@ -124,6 +133,9 @@
        <if test="expiretime != null" >
         `expireTime`= #{expiretime,jdbcType=TIMESTAMP},
        </if>
+       <if test="status != null" >
+        `status`= #{status,jdbcType=INTEGER},
+       </if>
            <if test="content != null" >
         `content`= #{content,jdbcType=LONGVARBINARY},
        </if>
@@ -139,7 +151,8 @@
        `creator` = #{creator,jdbcType=VARCHAR},
        `type` = #{type,jdbcType=INTEGER},
        `subtype` = #{subtype,jdbcType=INTEGER},
-       `expireTime` = #{expiretime,jdbcType=TIMESTAMP}
+       `expireTime` = #{expiretime,jdbcType=TIMESTAMP},
+       `status` = #{status,jdbcType=INTEGER}
      where id = #{id,jdbcType=INTEGER}
   </update>
   
@@ -171,6 +184,9 @@
       </if>
       <if test="expiretime != null" >
         and (`expireTime` is null or `expireTime` &gt; #{expiretime,jdbcType=TIMESTAMP})
+      </if>
+            <if test="status != null" >
+        and `status` = #{status,jdbcType=INTEGER}
       </if>
             <if test="content != null" >
         and `content` = #{content,jdbcType=LONGVARBINARY}
@@ -206,6 +222,9 @@
         <if test="dairy.expiretime != null" >
       and (`expireTime` is null or `expireTime` &gt; #{dairy.expiretime,jdbcType=TIMESTAMP})
     </if>
+        <if test="dairy.status != null" >
+      and `status` = #{dairy.status,jdbcType=INTEGER}
+    </if>
         <if test="dairy.content != null" >
       and `content` = #{dairy.content,jdbcType=LONGVARBINARY}
     </if>
@@ -221,6 +240,7 @@
    || order.property == 'type'
    || order.property == 'subtype'
    || order.property == 'expireTime'
+   || order.property == 'status'
    || order.property == 'content'
         " >
         		${order.property} ${order.direction}

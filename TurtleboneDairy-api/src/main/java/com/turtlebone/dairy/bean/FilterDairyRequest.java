@@ -9,6 +9,7 @@ public class FilterDairyRequest {
 	private Integer subtype;
 	private String title;
 	private String checkExpire;
+	private Integer status;
 	
 	private Integer pageNumber;
 	private Integer pageSize;

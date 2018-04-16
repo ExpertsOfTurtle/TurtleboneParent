@@ -15,4 +15,5 @@ public class DairyVO {
 	private Integer subtype;
 	private Date expiretime;
 	private String content;
+	private Integer status;
 }

@@ -25,6 +25,7 @@ import com.turtlebone.core.service.UserService;
 import com.turtlebone.dairy.bean.CreateDairyRequest;
 import com.turtlebone.dairy.bean.DairyVO;
 import com.turtlebone.dairy.bean.FilterDairyRequest;
+import com.turtlebone.dairy.common.DairyStatus;
 import com.turtlebone.dairy.common.DairyType;
 import com.turtlebone.dairy.common.SubDairyType;
 import com.turtlebone.dairy.model.DairyModel;
@@ -93,6 +94,7 @@ public class DairyController {
 			filter.setTitle(request.getTitle());
 		filter.setType(request.getType());
 		filter.setSubtype(request.getSubtype());
+		filter.setStatus(request.getStatus());
 		if ("Y".equalsIgnoreCase(request.getCheckExpire())) {
 			filter.setExpiretime(new Date());
 		}
@@ -115,8 +117,17 @@ public class DairyController {
 	
 	@RequestMapping(value="/delete/{id}")
 	public @ResponseBody ResponseEntity<?> delete(@PathVariable("id") Integer id) {
-		int rt = dairyService.deleteByPrimaryKey(id);
-		return ResponseEntity.ok(new ResultVO<Integer>("0", "OK", rt));
+		//不删除，改为标记
+		DairyModel dairy = dairyService.findByPrimaryKey(id);
+		if (dairy == null) {
+			return ResponseEntity.ok(new ResultVO<String>("E8802", "找不到记录, 你让我如何删除？", ""));	
+		} else {
+			dairy.setStatus(DairyStatus.Deleted.getVal());
+			dairyService.updateByPrimaryKey(dairy);
+			return ResponseEntity.ok(new ResultVO<String>("0", "OK", "成功"));	
+		}
+	//	int rt = dairyService.deleteByPrimaryKey(id);
+	//	return ResponseEntity.ok(new ResultVO<Integer>("0", "OK", rt));
 	}
 	
 	private DairyModel convert(CreateDairyRequest request) {
@@ -128,6 +139,7 @@ public class DairyController {
 		dairy.setSubtype(request.getSubtype());
 		dairy.setTitle(request.getTitle());
 		dairy.setExpiretime(request.getExpiretime());
+		dairy.setStatus(request.getStatus());
 		return dairy;
 	}
 	private DairyVO covert(DairyModel dairy) {
@@ -141,6 +153,7 @@ public class DairyController {
 		rs.setTitle(dairy.getTitle());
 		rs.setType(dairy.getType());
 		rs.setUpdatetime(dairy.getUpdatetime());
+		rs.setStatus(dairy.getStatus());
 		return rs;
 	}
 	private boolean validate(DairyModel dairy) throws TurtleException {
@@ -162,6 +175,9 @@ public class DairyController {
 		if (dairy.getSubtype() != null && !validateSubType(dairy.getSubtype())) {
 			throw new TurtleException("E8802", "Sub type not exist");
 		}
+		if (!validateStatus(dairy.getStatus())) {
+			throw new TurtleException("E8802", "Status not exist");
+		}
 		return true;
 	}
 	private boolean validateType(int val) {
@@ -175,6 +191,14 @@ public class DairyController {
 	private boolean validateSubType(int val) {
 		for (SubDairyType dt : SubDairyType.values()) {
 			if (dt.getVal() == val) {
+				return true;
+			}
+		}
+		return false;
+	}
+	private boolean validateStatus(int val) {
+		for (DairyStatus ds : DairyStatus.values()) {
+			if (ds.getVal() == val) {
 				return true;
 			}
 		}
