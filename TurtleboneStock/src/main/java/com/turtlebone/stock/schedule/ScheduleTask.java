@@ -17,12 +17,12 @@ import com.turtlebone.stock.common.IConstants;
 public class ScheduleTask {
 	private static Logger logger = LoggerFactory.getLogger(ScheduleTask.class);
 	
-	@Scheduled(cron = "*/10 30 9-11 * * 1-5")
+	@Scheduled(cron = "*/30 * 9-11 * * 1-5")
 	public void v1() throws Exception {
 		test();
 	}
 	
-	@Scheduled(cron = "*/10 0 13-15 * * 1-5")
+	@Scheduled(cron = "*/30 * 13-15 * * 1-5")
 	public void v2() throws Exception {
 		test();
 	}
@@ -44,6 +44,6 @@ public class ScheduleTask {
 				IOUtil.writeStringToFile("/dfs/info.st", str, true);
 			}
 		}
-//		logger.debug("{}", arr.length);
+		logger.debug("{}", arr.length);
 	}
 }
