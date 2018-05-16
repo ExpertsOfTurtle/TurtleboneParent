@@ -18,6 +18,10 @@ public class SendHTTPUtil {
 	private static Logger logger = LoggerFactory.getLogger(SendHTTPUtil.class);
 	
 	public static String callApiServer(String url, String method, String content, Map<String, String> header) throws Exception {
+		return callApiServer(url, method, content, header, "UTF-8");
+	}
+	
+	public static String callApiServer(String url, String method, String content, Map<String, String> header, String encoding) throws Exception {
 
 //		url = URLEncoder.encode(url, "UTF-8");
 		StringBuilder urlSb = new StringBuilder(url);
@@ -30,7 +34,7 @@ public class SendHTTPUtil {
 		con.setDoInput(true);
 		con.setDoOutput(true);
 
-		con.setRequestProperty("Content-Type", "application/json;charset=utf-8");
+		con.setRequestProperty("Content-Type", "application/json;charset=" + encoding.toLowerCase());
 		con.setRequestProperty("Accept", "*/*");
 		if (header != null) {
 			for (Entry<String, String> entry : header.entrySet()) {
@@ -40,11 +44,11 @@ public class SendHTTPUtil {
 		
 		int len = content.length();
 		if (len > 0) {
-			byte[] buffer = content.getBytes("UTF-8");
+			byte[] buffer = content.getBytes(encoding);
 
 			try (OutputStream outputStream = con.getOutputStream();
-					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, "UTF-8")) {
-				outputStreamWriter.write(new String(buffer, "UTF-8"));
+					OutputStreamWriter outputStreamWriter = new OutputStreamWriter(outputStream, encoding)) {
+				outputStreamWriter.write(new String(buffer, encoding));
 				outputStreamWriter.flush();
 			}
 		}
@@ -54,7 +58,7 @@ public class SendHTTPUtil {
 
 		StringBuffer resSb = new StringBuffer();
 		if (responseCode == HttpStatus.OK.value() || responseCode == HttpStatus.CREATED.value()) {
-			try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), "UTF-8"))) {
+			try (BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream(), encoding))) {
 				String inputLine;
 				while ((inputLine = in.readLine()) != null) {
 					resSb.append(inputLine);
