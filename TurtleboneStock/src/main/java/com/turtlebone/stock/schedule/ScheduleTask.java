@@ -22,7 +22,7 @@ public class ScheduleTask {
 		test();
 	}
 	
-	@Scheduled(cron = "*/30 * 13-15 * * 1-5")
+	@Scheduled(cron = "*/30 * 13-14 * * 1-5")
 	public void v2() throws Exception {
 		test();
 	}
