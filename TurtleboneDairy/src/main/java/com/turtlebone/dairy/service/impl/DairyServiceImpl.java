@@ -104,7 +104,7 @@ public class DairyServiceImpl implements DairyService {
 		PageRequest pr = new PageRequest(
 				pageNumber != null ? pageNumber : 0, 
 				pageSize != null && pageSize > 0 ? pageSize : 20, 
-				new Sort(Direction.DESC, "id"));
+				new Sort(Direction.DESC, "updateTime"));
 		List<Dairy> list = dairyRepo.selectPage(BeanCopyUtils.map(dairyModel, Dairy.class), pr);
 		return BeanCopyUtils.mapList(list, DairyModel.class);
 	}
