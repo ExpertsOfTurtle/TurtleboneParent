@@ -33,8 +33,8 @@ import com.turtlebone.core.util.StringUtil;
 public class WechatLoginController {
 	private static Logger logger = LoggerFactory.getLogger(WechatLoginController.class);
 	
-	private final String APPID = "wxd18588d3eefb71e2";
-	private final String SECRET = "750a90ba0151d3164185389a883f2f21";
+	private final String APPID = "wx40ec130187bae75d";
+	private final String SECRET = "153635e280c3a911ccbbfcfacf55aac2";
 	private final String WECHAT_URL = "https://api.weixin.qq.com/sns/jscode2session";
 	
 	@Autowired
